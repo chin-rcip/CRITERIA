@@ -1,10 +1,12 @@
 # CRITERIA
 
-**C**idoc c**R**m **I**n **T**urtle m**ER**maid d**I**agr**A**ms is a Python tool to convert RDF Turtle file (based on CIDOC-CRM model) into Mermaid markdown to generate (flowchart) diagrams.
+**C**idoc c**R**m **I**n **T**urtle m**ER**maid d**I**agr**A**ms is a Python tool to convert RDF Turtle file (based on CIDOC-CRM model) into [Mermaid](https://mermaid-js.github.io/mermaid/#/) markdown to generate (flowchart) diagrams.
 
 The tools allows you to generate two types of diagrams using the same Turtle file:
 * One includes all the **instances**, i.e. URIs, dateTime, Literal values, etc.
 * The other one includes only the classes, i.e. the **ontology** of the pattern.
+
+Mainly the mardown is incorporated into HTML page, however, the PNG can be downloaded from [Mermaid Live Editor](https://mermaid-js.github.io/mermaid-live-editors) by simply pasting the entire markdown file into the code box. 
 
 Here is an example of the Existence pattern of CHIN's Target Model.
 
