@@ -8,6 +8,10 @@ The tool can generate two types of diagrams using the same Turtle file:
 
 The markdown is intended to be incorporated into an HTML page; however, a PNG version can be downloaded from [Mermaid Live Editor](https://mermaid-js.github.io/mermaid-live-editor) by simply pasting the entire markdown file into the code box. 
 
+Recommended browsers for Mermaid Live Editor:
+* Mac: Safari, Chrome, Firefox
+* Windows: Firefox
+
 Below is an example using CHIN's Target Model Existence pattern:
 
 ##### RDF
@@ -63,9 +67,9 @@ The main python script is **`criteria.py`**, which requires **five** arguments.
 |Argument|Description|
 |--|--|
 |Type | Type of the diagram; the values must be either **`instance`** or **`ontology`**|
-|rdf|  RDF input filename (e.g. `Test.ttl`); any RDF file **must be stored** in the folder `/rdf`|
+|rdf|  RDF Turtle input filename (e.g. `Test.ttl`); TTL files **must be stored** in the folder `/rdf`|
 |mmd|  Mermaid output filename (e.g. `instanceTest.mmd`)|
-|uri|  URI of the first node of the graph (e.g. `https://www.rdm.net/person/0001`)|
+|uri|  URI of the first node of the graph, which is expected to be at the top of the diagram (e.g. in the above example, the first node is the URI of E21_Person `https://www.chin-rcip/e39/0001`)|
 |depth|  The depth/level of the diagram (e.g. `4` or `5`)|
 
 For example, to generate a diagram rendering instances using the `Test.ttl` file in `./rdf` folder, the command is as follows:
@@ -102,5 +106,5 @@ This **`ontologies`** folder contains the ontology files used in the script. Cur
 #### source
 **`source.py`** is the location where to place several python objects to be imported in the main script. It currently contains:
 - `classes`: a list object storing the main CIDOC CRM classes that are to be assigned color codes.
-- `onto`: a dictionary object storing the filenames of the corresponding ontologies (i.e. the `.rdfs` files in the folder `/ontologies`).
+- `onto`: a dictionary object storing the filenames of the ontologies used by the script (i.e. the `.rdfs` files in the folder `/ontologies`).
 > :warning: If you replace the `.rdfs` in the folder `/ontologies` with an updated file, or rename it, **the values** in the `onto` dictionary must be updated accordingly.
