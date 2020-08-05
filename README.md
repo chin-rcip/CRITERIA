@@ -6,7 +6,7 @@ The tool can generate two types of diagrams using the same Turtle file:
 * One renders all **instances**, e.g. URIs, dateTime, Literal values
 * The other renders only classes, i.e. the **ontology** of the pattern.
 
-The markdown is intended to be incorporated into an HTML page; however, a PNG version can be downloaded from [Mermaid Live Editor](https://mermaid-js.github.io/mermaid-live-editors) by simply pasting the entire markdown file into the code box. 
+The markdown is intended to be incorporated into an HTML page; however, a PNG version can be downloaded from [Mermaid Live Editor](https://mermaid-js.github.io/mermaid-live-editor) by simply pasting the entire markdown file into the code box. 
 
 Below is an example using CHIN's Target Model Existence pattern:
 
