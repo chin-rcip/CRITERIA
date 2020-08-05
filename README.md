@@ -1,6 +1,6 @@
 # CRITERIA
 
-**C**idoc c**R**m **I**n **T**urtle m**ER**maid d**I**agr**A**ms (CRITERIA) is a Python tool that converts RDF Turtle files (based on CIDOC-CRM model) into [Mermaid](https://mermaid-js.github.io/mermaid/#/) markdown to generate (flowchart) diagrams.
+**C**idoc c**R**m **I**n **T**urtle m**ER**maid d**I**agr**A**ms (CRITERIA) is a Python tool that converts RDF Turtle files (based on CIDOC CRM model) into [Mermaid](https://mermaid-js.github.io/mermaid/#/) markdown to generate (flowchart) diagrams.
 
 The tool can generate two types of diagrams using the same Turtle file:
 * One renders all **instances**, e.g. URIs, dateTime, Literal values
