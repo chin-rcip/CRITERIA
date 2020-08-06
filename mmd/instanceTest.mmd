@@ -24,20 +24,36 @@ classDef PC_Classes fill:#4ce600, stroke:#000000;
 classDef PC_Classes_URI fill:#bbff99,stroke:#000000;
 classDef Multi_URI fill:#cccccc,stroke:#000000;
 
-0([https://www.rdm.net/person/0001]) -->|crm:P98i_was_born| 1([https://www.rdm.net/event/0001])
-0([https://www.rdm.net/person/0001]):::Actor_URI -->|rdf:type| 2["crm:E21_Person"]:::Actor
-0([https://www.rdm.net/person/0001]) -->|crm:P100i_died_in| 3([https://www.rdm.net/event/0002])
-1([https://www.rdm.net/event/0001]):::Temporal_Entity_URI -->|rdf:type| 4["crm:E67_Birth"]:::Temporal_Entity
-1([https://www.rdm.net/event/0001]) -->|crm:P7_took_place_at| 5([http://www.rdm.net/place/0001])
-1([https://www.rdm.net/event/0001]) -->|crm:P4_has_time-span| 6([http://www.rdm.net/time-span/0001])
-3([https://www.rdm.net/event/0002]):::Temporal_Entity_URI -->|rdf:type| 7["crm:E69_Death"]:::Temporal_Entity
-3([https://www.rdm.net/event/0002]) -->|crm:P4_has_time-span| 8([http://www.rdm.net/time-span/0002])
-3([https://www.rdm.net/event/0002]) -->|crm:P7_took_place_at| 9([http://www.rdm.net/place/0002])
-5([http://www.rdm.net/place/0001]):::Place_URI -->|rdf:type| 10["crm:E53_Place"]:::Place
-6([http://www.rdm.net/time-span/0001]) -->|crm:P82a_begin_of_the_begin| 11(["''1900-02-20T00:00:00-04:00''^^xsd:dateTime"]):::Literal
-6([http://www.rdm.net/time-span/0001]) -->|crm:P82b_end_of_the_end| 12(["''1900-02-20T23:59:59-04:00''^^xsd:dateTime"]):::Literal
-6([http://www.rdm.net/time-span/0001]):::Time-Span_URI -->|rdf:type| 13["crm:E52_Time-Span"]:::Time-Span
-8([http://www.rdm.net/time-span/0002]) -->|crm:P82b_end_of_the_end| 14(["''1985-12-25T23:59:59-04:00''^^xsd:dateTime"]):::Literal
-8([http://www.rdm.net/time-span/0002]) -->|crm:P82a_begin_of_the_begin| 15(["''1985-12-25T00:00:00-04:00''^^xsd:dateTime"]):::Literal
-8([http://www.rdm.net/time-span/0002]):::Time-Span_URI -->|rdf:type| 16["crm:E52_Time-Span"]:::Time-Span
-9([http://www.rdm.net/place/0002]):::Place_URI -->|rdf:type| 17["crm:E53_Place"]:::Place
+0([https://www.chin-rcip.ca/e39/0001]) -->|crm:P100i_died_in| 1([https://www.chin-rcip.ca/e69/0001])
+0([https://www.chin-rcip.ca/e39/0001]) -->|rdfs:label| 2(["''Marc-Aurèle Fortin''^^xsd:string"]):::Literal
+0([https://www.chin-rcip.ca/e39/0001]) -->|crm:P98i_was_born| 3([https://www.chin-rcip.ca/e67/0001])
+0([https://www.chin-rcip.ca/e39/0001]):::Actor_URI -->|rdf:type| 4["crm:E21_Person"]:::Actor
+1([https://www.chin-rcip.ca/e69/0001]):::Temporal_Entity_URI -->|rdf:type| 5["crm:E69_Death"]:::Temporal_Entity
+1([https://www.chin-rcip.ca/e69/0001]) -->|crm:P7_took_place_at| 6([https://www.chin-rcip.ca/e53/0002])
+1([https://www.chin-rcip.ca/e69/0001]) -->|crm:P4_has_time-span| 7([https://www.chin-rcip.ca/e52/0002])
+1([https://www.chin-rcip.ca/e69/0001]) -->|crm:P120_occurs_before| 8([https://www.chin-rcip.ca/e9/0001])
+3([https://www.chin-rcip.ca/e67/0001]) -->|crm:P4_has_time-span| 9([https://www.chin-rcip.ca/e52/0001])
+3([https://www.chin-rcip.ca/e67/0001]):::Temporal_Entity_URI -->|rdf:type| 10["crm:E67_Birth"]:::Temporal_Entity
+3([https://www.chin-rcip.ca/e67/0001]) -->|crm:P7_took_place_at| 11([https://www.chin-rcip.ca/e53/0001])
+3([https://www.chin-rcip.ca/e67/0001]) -->|crm:P97_from_father| 12([https://www.chin-rcip.ca/e39/0003])
+3([https://www.chin-rcip.ca/e67/0001]) -->|crm:P96_by_mother| 13([https://www.chin-rcip.ca/e39/0002])
+6([https://www.chin-rcip.ca/e53/0002]) -->|rdfs:label| 14(["''Macamic, Québec''^^xsd:string"]):::Literal
+6([https://www.chin-rcip.ca/e53/0002]):::Place_URI -->|rdf:type| 15["crm:E53_Place"]:::Place
+7([https://www.chin-rcip.ca/e52/0002]) -->|crm:P82b_end_of_the_end| 16(["''1970-03-02T23:59:59''^^xsd:dateTime"]):::Literal
+7([https://www.chin-rcip.ca/e52/0002]) -->|crm:P82a_begin_of_the_begin| 17(["''1970-03-02T00:00:00''^^xsd:dateTime"]):::Literal
+7([https://www.chin-rcip.ca/e52/0002]):::Time-Span_URI -->|rdf:type| 18["crm:E52_Time-Span"]:::Time-Span
+8([https://www.chin-rcip.ca/e9/0001]) -->|crm:P27_moved_from| 6([https://www.chin-rcip.ca/e53/0002])
+8([https://www.chin-rcip.ca/e9/0001]):::Temporal_Entity_URI -->|rdf:type| 20["crm:E9_Move"]:::Temporal_Entity
+8([https://www.chin-rcip.ca/e9/0001]) -->|crm:P25_moved| 0([https://www.chin-rcip.ca/e39/0001])
+8([https://www.chin-rcip.ca/e9/0001]) -->|crm:P26_moved_to| 22([https://www.chin-rcip.ca/e53/0003])
+9([https://www.chin-rcip.ca/e52/0001]) -->|crm:P82a_begin_of_the_begin| 23(["''1888-03-14T00:00:00''^^xsd:dateTime"]):::Literal
+9([https://www.chin-rcip.ca/e52/0001]):::Time-Span_URI -->|rdf:type| 24["crm:E52_Time-Span"]:::Time-Span
+9([https://www.chin-rcip.ca/e52/0001]) -->|crm:P82b_end_of_the_end| 25(["''1888-03-14T23:59:59''^^xsd:dateTime"]):::Literal
+11([https://www.chin-rcip.ca/e53/0001]) -->|rdfs:label| 26(["''Laval, Québec''^^xsd:string"]):::Literal
+11([https://www.chin-rcip.ca/e53/0001]):::Place_URI -->|rdf:type| 27["crm:E53_Place"]:::Place
+12([https://www.chin-rcip.ca/e39/0003]) -->|rdfs:label| 28(["''Thomas Fortin''^^xsd:string"]):::Literal
+12([https://www.chin-rcip.ca/e39/0003]):::Actor_URI -->|rdf:type| 29["crm:E21_Person"]:::Actor
+13([https://www.chin-rcip.ca/e39/0002]):::Actor_URI -->|rdf:type| 30["crm:E21_Person"]:::Actor
+13([https://www.chin-rcip.ca/e39/0002]) -->|rdfs:label| 31(["''Amanda Fortier''^^xsd:string"]):::Literal
+22([https://www.chin-rcip.ca/e53/0003]) -->|rdfs:label| 32(["''Sainte-Rose''^^xsd:string"]):::Literal
+22([https://www.chin-rcip.ca/e53/0003]):::Place_URI -->|rdf:type| 33["crm:E53_Place"]:::Place

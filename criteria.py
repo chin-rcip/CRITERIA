@@ -77,12 +77,20 @@ def classDict():
 	# FRBRoo
 	frbrClass = superClass(source.onto['frbroo'], 'frbroo', 'http://iflastandards.info/ns/fr/frbr/frbroo/')
 	for fr in frbrClass:
-		# d[fr] = 'FRBR_Classes'
 		crmSpc = frbrClass[fr][-1] # retrieve the last/highest cidoc-crm superclass of a frbroo class.
 		for spc in cidocClass[crmSpc]:
 			spc = spc.split(':')[1]
 			if spc in classes:
 				d[fr] = '_'.join(spc.split('_')[1:])
+				break 
+	# CRMDig
+	digClass = superClass(source.onto['crmdig'], 'crmdig', 'http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/')
+	for dig in digClass:
+		crmSpc = digClass[dig][-1] # retrieve the last/highest cidoc-crm superclass of a crmdig class.
+		for spc in cidocClass[crmSpc]:
+			spc = spc.split(':')[1]
+			if spc in classes:
+				d[dig] = '_'.join(spc.split('_')[1:])
 				break 
 	# CRMpc
 	pcClass = superClass(source.onto['pc'], 'crm', 'http://www.cidoc-crm.org/cidoc-crm/')
@@ -97,17 +105,30 @@ def classDict():
 # Function to convert RDF triples to Mermaid statements.
 # the returned objList will be the input subList when the function 
 # is called again in the next loop.
-def convert(subList,g,classes,i):
+def convert(subList,g,classes,i, uriDict):
 	objList = []
 	stmtList = []
+	crm = Namespace('http://www.cidoc-crm.org/cidoc-crm/')
+	frbroo = Namespace('http://iflastandards.info/ns/fr/frbr/frbroo/')
+	crmdig = Namespace('http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/')
+	aat = Namespace('http://vocab.getty.edu/aat/')
+
 	for idx, s in subList:
 		count = 0 
 		# to count number of classes assigned to an instance, i.e. double instanciations
 		
 		for p, o in g.predicate_objects(s):
 			p = p.n3(g.namespace_manager)
-			group = (i,o)
-			objList.append(group)
+			if o in uriDict:
+				n = uriDict[o]
+			else:
+				n = i				
+				if (not 'crm' in o.n3(g.namespace_manager) and 
+					not 'frbroo' in o.n3(g.namespace_manager)):
+				# if 'chin-rcip.ca' in o.n3(g.namespace_manager):
+					uriDict[o] = i
+					group = (i,o)
+					objList.append(group)
 
 			# check whether the object of the triple is a key in the returned dict of classDict
 			# to retrieve the Mermaid class, i.e check for the object of the property rdf:type
@@ -121,7 +142,7 @@ def convert(subList,g,classes,i):
 				stmt = '{}([{}]):::{} -->|{}| {}[{}]:::{}'.format(idx,
 											s.n3(g.namespace_manager),
 											uriCl,p,
-											i,
+											n,
 											o.n3(g.namespace_manager),
 											cl)
 			# check for quotation marks in the object, indicating Literal values.
@@ -130,7 +151,7 @@ def convert(subList,g,classes,i):
 				stmt = '{}([{}]) -->|{}| {}([{}]):::{}'.format(idx,
 											s.n3(g.namespace_manager),
 											p,
-											i,
+											n,
 											o.n3(g.namespace_manager),
 											cl)
 				
@@ -138,11 +159,11 @@ def convert(subList,g,classes,i):
 				stmt = '{}([{}]) -->|{}| {}([{}])'.format(idx,
 											s.n3(g.namespace_manager),
 											p,
-											i,
+											n,
 											o.n3(g.namespace_manager))
 			stmtList.append(stmt)
 			i += 1			
-	return stmtList, objList, i
+	return stmtList, objList, i, uriDict
 
 # Main function to convert a RDF turtle files to Mermaid.
 def instance(rdfInput, mmdOutput, uri, depth):
@@ -154,9 +175,9 @@ def instance(rdfInput, mmdOutput, uri, depth):
 	g = Graph()
 	g.parse('./rdf/{}'.format(rdfInput) , format="turtle")
 
-	crm = Namespace('http://www.cidoc-crm.org/cidoc-crm/')
-	frbroo = Namespace('http://iflastandards.info/ns/fr/frbr/frbroo/')
-	aat = Namespace('http://vocab.getty.edu/aat/')
+	# crm = Namespace('http://www.cidoc-crm.org/cidoc-crm/')
+	# frbroo = Namespace('http://iflastandards.info/ns/fr/frbr/frbroo/')
+	# aat = Namespace('http://vocab.getty.edu/aat/')
 
 	classes = classDict()
 
@@ -166,8 +187,9 @@ def instance(rdfInput, mmdOutput, uri, depth):
 	lvl = 1 
 
 	subList = [(0,u)]
+	uriDict = {u: 0}
 	while lvl <= int(depth):
-		stmtList, subList, i = convert(subList,g,classes,i)
+		stmtList, subList, i, uriDict = convert(subList,g,classes,i,uriDict)
 		
 		for stmt in stmtList:
 			stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
@@ -186,10 +208,6 @@ def ontology(rdfInput, mmdOutput, uri, depth):
 	g = Graph()
 	g.parse('./rdf/{}'.format(rdfInput) , format="turtle")
 
-	crm = Namespace('http://www.cidoc-crm.org/cidoc-crm/')
-	frbroo = Namespace('http://iflastandards.info/ns/fr/frbr/frbroo/')
-	aat = Namespace('http://vocab.getty.edu/aat/')
-
 	classes = classDict()
 
 	u = URIRef(uri)
@@ -198,11 +216,11 @@ def ontology(rdfInput, mmdOutput, uri, depth):
 	lvl = 1
 
 	subList = [(0,u)]
-
+	uriDict = {u: 0}
 	uriType = {}
 	statements = []
 	while lvl <= int(depth):
-		stmtList, subList, i = convert(subList,g,classes,i)
+		stmtList, subList, i, uriDict = convert(subList,g,classes,i, uriDict)
 		for stmt in stmtList:
 			stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
 			stmt = stmt.replace('(["<','([').replace('>"])','])')
@@ -219,7 +237,7 @@ def ontology(rdfInput, mmdOutput, uri, depth):
 				# add to the uriType dict the uri part as the key, and the class part as the value
 				# so the class part will replace the uri part in the for loop below
 				uriType[inst] = clType
-			else:
+			elif not 'rdfs:label' in stmt:
 				statements.append(stmt)
 		lvl += 1
 
@@ -259,7 +277,6 @@ def parse_args():
 if __name__ == '__main__':
 	args = parse_args()
 	main(args.Type, args.rdf, args.mmd, args.uri, args.depth)
-
 
 
 

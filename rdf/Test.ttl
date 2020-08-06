@@ -3,29 +3,50 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://www.rdm.net/person/0001> a crm:E21_Person ;
-	crm:P98i_was_born <https://www.rdm.net/event/0001> ;
-	crm:P100i_died_in <https://www.rdm.net/event/0002> .
+<https://www.chin-rcip.ca/e39/0001> a crm:E21_Person ;
+	rdfs:label "Marc-Aurèle Fortin"^^xsd:string ;
+	# crm:P25i_moved_by <https://www.chin-rcip.ca/e9/0001> ;
+	crm:P98i_was_born <https://www.chin-rcip.ca/e67/0001> ;
+	crm:P100i_died_in <https://www.chin-rcip.ca/e69/0001> .
 
-<https://www.rdm.net/event/0001> a crm:E67_Birth ;
-	crm:P4_has_time-span <http://www.rdm.net/time-span/0001> ;
-	crm:P7_took_place_at <http://www.rdm.net/place/0001> .
+<https://www.chin-rcip.ca/e67/0001> a crm:E67_Birth ;
+	crm:P4_has_time-span <https://www.chin-rcip.ca/e52/0001> ;
+	crm:P7_took_place_at <https://www.chin-rcip.ca/e53/0001> ;
+	crm:P96_by_mother <https://www.chin-rcip.ca/e39/0002> ;
+	crm:P97_from_father <https://www.chin-rcip.ca/e39/0003> .
 
-<https://www.rdm.net/event/0002> a crm:E69_Death ;
-	crm:P4_has_time-span <http://www.rdm.net/time-span/0002> ;
-	crm:P7_took_place_at <http://www.rdm.net/place/0002> .
+<https://www.chin-rcip.ca/e69/0001> a crm:E69_Death ;
+	crm:P4_has_time-span <https://www.chin-rcip.ca/e52/0002> ;
+	crm:P7_took_place_at <https://www.chin-rcip.ca/e53/0002> ;
+	crm:P120_occurs_before <https://www.chin-rcip.ca/e9/0001> .
 
-<http://www.rdm.net/time-span/0001> a crm:E52_Time-Span ;
-	crm:P82a_begin_of_the_begin "1900-02-20T00:00:00-04:00"^^xsd:dateTime ;
-	crm:P82b_end_of_the_end "1900-02-20T23:59:59-04:00"^^xsd:dateTime .
+<https://www.chin-rcip.ca/e52/0001> a crm:E52_Time-Span ;
+	crm:P82a_begin_of_the_begin "1888-03-14T00:00:00"^^xsd:dateTime ;
+	crm:P82b_end_of_the_end "1888-03-14T23:59:59"^^xsd:dateTime .
 
-<http://www.rdm.net/time-span/0002> a crm:E52_Time-Span ;
-	crm:P82a_begin_of_the_begin "1985-12-25T00:00:00-04:00"^^xsd:dateTime ;
-	crm:P82b_end_of_the_end "1985-12-25T23:59:59-04:00"^^xsd:dateTime .
+<https://www.chin-rcip.ca/e52/0002> a crm:E52_Time-Span ;
+	crm:P82a_begin_of_the_begin "1970-03-02T00:00:00"^^xsd:dateTime ;
+	crm:P82b_end_of_the_end "1970-03-02T23:59:59"^^xsd:dateTime .
 
-<http://www.rdm.net/place/0001> a crm:E53_Place .
+<https://www.chin-rcip.ca/e53/0001> a crm:E53_Place ;
+	rdfs:label "Laval, Québec"^^xsd:string .
 
-<http://www.rdm.net/place/0002> a crm:E53_Place .
+<https://www.chin-rcip.ca/e53/0002> a crm:E53_Place ;
+	rdfs:label "Macamic, Québec"^^xsd:string .
+
+<https://www.chin-rcip.ca/e39/0002> a crm:E21_Person ;
+	rdfs:label "Amanda Fortier"^^xsd:string .
+
+<https://www.chin-rcip.ca/e39/0003> a crm:E21_Person ;
+	rdfs:label "Thomas Fortin"^^xsd:string .
+
+<https://www.chin-rcip.ca/e9/0001> a crm:E9_Move ;
+	crm:P25_moved <https://www.chin-rcip.ca/e39/0001> ;
+	crm:P27_moved_from <https://www.chin-rcip.ca/e53/0002> ;
+	crm:P26_moved_to <https://www.chin-rcip.ca/e53/0003> .
+
+<https://www.chin-rcip.ca/e53/0003> a crm:E53_Place ;
+	rdfs:label "Sainte-Rose"^^xsd:string .
 
 
 
