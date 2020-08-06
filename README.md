@@ -12,44 +12,16 @@ Recommended browsers for Mermaid Live Editor:
 * Mac: Safari, Chrome, Firefox
 * Windows: Firefox
 
-Below is an example using CHIN's Target Model Existence pattern:
+Below is an example using CHIN's Birth/Death of People pattern:
 
 ##### RDF
-```turtle
-@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+* [Test.ttl](/rdf/Test.ttl)
 
-<https://www.rdm.net/person/0001> a crm:E21_Person ;
-	crm:P98i_was_born <https://www.rdm.net/event/0001> ;
-	crm:P100i_died_in <https://www.rdm.net/event/0002> .
-
-<https://www.rdm.net/event/0001> a crm:E67_Birth ;
-	crm:P4_has_time-span <http://www.rdm.net/time-span/0001> ;
-	crm:P7_took_place_at <http://www.rdm.net/place/0001> .
-
-<https://www.rdm.net/event/0002> a crm:E69_Death ;
-	crm:P4_has_time-span <http://www.rdm.net/time-span/0002> ;
-	crm:P7_took_place_at <http://www.rdm.net/place/0002> .
-
-<http://www.rdm.net/time-span/0001> a crm:E52_Time-Span ;
-	crm:P82a_begin_of_the_begin "1900-02-20T00:00:00-04:00"^^xsd:dateTime ;
-	crm:P82b_end_of_the_end "1900-02-20T23:59:59-04:00"^^xsd:dateTime .
-
-<http://www.rdm.net/time-span/0002> a crm:E52_Time-Span ;
-	crm:P82a_begin_of_the_begin "1985-12-25T00:00:00-04:00"^^xsd:dateTime ;
-	crm:P82b_end_of_the_end "1985-12-25T23:59:59-04:00"^^xsd:dateTime .
-
-<http://www.rdm.net/place/0001> a crm:E53_Place .
-
-<http://www.rdm.net/place/0002> a crm:E53_Place .
-```
 ##### Diagram with instances
-![Existence pattern with instances](/docs/images/existenceInst.png)
+![Birth/Death of People pattern with instances](/docs/images/BirthDeathInst.png)
 
 ##### Ontology representation
-![Ontology of Existence pattern ](/docs/images/existenceOnto.png)
+![Ontology of Birth/Death of People pattern ](/docs/images/BirthDeathOnto.png)
 
 ## Installation
 The tool can be installed by cloning this repository or downloading it as a zip file.
