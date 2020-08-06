@@ -46,7 +46,7 @@
 	crm:P26_moved_to <https://www.chin-rcip.ca/e53/0003> .
 
 <https://www.chin-rcip.ca/e53/0003> a crm:E53_Place ;
-	rdfs:label "Sainte-Rose"^^xsd:string .
+	rdfs:label "Sainte-Rose, Québec"^^xsd:string .
 
 
 
