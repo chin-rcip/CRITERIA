@@ -95,7 +95,7 @@ classDef Temporal_Entity_URI fill:#99f1ff,stroke:#000000;
 > :warning: At the moment, you can *ONLY edit the colors* in the files, but **DO NOT change the *name of the files* or the *name of the classes* !**
 
 #### /ontologies
-This folder contains the ontologies files to be used in the script. Currently it has the `.rdfs` files of main Cidoc-CRM, FRBRoo, and CRMpc.
+This folder contains the ontologies files to be used in the script. Currently it has the `.rdfs` files of main [CIDOC CRM (v6.2.1)](http://www.cidoc-crm.org/Version/version-6.2.1), [FRBRoo (v2.4)](http://www.cidoc-crm.org/frbroo/ModelVersion/frbroo-v.-2.4), and [CRMpc (v1.1)](http://www.cidoc-crm.org/Version/version-6.2).
 > :warning: Make sure that the classes in the `.rdfs` **matches** the classes used in your `.ttl`
 > For example, it's `E24_Physical_Human-Made_Thing` in your rdf, but it's `E24_Physical_Man-Made_Thing` in the ontology, so edit the ontology file accordingly.
 
