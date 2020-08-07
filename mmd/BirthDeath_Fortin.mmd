@@ -1,0 +1,52 @@
+graph TD
+classDef Literal fill:#f2f2f2,stroke:#000000;
+classDef CRM_Entity fill:#FFFFFF,stroke:#000000;
+classDef CRM_Entity_URI fill:#FFFFFF,stroke:#000000;
+classDef Temporal_Entity fill:#00C9E6, stroke:#000000;
+classDef Temporal_Entity_URI fill:#99f1ff,stroke:#000000;
+classDef Type fill:#E18312, stroke:#000000;
+classDef Type_URI fill:#f6c588,stroke:#000000;
+classDef Time-Span fill:#2C9C91, stroke:#000000;
+classDef Time-Span_URI fill:#9be4dc,stroke:#000000;
+classDef Appellation fill:#FFEB7F, stroke:#000000;
+classDef Appellation_URI fill:#fff6cc,stroke:#000000;
+classDef Place fill:#008836, stroke:#000000;
+classDef Place_URI fill:#33ff85,stroke:#000000;
+classDef Persistent_Item fill:#B266B2, stroke:#000000;
+classDef Persistent_Item_URI fill:#dcbcdc,stroke:#000000;
+classDef Conceptual_Object fill:#FFD700, stroke:#000000;
+classDef Conceptual_Object_URI fill:#fff099,stroke:#000000;
+classDef Physical_Thing fill:#D2B48C, stroke:#000000;
+classDef Physical_Thing_URI fill:#eadbc8,stroke:#000000;
+classDef Actor fill:#f58aad, stroke:#000000;
+classDef Actor_URI fill:#fbd0de,stroke:#000000;
+classDef PC_Classes fill:#4ce600, stroke:#000000;
+classDef PC_Classes_URI fill:#bbff99,stroke:#000000;
+classDef Multi_URI fill:#cccccc,stroke:#000000;
+
+0([https://www.chin-rcip.ca/e2/0001]) -->|crm:P7_took_place_at| 1([https://www.chin-rcip.ca/e53/0001])
+2([https://www.chin-rcip.ca/e39/0001]):::Actor_URI -->|rdf:type| 3["crm:E21_Person"]:::Actor
+4([https://www.chin-rcip.ca/e2/0002]) -->|crm:P4_has_time-span| 5([https://www.chin-rcip.ca/e52/0002])
+5([https://www.chin-rcip.ca/e52/0002]) -->|crm:P82a_begin_of_the_begin| 6(["''1970-03-02T00:00:00''^^xsd:dateTime"]):::Literal
+2([https://www.chin-rcip.ca/e39/0001]) -->|rdfs:label| 7(["''Marc-Aurèle Fortin (1888-1970)''^^xsd:string"]):::Literal
+8([https://www.chin-rcip.ca/e53/0002]) -->|rdfs:label| 9(["''Macamic, Québec''^^xsd:string"]):::Literal
+5([https://www.chin-rcip.ca/e52/0002]):::Time-Span_URI -->|rdf:type| 10["crm:E52_Time-Span"]:::Time-Span
+8([https://www.chin-rcip.ca/e53/0002]):::Place_URI -->|rdf:type| 11["crm:E53_Place"]:::Place
+1([https://www.chin-rcip.ca/e53/0001]):::Place_URI -->|rdf:type| 12["crm:E53_Place"]:::Place
+13([https://www.chin-rcip.ca/e52/0001]):::Time-Span_URI -->|rdf:type| 14["crm:E52_Time-Span"]:::Time-Span
+0([https://www.chin-rcip.ca/e2/0001]) -->|crm:P97_from_father| 15([https://www.chin-rcip.ca/e39/0003])
+5([https://www.chin-rcip.ca/e52/0002]) -->|crm:P82b_end_of_the_end| 16(["''1970-03-02T23:59:59''^^xsd:dateTime"]):::Literal
+15([https://www.chin-rcip.ca/e39/0003]) -->|rdfs:label| 17(["''Thomas Fortin (1853-1933)''^^xsd:string"]):::Literal
+13([https://www.chin-rcip.ca/e52/0001]) -->|crm:P82a_begin_of_the_begin| 18(["''1888-03-14T00:00:00''^^xsd:dateTime"]):::Literal
+15([https://www.chin-rcip.ca/e39/0003]):::Actor_URI -->|rdf:type| 19["crm:E21_Person"]:::Actor
+4([https://www.chin-rcip.ca/e2/0002]):::Temporal_Entity_URI -->|rdf:type| 20["crm:E69_Death"]:::Temporal_Entity
+0([https://www.chin-rcip.ca/e2/0001]) -->|crm:P4_has_time-span| 13([https://www.chin-rcip.ca/e52/0001])
+2([https://www.chin-rcip.ca/e39/0001]) -->|crm:P98i_was_born| 0([https://www.chin-rcip.ca/e2/0001])
+0([https://www.chin-rcip.ca/e2/0001]) -->|crm:P96_by_mother| 21([https://www.chin-rcip.ca/e39/0002])
+21([https://www.chin-rcip.ca/e39/0002]) -->|rdfs:label| 22(["''Amanda Fortier (1861-1953)''^^xsd:string"]):::Literal
+0([https://www.chin-rcip.ca/e2/0001]):::Temporal_Entity_URI -->|rdf:type| 23["crm:E67_Birth"]:::Temporal_Entity
+4([https://www.chin-rcip.ca/e2/0002]) -->|crm:P7_took_place_at| 8([https://www.chin-rcip.ca/e53/0002])
+21([https://www.chin-rcip.ca/e39/0002]):::Actor_URI -->|rdf:type| 24["crm:E21_Person"]:::Actor
+13([https://www.chin-rcip.ca/e52/0001]) -->|crm:P82b_end_of_the_end| 25(["''1888-03-14T23:59:59''^^xsd:dateTime"]):::Literal
+1([https://www.chin-rcip.ca/e53/0001]) -->|rdfs:label| 26(["''Laval, Québec''^^xsd:string"]):::Literal
+2([https://www.chin-rcip.ca/e39/0001]) -->|crm:P100i_died_in| 4([https://www.chin-rcip.ca/e2/0002])

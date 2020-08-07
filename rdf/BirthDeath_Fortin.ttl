@@ -1,0 +1,39 @@
+@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://www.chin-rcip.ca/e39/0001> a crm:E21_Person ;
+	rdfs:label "Marc-Aurèle Fortin (1888-1970)"^^xsd:string ;
+	crm:P98i_was_born <https://www.chin-rcip.ca/e2/0001> ;
+	crm:P100i_died_in <https://www.chin-rcip.ca/e2/0002> .
+
+<https://www.chin-rcip.ca/e2/0001> a crm:E67_Birth ;
+	crm:P4_has_time-span <https://www.chin-rcip.ca/e52/0001> ;
+	crm:P7_took_place_at <https://www.chin-rcip.ca/e53/0001> ;
+	crm:P96_by_mother <https://www.chin-rcip.ca/e39/0002> ;
+	crm:P97_from_father <https://www.chin-rcip.ca/e39/0003> .
+
+<https://www.chin-rcip.ca/e2/0002> a crm:E69_Death ;
+	crm:P4_has_time-span <https://www.chin-rcip.ca/e52/0002> ;
+	crm:P7_took_place_at <https://www.chin-rcip.ca/e53/0002> .
+
+<https://www.chin-rcip.ca/e52/0001> a crm:E52_Time-Span ;
+	crm:P82a_begin_of_the_begin "1888-03-14T00:00:00"^^xsd:dateTime ;
+	crm:P82b_end_of_the_end "1888-03-14T23:59:59"^^xsd:dateTime .
+
+<https://www.chin-rcip.ca/e52/0002> a crm:E52_Time-Span ;
+	crm:P82a_begin_of_the_begin "1970-03-02T00:00:00"^^xsd:dateTime ;
+	crm:P82b_end_of_the_end "1970-03-02T23:59:59"^^xsd:dateTime .
+
+<https://www.chin-rcip.ca/e53/0001> a crm:E53_Place ;
+	rdfs:label "Laval, Québec"^^xsd:string .
+
+<https://www.chin-rcip.ca/e53/0002> a crm:E53_Place ;
+	rdfs:label "Macamic, Québec"^^xsd:string .
+
+<https://www.chin-rcip.ca/e39/0002> a crm:E21_Person ;
+	rdfs:label "Amanda Fortier (1861-1953)"^^xsd:string .
+
+<https://www.chin-rcip.ca/e39/0003> a crm:E21_Person ;
+	rdfs:label "Thomas Fortin (1853-1933)"^^xsd:string .

@@ -5,7 +5,6 @@
 
 <https://www.chin-rcip.ca/e39/0001> a crm:E21_Person ;
 	rdfs:label "Marc-Aurèle Fortin"^^xsd:string ;
-	# crm:P25i_moved_by <https://www.chin-rcip.ca/e9/0001> ;
 	crm:P98i_was_born <https://www.chin-rcip.ca/e67/0001> ;
 	crm:P100i_died_in <https://www.chin-rcip.ca/e69/0001> .
 
@@ -17,8 +16,7 @@
 
 <https://www.chin-rcip.ca/e69/0001> a crm:E69_Death ;
 	crm:P4_has_time-span <https://www.chin-rcip.ca/e52/0002> ;
-	crm:P7_took_place_at <https://www.chin-rcip.ca/e53/0002> ;
-	crm:P120_occurs_before <https://www.chin-rcip.ca/e9/0001> .
+	crm:P7_took_place_at <https://www.chin-rcip.ca/e53/0002> .
 
 <https://www.chin-rcip.ca/e52/0001> a crm:E52_Time-Span ;
 	crm:P82a_begin_of_the_begin "1888-03-14T00:00:00"^^xsd:dateTime ;
@@ -35,18 +33,10 @@
 	rdfs:label "Macamic, Québec"^^xsd:string .
 
 <https://www.chin-rcip.ca/e39/0002> a crm:E21_Person ;
+	a crm:E39_Actor ;
 	rdfs:label "Amanda Fortier"^^xsd:string .
 
 <https://www.chin-rcip.ca/e39/0003> a crm:E21_Person ;
 	rdfs:label "Thomas Fortin"^^xsd:string .
-
-<https://www.chin-rcip.ca/e9/0001> a crm:E9_Move ;
-	crm:P25_moved <https://www.chin-rcip.ca/e39/0001> ;
-	crm:P27_moved_from <https://www.chin-rcip.ca/e53/0002> ;
-	crm:P26_moved_to <https://www.chin-rcip.ca/e53/0003> .
-
-<https://www.chin-rcip.ca/e53/0003> a crm:E53_Place ;
-	rdfs:label "Sainte-Rose, Québec"^^xsd:string .
-
 
 

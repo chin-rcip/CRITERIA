@@ -1,0 +1,26 @@
+graph TD
+classDef Literal fill:#f2f2f2,stroke:#000000;
+classDef CRM_Entity fill:#FFFFFF,stroke:#000000;
+classDef Temporal_Entity fill:#00C9E6, stroke:#000000;
+classDef Type fill:#E18312, stroke:#000000;
+classDef Time-Span fill:#2C9C91, stroke:#000000;
+classDef Appellation fill:#FFEB7F, stroke:#000000;
+classDef Place fill:#008836, stroke:#000000;
+classDef Persistent_Item fill:#B266B2, stroke:#000000;
+classDef Conceptual_Object fill:#FFD700, stroke:#000000;
+classDef Physical_Thing fill:#D2B48C, stroke:#000000;
+classDef Actor fill:#f58aad, stroke:#000000;
+classDef PC_Classes fill:#4ce600, stroke:#000000;
+
+9["crm:E67_Birth"]:::Temporal_Entity -->|crm:P96_by_mother| 10["crm:E21_Person"]:::Actor
+11["crm:E52_Time-Span"]:::Time-Span -->|crm:P82b_end_of_the_end| 12[xsd:dateTime]:::Literal
+14["crm:E69_Death"]:::Temporal_Entity -->|crm:P4_has_time-span| 15["crm:E52_Time-Span"]:::Time-Span
+14["crm:E69_Death"]:::Temporal_Entity -->|crm:P7_took_place_at| 2["crm:E53_Place"]:::Place
+6["crm:E21_Person"]:::Actor -->|crm:P100i_died_in| 14["crm:E69_Death"]:::Temporal_Entity
+9["crm:E67_Birth"]:::Temporal_Entity -->|crm:P4_has_time-span| 11["crm:E52_Time-Span"]:::Time-Span
+9["crm:E67_Birth"]:::Temporal_Entity -->|crm:P7_took_place_at| 4["crm:E53_Place"]:::Place
+11["crm:E52_Time-Span"]:::Time-Span -->|crm:P82a_begin_of_the_begin| 21[xsd:dateTime]:::Literal
+6["crm:E21_Person"]:::Actor -->|crm:P98i_was_born| 9["crm:E67_Birth"]:::Temporal_Entity
+15["crm:E52_Time-Span"]:::Time-Span -->|crm:P82b_end_of_the_end| 25[xsd:dateTime]:::Literal
+15["crm:E52_Time-Span"]:::Time-Span -->|crm:P82a_begin_of_the_begin| 26[xsd:dateTime]:::Literal
+9["crm:E67_Birth"]:::Temporal_Entity -->|crm:P97_from_father| 0["crm:E21_Person"]:::Actor

@@ -1,3 +1,4 @@
+import rdflib
 from rdflib import Graph, URIRef, Namespace
 from rdflib.namespace import NamespaceManager, RDFS, RDF, XSD
 import re
@@ -103,9 +104,13 @@ def classDict():
 	return d
 
 # Function to convert RDF triples to Mermaid statements.
-# the returned objList will be the input subList when the function 
-# is called again in the next loop.
-def convert(subList,g,classes,i, uriDict):
+# Returns a list of statements
+def convert(rdfInput):
+	g = Graph()
+	g.parse('./rdf/{}'.format(rdfInput) , format="turtle")
+
+	classes = classDict()
+
 	objList = []
 	stmtList = []
 	crm = Namespace('http://www.cidoc-crm.org/cidoc-crm/')
@@ -113,133 +118,111 @@ def convert(subList,g,classes,i, uriDict):
 	crmdig = Namespace('http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/')
 	aat = Namespace('http://vocab.getty.edu/aat/')
 
-	for idx, s in subList:
-		count = 0 
-		# to count number of classes assigned to an instance, i.e. double instanciations
-		
-		for p, o in g.predicate_objects(s):
-			p = p.n3(g.namespace_manager)
-			if o in uriDict:
-				n = uriDict[o]
-			else:
-				n = i				
-				if (not 'crm' in o.n3(g.namespace_manager) and 
-					not 'frbroo' in o.n3(g.namespace_manager)):
-				# if 'chin-rcip.ca' in o.n3(g.namespace_manager):
-					uriDict[o] = i
-					group = (i,o)
-					objList.append(group)
+	uriDict = {}
+	stmtList = []
+	doubleInst = [] # to check for URI with double instantiations
+	i = 0
+	for s,p,o in g.triples((None, None, None)):
+		p = p.n3(g.namespace_manager)
+		if s in uriDict:
+			n1 = uriDict[s]
+		else:
+			n1 = i
+			i += 1
+			if (isinstance(s, rdflib.URIRef) and 
+				not 'crm' in s.n3(g.namespace_manager) and 
+				not 'frbroo' in s.n3(g.namespace_manager)):
+				uriDict[s] = n1
 
-			# check whether the object of the triple is a key in the returned dict of classDict
-			# to retrieve the Mermaid class, i.e check for the object of the property rdf:type
-			if o.n3(g.namespace_manager) in classes:
-				cl = classes[o.n3(g.namespace_manager)]
-				count += 1
-				if count < 2:
-					uriCl = cl+'_URI' # if not multi instanciations, Mermaid class is the node class + _URI
-				else:
-					uriCl = 'Multi_URI' # if multi instanciations
-				stmt = '{}([{}]):::{} -->|{}| {}[{}]:::{}'.format(idx,
-											s.n3(g.namespace_manager),
-											uriCl,p,
-											n,
-											o.n3(g.namespace_manager),
-											cl)
-			# check for quotation marks in the object, indicating Literal values.
-			elif '"' in o.n3(g.namespace_manager):
-				cl = 'Literal'
-				stmt = '{}([{}]) -->|{}| {}([{}]):::{}'.format(idx,
-											s.n3(g.namespace_manager),
-											p,
-											n,
-											o.n3(g.namespace_manager),
-											cl)
-				
-			else:
-				stmt = '{}([{}]) -->|{}| {}([{}])'.format(idx,
-											s.n3(g.namespace_manager),
-											p,
-											n,
-											o.n3(g.namespace_manager))
-			stmtList.append(stmt)
-			i += 1			
-	return stmtList, objList, i, uriDict
+		if o in uriDict:
+			n2 = uriDict[o]
+		else:
+			n2 = i
+			i += 1
+			if (isinstance(o, rdflib.URIRef) and 
+				not 'crm' in o.n3(g.namespace_manager) and 
+				not 'frbroo' in o.n3(g.namespace_manager)):
+				uriDict[o] = n2
 
-# Main function to convert a RDF turtle files to Mermaid.
-def instance(rdfInput, mmdOutput, uri, depth):
+		# check whether the object of the triple is a key in the returned dict of classDict
+		# to retrieve the Mermaid class, i.e check for the object of the property rdf:type
+		if str(o.n3(g.namespace_manager)) in classes:
+			cl = classes[str(o.n3(g.namespace_manager))]
+			if not s in doubleInst:
+				doubleInst.append(s)
+				uriCl = cl+'_URI'
+			else:
+				uriCl = 'Multi_URI'
+			stmt = '{}([{}]):::{} -->|{}| {}[{}]:::{}'.format(n1,
+										s.n3(g.namespace_manager),
+										uriCl,p,
+										n2,
+										o.n3(g.namespace_manager),
+										cl)
+
+		elif '"' in o.n3(g.namespace_manager):
+			cl = 'Literal'
+			stmt = '{}([{}]) -->|{}| {}([{}]):::{}'.format(n1,
+										s.n3(g.namespace_manager),
+										p,
+										n2,
+										o.n3(g.namespace_manager),
+										cl)
+
+		else:
+			stmt = '{}([{}]) -->|{}| {}([{}])'.format(n1,
+										s.n3(g.namespace_manager),
+										p,
+										n2,
+										o.n3(g.namespace_manager))
+
+		stmtList.append(stmt)
+	return stmtList
+
+# Main function to convert a RDF turtle files to Mermaid with instances.
+def instance(rdfInput, mmdOutput):
 	template = open("./src/templates/instance.mmd", "r", encoding="utf-8")
 	read = template.read()
 	out = open('./mmd/{}'.format(mmdOutput), "w", encoding="utf-8")
 	out.write(read)
 
-	g = Graph()
-	g.parse('./rdf/{}'.format(rdfInput) , format="turtle")
-
-	# crm = Namespace('http://www.cidoc-crm.org/cidoc-crm/')
-	# frbroo = Namespace('http://iflastandards.info/ns/fr/frbr/frbroo/')
-	# aat = Namespace('http://vocab.getty.edu/aat/')
-
-	classes = classDict()
-
-	u = URIRef(uri)
-
-	i = 1
-	lvl = 1 
-
-	subList = [(0,u)]
-	uriDict = {u: 0}
-	while lvl <= int(depth):
-		stmtList, subList, i, uriDict = convert(subList,g,classes,i,uriDict)
+	stmtList = convert(rdfInput)
 		
-		for stmt in stmtList:
-			stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
-			stmt = stmt.replace('(["<','([').replace('>"])','])')
-			out.write(stmt+'\n')
-		lvl += 1
+	for stmt in stmtList:
+		stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
+		stmt = stmt.replace('(["<','([').replace('>"])','])')
+		out.write(stmt+'\n')
 
 # Main function to convert a RDF turtle files to Mermaid, but only the classes represented, without the instances,
 # by replacing the uri with the classes in Mermaid statements.
-def ontology(rdfInput, mmdOutput, uri, depth):
+def ontology(rdfInput, mmdOutput):
 	template = open("./src/templates/ontology.mmd", "r", encoding="utf-8")
 	read = template.read()
 	out = open('./mmd/{}'.format(mmdOutput), "w", encoding="utf-8")
 	out.write(read)
 
-	g = Graph()
-	g.parse('./rdf/{}'.format(rdfInput) , format="turtle")
-
-	classes = classDict()
-
-	u = URIRef(uri)
-
-	i = 1
-	lvl = 1
-
-	subList = [(0,u)]
-	uriDict = {u: 0}
 	uriType = {}
 	statements = []
-	while lvl <= int(depth):
-		stmtList, subList, i, uriDict = convert(subList,g,classes,i, uriDict)
-		for stmt in stmtList:
-			stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
-			stmt = stmt.replace('(["<','([').replace('>"])','])')
-						
-			date = re.findall('\(\[".*\^xsd:dateTime"]\)', stmt)
-			lit = re.findall('\(\["\'\'.*\'\'.*"]\)', stmt)
-			if date:
-				stmt = stmt.replace(date[0], '[xsd:dateTime]')
-			elif lit:
-				stmt = stmt.replace(lit[0], '[rdfs:Literal]')
-			if 'rdf:type' in stmt:
-				inst = re.findall('\(\[.*:.*\)', stmt)[0] # get the uri part
-				clType = re.findall('\["crm:.*"]:::.*', stmt)[0] # get the class part
-				# add to the uriType dict the uri part as the key, and the class part as the value
-				# so the class part will replace the uri part in the for loop below
-				uriType[inst] = clType
-			elif not 'rdfs:label' in stmt:
-				statements.append(stmt)
-		lvl += 1
+	
+	stmtList = convert(rdfInput)
+	for stmt in stmtList:
+		stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
+		stmt = stmt.replace('(["<','([').replace('>"])','])')
+					
+		date = re.findall('\(\[".*\^xsd:dateTime"]\)', stmt)
+		lit = re.findall('\(\["\'\'.*\'\'.*"]\)', stmt)
+		if date:
+			stmt = stmt.replace(date[0], '[xsd:dateTime]')
+		elif lit:
+			stmt = stmt.replace(lit[0], '[rdfs:Literal]')
+		if 'rdf:type' in stmt:
+			inst = re.findall('\(\[.*:.*\)', stmt)[0] # get the uri part
+			clType = re.findall('\["crm:.*"]:::.*', stmt)[0] # get the class part
+			# add to the uriType dict the uri part as the key, and the class part as the value
+			# so the class part will replace the uri part in the for loop below
+			uriType[inst] = clType
+		elif not 'rdfs:label' in stmt:
+			statements.append(stmt)
 
 	for stmt in statements:
 		key1 = re.findall('\(\[.*:.*\) ', stmt)[0].split(' ')[0]
@@ -251,15 +234,12 @@ def ontology(rdfInput, mmdOutput, uri, depth):
 		out.write(stmt+'\n')
 
 
-def main(Type, rdf, mmd, uri, depth):
-	try:
-		if Type == 'instance':
-			instance(rdf, mmd, uri, depth)
-		elif Type == 'ontology':
-			ontology(rdf, mmd, uri, depth)
-		print('Success! Your output file {} is located in folder /mmd'.format(mmd))
-	except:
-		pass
+def main(Type, rdf, mmd):
+	if Type == 'instance':
+		instance(rdf, mmd)
+	elif Type == 'ontology':
+		ontology(rdf, mmd)
+	print('Success! Your output file {} is located in folder /mmd'.format(mmd))
 
 # argparse arguments
 def parse_args():
@@ -268,15 +248,13 @@ def parse_args():
 	parser.add_argument("Type", help='The type of the diagram', choices=['instance', 'ontology'])
 	parser.add_argument("rdf", help='RDF input filename')
 	parser.add_argument("mmd", help='Mermaid output filename')
-	parser.add_argument("uri", help='URI of the first node of the graph, e.g. URI of a E39_Actor')
-	parser.add_argument("depth", help='The depth/level of the diagram, e.g. 4, 5')
 
 	args = parser.parse_args()
 	return args
 
 if __name__ == '__main__':
 	args = parse_args()
-	main(args.Type, args.rdf, args.mmd, args.uri, args.depth)
+	main(args.Type, args.rdf, args.mmd)
 
 
 

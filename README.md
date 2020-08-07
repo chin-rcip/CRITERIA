@@ -2,7 +2,7 @@
 
 **C**idoc c**R**m **I**n **T**urtle m**ER**maid d**I**agr**A**ms (CRITERIA) is a Python tool that converts RDF Turtle files (based on [CIDOC CRM model](http://www.cidoc-crm.org/)) into [Mermaid](https://mermaid-js.github.io/mermaid/#/) markdown to generate (flowchart) diagrams.
 
-The tool can generate two types of diagrams using the same Turtle file:
+The tool can generate two types of diagrams using the same Turtle file (which must always contain instances):
 * One renders all **instances**, e.g. URIs, dateTime, Literal values
 * The other renders only classes, i.e. the **ontology** of the pattern.
 
@@ -15,10 +15,10 @@ Recommended browsers for Mermaid Live Editor:
 Below is an example using CHIN's Birth/Death of People pattern:
 
 ##### RDF
-* [Test.ttl](/rdf/Test.ttl)
+* [BirthDeath_Fortin.ttl](/rdf/BirthDeath_Fortin.ttl)
 
 ##### Diagram with instances
-![Birth/Death of People pattern with instances](/docs/images/BirthDeathInst.png)
+![Birth/Death of People pattern with instances](/docs/images/BirthDeath_Fortin.png)
 
 ##### Ontology representation
 ![Ontology of Birth/Death of People pattern ](/docs/images/BirthDeathOnto.png)
@@ -35,24 +35,23 @@ The following programming language versions of are necessary to run this tool.
 ## Usage
 
 ### criteria
-The main python script is **`criteria.py`**, which requires **five** arguments.
+The main python script is **`criteria.py`**, which requires **three** arguments.
 |Argument|Description|
 |--|--|
 |Type | Type of the diagram; the values must be either **`instance`** or **`ontology`**|
-|rdf|  RDF Turtle input filename (e.g. `Test.ttl`); TTL files **must be stored** in the folder `/rdf`|
-|mmd|  Mermaid output filename (e.g. `instanceTest.mmd`)|
-|uri|  URI of the first node of the graph, which is expected to be at the top of the diagram (e.g. in the above example, the first node is the URI of E21_Person `https://www.chin-rcip/e39/0001`)|
-|depth|  The depth/level of the diagram (e.g. `4` or `5`)|
+|rdf|  RDF Turtle input filename (e.g. `BirthDeath_Fortin.ttl`); TTL files **must be stored** in the folder `/rdf`|
+|mmd|  Mermaid output filename (e.g. `BirthDeath_Fortin.mmd`)|
 
-For example, to generate a diagram rendering instances using the `Test.ttl` file in `./rdf` folder, the command is as follows:
+For example, to generate a diagram rendering instances using the `BirthDeath_Fortin.ttl` file in `./rdf` folder, the command is as follows:
 ```shell
-$  python criteria.py instance Test.ttl instanceTest.mmd https://www.rdm.net/person/0001 5
+$  python criteria.py instance BirthDeath_Fortin.ttl BirthDeath_Fortin.mmd
 ```
 ### rdf
 RDF files used to generate diagrams must be stored in the **`/rdf`** folder.
 
 ### mmd
 Mermaid files (`.mmd`) are outputed and stored in the **`/mmd`** folder.
+> Note: While processing the triples, the script would grab all of them randomly, meaning user would not have much control about the order of statements in the .mmd. However, it also means that running the script over the same Turtle file would generate different Mermaid files (i.e. different order of statements), meaning different graphs (i.e. different positions of the nodes).
 
 ### src
 The **`/src`** folder contains resources used by the main script.
@@ -71,7 +70,7 @@ classDef Temporal_Entity_URI fill:#99f1ff,stroke:#000000;
 > :warning: At the moment, you can *ONLY edit the colors* in the files, but **DO NOT change the *name of the files* or the *name of the classes* !**
 
 #### /ontologies
-This **`ontologies`** folder contains the ontology files used in the script. Currently it contains the `.rdfs` files of main [CIDOC CRM (v6.2.1)](http://www.cidoc-crm.org/Version/version-6.2.1), [FRBRoo (v2.4)](http://www.cidoc-crm.org/frbroo/ModelVersion/frbroo-v.-2.4), and [CRMpc (v1.1)](http://www.cidoc-crm.org/Version/version-6.2).
+This **`ontologies`** folder contains the ontology files used in the script. Currently it contains the `.rdfs` files of main [CIDOC CRM (v6.2.1)](http://www.cidoc-crm.org/Version/version-6.2.1), [FRBRoo (v2.4)](http://www.cidoc-crm.org/frbroo/ModelVersion/frbroo-v.-2.4), [CRMpc (v1.1)](http://www.cidoc-crm.org/Version/version-6.2), and CRMdig (v3.2.2) (retrieved from [FORTH's 3M](https://isl.ics.forth.gr/3M/)).
 > :warning: Make sure that the classes in the `.rdfs` **match** the classes used in the `.ttl`
 > For example, if your `.ttl` uses `E24_Physical_Human-Made_Thing` but the ontology uses `E24_Physical_Man-Made_Thing` the ontology file must be edited accordingly.
 
