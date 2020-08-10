@@ -79,3 +79,9 @@ This **`ontologies`** folder contains the ontology files used in the script. Cur
 - `classes`: a list object storing the main CIDOC CRM classes that are to be assigned color codes.
 - `onto`: a dictionary object storing the filenames of the ontologies used by the script (i.e. the `.rdfs` files in the folder `/ontologies`).
 > :warning: If you replace the `.rdfs` in the folder `/ontologies` with an updated file, or rename it, **the values** in the `onto` dictionary must be updated accordingly.
+
+## License
+
+CRITERIA is under the [MIT License](https://github.com/chin-rcip/CRITERIA/blob/master/LICENSE). To meet the attribution requirement of this license, you must must indicate the copyright holder using the following:
+
+> Copyright (c) 2020 Canadian Heritage Information Network, Canadian Heritage, Government of Canada - Réseau Canadien d'information sur le patrimoine, Patrimoine canadien, Gouvernement du Canada
