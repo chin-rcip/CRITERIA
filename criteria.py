@@ -217,7 +217,8 @@ def ontology(rdfInput, mmdOutput):
 			stmt = stmt.replace(lit[0], '[rdfs:Literal]')
 		if 'rdf:type' in stmt:
 			inst = re.findall('\(\[.*:.*\)', stmt)[0] # get the uri part
-			clType = re.findall('\["crm:.*"]:::.*', stmt)[0] # get the class part
+			clType = re.findall('\[".*"]:::.*', stmt)[0] # get the class part
+			print(clType)
 			# add to the uriType dict the uri part as the key, and the class part as the value
 			# so the class part will replace the uri part in the for loop below
 			uriType[inst] = clType
