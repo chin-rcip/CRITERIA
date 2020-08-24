@@ -48,6 +48,11 @@ $  python criteria.py instance BirthDeath_Fortin.ttl BirthDeath_Fortin.mmd
 ```
 ### rdf
 RDF files used to generate diagrams must be stored in the **`/rdf`** folder.
+> :warning: At the moment, please use the following prefixes in your Turtle file:
+> - **crm**: <http://www.cidoc-crm.org/cidoc-crm/>
+> - **frbroo**: <http://iflastandards.info/ns/fr/frbr/frbroo/>
+> - **crmdig**: <http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/>
+> - **aat**: <http://vocab.getty.edu/aat/>
 
 ### mmd
 Mermaid files (`.mmd`) are outputed and stored in the **`/mmd`** folder.
