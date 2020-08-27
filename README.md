@@ -1,8 +1,8 @@
 # CRITERIA
 
-**C**idoc c**R**m **I**n **T**urtle m**ER**maid d**I**agr**A**ms (CRITERIA) is a Python tool that converts RDF Turtle files (based on [CIDOC CRM model](http://www.cidoc-crm.org/)) into [Mermaid](https://mermaid-js.github.io/mermaid/#/) markdown to generate (flowchart) diagrams.
+**C**idoc c**R**m **I**n **T**riples m**ER**maid d**I**agr**A**ms (CRITERIA) is a Python tool that converts RDF files (based on [CIDOC CRM model](http://www.cidoc-crm.org/)) into [Mermaid](https://mermaid-js.github.io/mermaid/#/) markdown to generate (flowchart) diagrams.
 
-The tool can generate two types of diagrams using the same Turtle file (which must always contain instances):
+The tool can generate two types of diagrams using the same RDF file (which must always contain instances):
 * One renders all **instances**, e.g. URIs, dateTime, Literal values
 * The other renders only classes, i.e. the **ontology** of the pattern.
 
@@ -53,7 +53,7 @@ RDF files used to generate diagrams must be stored in the **`/rdf`** folder.
 
 ### mmd
 Mermaid files (`.mmd`) are outputed and stored in the **`/mmd`** folder.
-> Note: While processing the triples, the script would grab all of them randomly, meaning user would not have much control about the order of statements in the .mmd. However, it also means that running the script over the same Turtle file would generate different Mermaid files (i.e. different order of statements), meaning different graphs (i.e. different positions of the nodes).
+> Note: While processing the triples, the script would grab all of them randomly, meaning user would not have much control about the order of statements in the .mmd. However, it also means that running the script over the same RDF file would generate different Mermaid files (i.e. different order of statements), meaning different graphs (i.e. different positions of the nodes).
 
 ### src
 The **`/src`** folder contains resources used by the main script.
