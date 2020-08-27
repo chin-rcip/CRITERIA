@@ -1,5 +1,5 @@
 import rdflib
-from rdflib import Graph, URIRef, Namespace
+from rdflib import Graph, URIRef, Namespace, util
 from rdflib.namespace import NamespaceManager, RDFS, RDF, XSD
 import re
 import sys
@@ -11,20 +11,20 @@ from pprint import pprint
 # Function to build a dictionary of an ontology's classes and their superclasses.
 # For instances, the returned object (clss) would look like this:
 # 	clss = {
-# 			'crm:E21_Person': ['crm:E39_Actor',
-# 	                    'crm:E20_Biological_Object',
-# 	                    'crm:E19_Physical_Object',
-# 	                    'crm:E18_Physical_Thing',
-# 	                    'crm:E72_Legal_Object',
-# 	                    'crm:E92_Spacetime_Volume',
-# 	                    'crm:E1_CRM_Entity'],
-#  			'crm:E22_Human-Made_Object': ['crm:E19_Physical_Object',
-# 	                           'crm:E24_Physical_Human-Made_Thing',
-# 	                           'crm:E18_Physical_Thing',
-# 	                           'crm:E71_Human-Made_Thing',
-# 	                           'crm:E70_Thing',
-# 	                           'crm:E77_Persistent_Item',
-# 	                           'crm:E1_CRM_Entity']}
+# 			'E21_Person': ['E39_Actor',
+# 	                    'E20_Biological_Object',
+# 	                    'E19_Physical_Object',
+# 	                    'E18_Physical_Thing',
+# 	                    'E72_Legal_Object',
+# 	                    'E92_Spacetime_Volume',
+# 	                    'E1_CRM_Entity'],
+#  			'E22_Human-Made_Object': ['E19_Physical_Object',
+# 	                           'E24_Physical_Human-Made_Thing',
+# 	                           'E18_Physical_Thing',
+# 	                           'E71_Human-Made_Thing',
+# 	                           'E70_Thing',
+# 	                           'E77_Persistent_Item',
+# 	                           'E1_CRM_Entity']}
 
 def superClass(ontology, prefix, baseURL):
 	g = Graph()
@@ -44,22 +44,22 @@ def superClass(ontology, prefix, baseURL):
 			if l == 0:
 				sc = c
 			for spc in g.objects(sc, RDFS.subClassOf):
-				spcList.append(spc.n3(g.namespace_manager))
+				spcList.append(spc.n3(g.namespace_manager).split(':')[1])
 				sc = spc
 			l += 1
-		clss[c.n3(g.namespace_manager)] = spcList
+		clss[c.n3(g.namespace_manager).split(':')[1]] = spcList
 	return clss
 
 
 # Function to build a dictionary of an ontology's classes and their Mermaid classes, i.e. main CIDOC-CRM classes.
 # For instances, the returned object (d) would look like this:
-	# d = {'crm:E10_Transfer_of_Custody': 'Temporal_Entity',
-	# 	 'crm:E11_Modification': 'Temporal_Entity',
-	# 	 'crm:E12_Production': 'Temporal_Entity',
-	# 	 'crm:E1_CRM_Entity': 'CRM_Entity',
-	# 	 'crm:E20_Biological_Object': 'Physical_Thing',
-	# 	 'crm:E21_Person': 'Actor',
-	# 	 'crm:E22_Human-Made_Object': 'Physical_Thing'}
+	# d = {'E10_Transfer_of_Custody': 'Temporal_Entity',
+	# 	 'E11_Modification': 'Temporal_Entity',
+	# 	 'E12_Production': 'Temporal_Entity',
+	# 	 'E1_CRM_Entity': 'CRM_Entity',
+	# 	 'E20_Biological_Object': 'Physical_Thing',
+	# 	 'E21_Person': 'Actor',
+	# 	 'E22_Human-Made_Object': 'Physical_Thing'}
 
 def classDict():
 	d = {}
@@ -68,19 +68,19 @@ def classDict():
 	cidocClass = superClass(source.onto['crm'], 'crm', 'http://www.cidoc-crm.org/cidoc-crm/')
 	for sc in cidocClass:
 		for spc in cidocClass[sc]:
-			spc = spc.split(':')[1]
+			# spc = spc.split(':')[1]
 			if spc in classes:
 				d[sc] = '_'.join(spc.split('_')[1:])
 				break 
 				# exit loop after the first superclass is found in the classes list.
-				# e.g. for 'crm:E21_Person' the first superclass found in the classes list
+				# e.g. for 'E21_Person' the first superclass found in the classes list
 				# is E39_Actor
 	# FRBRoo
 	frbrClass = superClass(source.onto['frbroo'], 'frbroo', 'http://iflastandards.info/ns/fr/frbr/frbroo/')
 	for fr in frbrClass:
 		crmSpc = frbrClass[fr][-1] # retrieve the last/highest cidoc-crm superclass of a frbroo class.
 		for spc in cidocClass[crmSpc]:
-			spc = spc.split(':')[1]
+			# spc = spc.split(':')[1]
 			if spc in classes:
 				d[fr] = '_'.join(spc.split('_')[1:])
 				break 
@@ -89,7 +89,7 @@ def classDict():
 	for dig in digClass:
 		crmSpc = digClass[dig][-1] # retrieve the last/highest cidoc-crm superclass of a crmdig class.
 		for spc in cidocClass[crmSpc]:
-			spc = spc.split(':')[1]
+			# spc = spc.split(':')[1]
 			if spc in classes:
 				d[dig] = '_'.join(spc.split('_')[1:])
 				break 
@@ -99,24 +99,21 @@ def classDict():
 		d[pc] = 'PC_Classes'
 
 	for c in classes:
-		d['crm:'+c] = '_'.join(c.split('_')[1:])
-
+		# d['crm:'+c] = '_'.join(c.split('_')[1:])
+		d[c] = '_'.join(c.split('_')[1:])
 	return d
 
 # Function to convert RDF triples to Mermaid statements.
 # Returns a list of statements
 def convert(rdfInput):
+	inFormat = util.guess_format(rdfInput, {'json': 'json-ld', 'jsonld': 'json-ld'})
 	g = Graph()
-	g.parse('./rdf/{}'.format(rdfInput) , format="turtle")
+	g.parse('./rdf/{}'.format(rdfInput) , format=inFormat)
 
 	classes = classDict()
 
 	objList = []
 	stmtList = []
-	crm = Namespace('http://www.cidoc-crm.org/cidoc-crm/')
-	frbroo = Namespace('http://iflastandards.info/ns/fr/frbr/frbroo/')
-	crmdig = Namespace('http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/')
-	aat = Namespace('http://vocab.getty.edu/aat/')
 
 	uriDict = {}
 	stmtList = []
@@ -129,9 +126,7 @@ def convert(rdfInput):
 		else:
 			n1 = i
 			i += 1
-			if (isinstance(s, rdflib.URIRef) and 
-				not 'crm' in s.n3(g.namespace_manager) and 
-				not 'frbroo' in s.n3(g.namespace_manager)):
+			if isinstance(s, rdflib.URIRef):
 				uriDict[s] = n1
 
 		if o in uriDict:
@@ -140,14 +135,17 @@ def convert(rdfInput):
 			n2 = i
 			i += 1
 			if (isinstance(o, rdflib.URIRef) and 
-				not 'crm' in o.n3(g.namespace_manager) and 
-				not 'frbroo' in o.n3(g.namespace_manager)):
+				p != 'rdf:type' ):
 				uriDict[o] = n2
 
 		# check whether the object of the triple is a key in the returned dict of classDict
 		# to retrieve the Mermaid class, i.e check for the object of the property rdf:type
-		if str(o.n3(g.namespace_manager)) in classes:
-			cl = classes[str(o.n3(g.namespace_manager))]
+		if p == 'rdf:type':
+			c = o.n3(g.namespace_manager).split(':')[1]
+			if c in classes:
+				cl = classes[c]
+			else:
+				cl = 'Default'
 			if not s in doubleInst:
 				doubleInst.append(s)
 				uriCl = cl+'_URI'
@@ -217,11 +215,19 @@ def ontology(rdfInput, mmdOutput):
 			stmt = stmt.replace(lit[0], '[rdfs:Literal]')
 		if 'rdf:type' in stmt:
 			inst = re.findall('\(\[.*:.*\)', stmt)[0] # get the uri part
-			clType = re.findall('\[".*"]:::.*', stmt)[0] # get the class part
-			print(clType)
+			clType = '[' + re.findall('\|.*\[".*"\].*', stmt)[0].split('[')[1] # get the class part
 			# add to the uriType dict the uri part as the key, and the class part as the value
 			# so the class part will replace the uri part in the for loop below
-			uriType[inst] = clType
+			if not inst in uriType:
+				uriType[inst] = clType
+			# else if uri is already in uriType, indicating multi instantiations,
+			# update the value of the 'inst' key by append the second class with <br> betwwen them
+			# so that all classes are in the same box/node
+			else:
+				clType = clType.split('["')[1].split(']')[0]
+				multi = uriType[inst].split('"]')[0] + '<br>' + clType + ']:::Multi'
+				uriType[inst] = multi
+				
 		elif not 'rdfs:label' in stmt:
 			statements.append(stmt)
 
@@ -256,7 +262,4 @@ def parse_args():
 if __name__ == '__main__':
 	args = parse_args()
 	main(args.Type, args.rdf, args.mmd)
-
-
-
 

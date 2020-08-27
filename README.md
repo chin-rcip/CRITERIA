@@ -9,8 +9,8 @@ The tool can generate two types of diagrams using the same Turtle file (which mu
 The markdown is intended to be incorporated into an HTML page; however, a PNG version can be downloaded from [Mermaid Live Editor](https://mermaid-js.github.io/mermaid-live-editor) by simply pasting the entire markdown file into the code box. 
 
 Recommended browsers for Mermaid Live Editor:
-* Mac: Safari, Chrome, Firefox
-* Windows: Firefox
+* **Mac**: Safari, Chrome, Firefox
+* **Windows**: Firefox
 
 Below is an example using CHIN's Birth/Death of People pattern:
 
@@ -31,6 +31,7 @@ It will run in console; see [Usage](#usage) for further instructions.
 The following programming language versions of are necessary to run this tool.
 - Python 3.7.0
 - [rdflib 5.0.0](https://rdflib.readthedocs.io/en/stable/gettingstarted.html)
+- **UPDATE**: [rdflib-jsonld 0.5.0](https://github.com/RDFLib/rdflib-jsonld)
 
 ## Usage
 
@@ -39,7 +40,7 @@ The main python script is **`criteria.py`**, which requires **three** arguments.
 |Argument|Description|
 |--|--|
 |Type | Type of the diagram; the values must be either **`instance`** or **`ontology`**|
-|rdf|  RDF Turtle input filename (e.g. `BirthDeath_Fortin.ttl`); TTL files **must be stored** in the folder `/rdf`|
+|rdf|  RDF input filename (e.g. `BirthDeath_Fortin.ttl`); input files **must be stored** in the folder `/rdf`<br>>>**Notes**: The tool can now process **other input formats** besides **`Turtle`**, such as **`NTriples`**, **`RDF/XML`**, **`Trig`**, **`JSON-LD`**, etc.|
 |mmd|  Mermaid output filename (e.g. `BirthDeath_Fortin.mmd`)|
 
 For example, to generate a diagram rendering instances using the `BirthDeath_Fortin.ttl` file in `./rdf` folder, the command is as follows:
@@ -48,11 +49,7 @@ $  python criteria.py instance BirthDeath_Fortin.ttl BirthDeath_Fortin.mmd
 ```
 ### rdf
 RDF files used to generate diagrams must be stored in the **`/rdf`** folder.
-> :warning: At the moment, please use the following prefixes in your Turtle file:
-> - **crm**: <http://www.cidoc-crm.org/cidoc-crm/>
-> - **frbroo**: <http://iflastandards.info/ns/fr/frbr/frbroo/>
-> - **crmdig**: <http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/>
-> - **aat**: <http://vocab.getty.edu/aat/>
+> **UPDATE**: The tool can now process **prefixes defined by users**.
 
 ### mmd
 Mermaid files (`.mmd`) are outputed and stored in the **`/mmd`** folder.
@@ -62,7 +59,8 @@ Mermaid files (`.mmd`) are outputed and stored in the **`/mmd`** folder.
 The **`/src`** folder contains resources used by the main script.
 
 #### /templates 
-The **`templates`** folder contains the templates used to generate the `.mmd` output files. The templates have pre-defined classes for styling: one for visualising instances (`instance.mmd`), the other for visualising only the ontology (`ontology.mmd`).
+The **`templates`** folder contains the templates used to generate the `.mmd` output files. The templates have pre-defined classes for styling: one for visualising instances (`instance.mmd`), the other for visualising only the ontology (`ontology.mmd`). The default styling is based on the color scheme of CIDOC CRM (as proposed by George Bruseker).
+
 For example,
 ```
 graph TD
