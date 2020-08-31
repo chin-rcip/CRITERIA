@@ -106,7 +106,11 @@ def classDict():
 # Function to convert RDF triples to Mermaid statements.
 # Returns a list of statements
 def convert(rdfInput):
-	inFormat = util.guess_format(rdfInput, {'json': 'json-ld', 'jsonld': 'json-ld'})
+	if '.json' in rdfInput or '.jsonld' in rdfInput:
+		inFormat = util.guess_format(rdfInput, {'json': 'json-ld', 'jsonld': 'json-ld'})
+	else:
+		inFormat = util.guess_format(rdfInput)
+		
 	g = Graph()
 	g.parse('./rdf/{}'.format(rdfInput) , format=inFormat)
 
