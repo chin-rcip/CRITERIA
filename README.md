@@ -40,20 +40,25 @@ The main python script is **`criteria.py`**, which requires **three** arguments.
 |Argument|Description|
 |--|--|
 |Type | Type of the diagram; the values must be either **`instance`** or **`ontology`**|
-|rdf|  RDF input filename (e.g. `BirthDeath_Fortin.ttl`); input files **must be stored** in the folder `/rdf`<br>>>**Notes**: The tool can now process **other input formats** besides **`Turtle`**, such as **`NTriples`**, **`RDF/XML`**, **`Trig`**, **`JSON-LD`**, etc.|
-|mmd|  Mermaid output filename (e.g. `BirthDeath_Fortin.mmd`)|
+|rdf|  RDF input including the full or relative path to the input file (e.g. `./rdf/BirthDeath_Fortin.ttl`).<br>>>**UPDATE**:<br>- The tool can now process **other input formats** besides **`Turtle`**, such as **`NTriples`**, **`RDF/XML`**, **`Trig`**, **`JSON-LD`**, etc.<br>- RDF files is NO LONGER needed to be  stored in the folder `/rdf`. User can now provide their own **input path**, `/User/username/path_to_directory/input.ttl`.|
+|mmd|  Mermaid output including the full or relative path to the output file (e.g. `./mmd/BirthDeath_Fortin.mmd`).<br>>>**UPDATE**: User can now provide their own **output path**, `/User/username/path_to_directory/output.mmd`.|
 
-For example, to generate a diagram rendering instances using the `BirthDeath_Fortin.ttl` file in `./rdf` folder, the command is as follows:
+For example, to generate a diagram rendering instances using the `BirthDeath_Fortin.ttl` file in `./rdf` folder and the mermaid output to be stored in folder `./mmd`, the command is as follows:
 ```shell
-$  python criteria.py instance BirthDeath_Fortin.ttl BirthDeath_Fortin.mmd
+$  python criteria.py instance ./rdf/BirthDeath_Fortin.ttl ./mmd/BirthDeath_Fortin.mmd
 ```
 ### rdf
-RDF files used to generate diagrams must be stored in the **`/rdf`** folder.
-> **UPDATE**: The tool can now process **prefixes defined by users**.
+This folder contains RDF files used for testing.
+> **UPDATE**:
+> - The tool can now process **prefixes defined by users**.
+> - RDF files are no longer needed be stored in the **`/rdf`** folder.
 
 ### mmd
-Mermaid files (`.mmd`) are outputed and stored in the **`/mmd`** folder.
-> Note: While processing the triples, the script would grab all of them randomly, meaning user would not have much control about the order of statements in the .mmd. However, it also means that running the script over the same RDF file would generate different Mermaid files (i.e. different order of statements), meaning different graphs (i.e. different positions of the nodes).
+This folder contains mermaid outputs generated during testing. 
+> **UPDATE**:
+> - Output files are no longer stored in the **`/mmd`** folder by default. User can now provide their own output path.
+>
+> **Note**: While processing the triples, the script would grab all of them randomly, meaning user would not have much control about the order of statements in the .mmd. However, it also means that running the script over the same RDF file would generate slightly different Mermaid files (i.e. different order of statements), meaning different graphs (i.e. different positions of the nodes). However, the top node's position will remain the same.
 
 ### src
 The **`/src`** folder contains resources used by the main script.

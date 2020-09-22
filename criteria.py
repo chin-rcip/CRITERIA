@@ -5,7 +5,6 @@ import re
 import sys
 import argparse
 from src import source
-from pprint import pprint
 
 
 # Function to build a dictionary of an ontology's classes and their superclasses.
@@ -112,7 +111,7 @@ def convert(rdfInput):
 		inFormat = util.guess_format(rdfInput)
 		
 	g = Graph()
-	g.parse('./rdf/{}'.format(rdfInput) , format=inFormat)
+	g.parse(rdfInput, format=inFormat)
 
 	classes = classDict()
 
@@ -185,7 +184,7 @@ def convert(rdfInput):
 def instance(rdfInput, mmdOutput):
 	template = open("./src/templates/instance.mmd", "r", encoding="utf-8")
 	read = template.read()
-	out = open('./mmd/{}'.format(mmdOutput), "w", encoding="utf-8")
+	out = open(mmdOutput, "w", encoding="utf-8")
 	out.write(read)
 
 	stmtList = convert(rdfInput)
@@ -200,7 +199,7 @@ def instance(rdfInput, mmdOutput):
 def ontology(rdfInput, mmdOutput):
 	template = open("./src/templates/ontology.mmd", "r", encoding="utf-8")
 	read = template.read()
-	out = open('./mmd/{}'.format(mmdOutput), "w", encoding="utf-8")
+	out = open(mmdOutput, "w", encoding="utf-8")
 	out.write(read)
 
 	uriType = {}
@@ -250,15 +249,15 @@ def main(Type, rdf, mmd):
 		instance(rdf, mmd)
 	elif Type == 'ontology':
 		ontology(rdf, mmd)
-	print('Success! Your output file {} is located in folder /mmd'.format(mmd))
+	print('Success!')
 
 # argparse arguments
 def parse_args():
 	parser = argparse.ArgumentParser(description='Convert CidocCRM-based RDF to Mermaid')
 
 	parser.add_argument("Type", help='The type of the diagram', choices=['instance', 'ontology'])
-	parser.add_argument("rdf", help='RDF input filename')
-	parser.add_argument("mmd", help='Mermaid output filename')
+	parser.add_argument("rdf", help='RDF input filename including path_to_file')
+	parser.add_argument("mmd", help='Mermaid output filename including path_to_file')
 
 	args = parser.parse_args()
 	return args
