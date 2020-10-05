@@ -8,7 +8,7 @@ The tool can generate two types of diagrams using the same RDF file (which must 
 
 The markdown is intended to be incorporated into an HTML page; however, a PNG version can be downloaded from [Mermaid Live Editor](https://mermaid-js.github.io/mermaid-live-editor) by simply pasting the entire markdown file into the code box. 
 
-**UPDATE** A [live demo](http://chinrcip.pythonanywhere.com/) of CRITERIA is now avaliable!
+**UPDATE** A [live demo](http://chinrcip.pythonanywhere.com/) of CRITERIA is now available!
 
 Recommended browsers for Mermaid Live Editor & Live demo:
 * **Mac**: Safari, Chrome, Firefox
