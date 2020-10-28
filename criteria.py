@@ -191,7 +191,8 @@ def instance(rdfInput, mmdOutput):
 		
 	for stmt in stmtList:
 		stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
-		stmt = stmt.replace('(["<','([').replace('>"])','])')
+		stmt = stmt.replace('(["<','(["').replace('>"])','"])')
+		stmt = stmt.replace('|<','|"').replace('>|','"|').replace('--"','-->')
 		out.write(stmt+'\n')
 
 # Main function to convert a RDF turtle files to Mermaid, but only the classes represented, without the instances,
