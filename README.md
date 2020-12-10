@@ -98,4 +98,4 @@ CRITERIA is under the [MIT License](https://github.com/chin-rcip/CRITERIA/blob/m
 
 ## Contact us
 
-For questions or comments regarding CRITERIA, please consult the [Issues](https://github.com/chin-rcip/CRITERIA/issues) section (and open an Issue if it is relevant) or contact us by email at the following address: [pch.RCIP-CHIN.pch@canada.ca](pch.RCIP-CHIN.pch@canada.ca)
+For questions or comments regarding CRITERIA, please consult the [Issues](https://github.com/chin-rcip/CRITERIA/issues) section (and open an Issue if it is relevant) or contact us by email at the following address: [pch.RCIP-CHIN.pch@canada.ca](mailto:pch.RCIP-CHIN.pch@canada.ca)
