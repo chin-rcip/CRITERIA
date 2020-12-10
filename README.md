@@ -95,3 +95,7 @@ This **`ontologies`** folder contains the ontology files used in the script. Cur
 CRITERIA is under the [MIT License](https://github.com/chin-rcip/CRITERIA/blob/master/LICENSE). To meet the attribution requirement of this license, you must must indicate the copyright holder using the following:
 
 > Copyright (c) 2020 Canadian Heritage Information Network, Canadian Heritage, Government of Canada - Réseau Canadien d'information sur le patrimoine, Patrimoine canadien, Gouvernement du Canada
+
+## Contact us
+
+For questions or comments regarding CRITERIA, please consult the [Issues](https://github.com/chin-rcip/CRITERIA/issues) section (and open an Issue if it is relevant) or contact us by email at the following address: [pch.RCIP-CHIN.pch@canada.ca](pch.RCIP-CHIN.pch@canada.ca)
