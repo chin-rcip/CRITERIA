@@ -101,10 +101,13 @@ CRITERIA is under the [MIT License](https://github.com/chin-rcip/CRITERIA/blob/m
 CHIN would like to highlight the projects and institutions that use CRITERIA, thanks to which CHIN can improve the tool. If you use CRITERIA and your project is not listed below, do not hesitate to [contact us](#contact-us).
 
 Project: [Reference Data Models](http://docs.swissartresearch.net/)
+
 Organization: [Swiss Art Research Infrastructure, University of Zurich](http://swissartresearch.net/)
+
 Description:
 >With the term Reference Data Models we denote a re-usable template of common descriptors grounded on the analysis of select sources determined to be of relevance to the entity being modelled.
 Each available template is a collection of descriptors for a specific entity, and each descriptor is mapped to the CIDOC-CRM ontology. The aim is manifold: to provide reference implementations to be used by institutions and projects not familiar with CIDOC-CRM, to create usable guidelines to generate input interfaces for born-CRM semantic data and to guide mapping processes from extant sources into the CRM conformant reference model using tools such as 3M.
+
 [Source](https://docs.swissartresearch.net/)
 
 ## Contact us
