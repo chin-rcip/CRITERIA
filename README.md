@@ -104,11 +104,8 @@ Project: [Reference Data Models](http://docs.swissartresearch.net/)
 
 Organization: [Swiss Art Research Infrastructure, University of Zurich](http://swissartresearch.net/)
 
-Description:
->With the term Reference Data Models we denote a re-usable template of common descriptors grounded on the analysis of select sources determined to be of relevance to the entity being modelled.
-Each available template is a collection of descriptors for a specific entity, and each descriptor is mapped to the CIDOC-CRM ontology. The aim is manifold: to provide reference implementations to be used by institutions and projects not familiar with CIDOC-CRM, to create usable guidelines to generate input interfaces for born-CRM semantic data and to guide mapping processes from extant sources into the CRM conformant reference model using tools such as 3M.
-
-[Source](https://docs.swissartresearch.net/)
+Description ([Source](https://docs.swissartresearch.net/)):
+>The Semantic Reference Data Models project aims to create a series of re-usable templates of semantic pattern for facilitating the integration and querying of cultural heritage data sources. Each template is a collection of semantic patterns and it is grounded on the analysis of selected sources determined to be of relevance an entity. The developed semantic patterns are mapped to the CIDOC-CRM ontology to ensure compatibility across the heritage domain. The patterns can be used to provide reference implementations for institutions and projects not familiar with CIDOC-CRM, to create usable guidelines to generate input interfaces for born-CRM semantic data and to guide mapping processes from extant sources into the CRM conformant reference model using tools such as 3M.
 
 ## Contact us
 
