@@ -1,6 +1,6 @@
 # CRITERIA
 
-**C**idoc c**R**m **I**n **T**riples m**ER**maid d**I**agr**A**ms (CRITERIA) is a Python tool that converts RDF files (based on [CIDOC CRM model](http://www.cidoc-crm.org/)) into [Mermaid](https://mermaid-js.github.io/mermaid/#/) markdown to generate (flowchart) diagrams.
+**C**idoc c**R**m **I**n **T**riples m**ER**maid d**I**agr**A**ms (CRITERIA) is a Python tool that converts RDF files (based on the [CIDOC CRM model](http://www.cidoc-crm.org/)) into [Mermaid](https://mermaid-js.github.io/mermaid/#/) markdown to generate (flowchart) diagrams.
 
 The tool can generate two types of diagrams using the same RDF file (which must always contain instances):
 * One renders all **instances**, e.g. URIs, dateTime, Literal values
@@ -8,7 +8,7 @@ The tool can generate two types of diagrams using the same RDF file (which must 
 
 The markdown is intended to be incorporated into an HTML page; however, a PNG version can be downloaded from [Mermaid Live Editor](https://mermaid-js.github.io/mermaid-live-editor) by simply pasting the entire markdown file into the code box. 
 
-**UPDATE** A [live demo](http://chinrcip.pythonanywhere.com/) of CRITERIA is now available!
+**UPDATE** A [live demonstrator](http://chinrcip.pythonanywhere.com/) of CRITERIA is now available!
 
 Recommended browsers for Mermaid Live Editor & Live demo:
 * **Mac**: Safari, Chrome, Firefox
@@ -110,3 +110,117 @@ Description ([Source](https://docs.swissartresearch.net/)):
 ## Contact us
 
 For questions or comments regarding CRITERIA, please consult the [Issues](https://github.com/chin-rcip/CRITERIA/issues) section (and open an Issue if it is relevant) or contact us by email at the following address: [pch.RCIP-CHIN.pch@canada.ca](mailto:pch.RCIP-CHIN.pch@canada.ca)
+
+
+# CRITERIA
+
+**CRITERIA** est un outil Python permettant de convertir des fichiers RDF (basés sur le [modèle CIDOC CRM](http://www.cidoc-crm.org/)) en format markdown [Mermaid](https://mermaid-js.github.io/mermaid/#/) markdown pour générer des diagrammes.
+
+Cet outil peut générer deux types de diagrammes en utilisant un seul fichier RDF (qui doit toujours contenir des instances) :
+* Le premier type de diagramme représente toutes les **instances**, p. ex. des URI, des dates et des valeurs littérales. 
+* Le second type de diagramme représente les classes, c.-à-d. l'**ontologie** du patron conceptuel.
+
+Le markdown est prévu pour être intégré à une page HTML; une version PNG peut néanmoins être téléchargée depuis un [éditeur Mermaid](https://mermaid-js.github.io/mermaid-live-editor) en copiant l'intégralité du fichier markdown dans la boîte de code. 
+
+**MISE À JOUR** Un [démonstrateur en ligne](http://chinrcip.pythonanywhere.com/) de CRITERIA est maintenant disponible!
+
+Navigateurs recommandés pour l'éditeur Mermaid et le Démonstrateur en ligne :
+* **Mac**: Safari, Chrome, Firefox
+* **Windows**: Firefox
+
+L'exemple ci-dessous illustre le patron conceptuel du Réseau canadien d'information sur le patrimoine (RCIP) pour les naissances/décès (l'exemple n'est disponible qu'en anglais à l'heure actuelle): 
+
+##### RDF
+* [BirthDeath_Fortin.ttl](/rdf/BirthDeath_Fortin.ttl)
+
+##### Diagramme des instances
+![Birth/Death of People pattern with instances](/docs/images/BirthDeath_Fortin.png)
+
+##### Représentation de l'ontologie
+![Ontology of Birth/Death of People pattern ](/docs/images/BirthDeathOnto.png)
+
+## Installation
+L'outil peut être installé en clônant ce répertoire ou en le téléchargeant en format .zip. 
+Le fichier s'exécutera dans la console; voir [Utilisation](#utilisation) pour plus de détails sur la procédure à suivre.
+
+### Exigences techniques
+Les versions des langages de programmation suivantes sont nécessaires à l'exécution de l'outil :
+- Python 3.7.0
+- [rdflib 5.0.0](https://rdflib.readthedocs.io/en/stable/gettingstarted.html)
+- **MISE À JOUR**: [rdflib-jsonld 0.5.0](https://github.com/RDFLib/rdflib-jsonld)
+
+## Utilisation
+
+### criteria
+Le principal script python est **`criteria.py`**; il exige **trois** arguments:
+|Argument|Description|
+|--|--|
+|Type | Type du diagramme; les valeurs doivent être **`instance`** ou **`ontology`**|
+|rdf|  Entrée RDF, incluant le chemin complet ou relatif au fichier d'entrée (p. ex. `./rdf/BirthDeath_Fortin.ttl`).<br>>>**MISE À JOUR**:<br>- L'outil peut maintenant exécuter d'**autres formats** que **`Turtle`**, tels que **`NTriples`**, **`RDF/XML`**, **`Trig`**, **`JSON-LD`**, etc.<br>- Les fichiers RDF ne doivent plus nécessairement être enregistrés dans le dossier `/rdf`. L'utilisateur peut maintenant utiliser un **chemin d'entrée** qui lui est particulier : `/User/username/path_to_directory/input.ttl`.|
+|mmd|  Les données converties en Mermaid, incluant le chemin complet ou relatif au fichier extrant (p. ex. `./mmd/BirthDeath_Fortin.mmd`).<br>>>**MISE À JOUR**: L'utilisateur peut maintenant soumettre son propre **chemin extrant** : `/User/username/path_to_directory/output.mmd`.|
+
+Par exemple, pour générer un diagramme représentant les instances du fichier `BirthDeath_Fortin.ttl` se trouvant dans le dossier `./rdf` avec pour extrant un fichier mermaid `./mmd`, il faut exécuter la commande suivante :
+```shell
+$  python criteria.py instance ./rdf/BirthDeath_Fortin.ttl ./mmd/BirthDeath_Fortin.mmd
+```
+### rdf
+Ce dossier contient les fichiers RDF utilisés à des fins de tests.
+> **MISE À JOUR**:
+> - L'outil peut maintenant utiliser des **préfixes définis par l'utilisateur**.
+> - Il n'est plus nécessaire de stocker les fichiers RDF dans le dossier **`/rdf`**.
+
+### mmd
+Ce dossier contient les extrants mermaid générés par les tests. This folder contains mermaid outputs generated during testing. 
+> **MISE À JOUR**:
+> - Les fichiers RDF extrants ne sont plus stockés dans le dossier **`/mmd`** par défaut. L'utilisateur peut soumettre son propre chemin.
+>
+> **Note**: While processing the triples, the script would grab all of them randomly, meaning user would not have much control about the order of statements in the .mmd. However, it also means that running the script over the same RDF file would generate slightly different Mermaid files (i.e. different order of statements), meaning different graphs (i.e. different positions of the nodes). However, the top node's position will remain the same.
+
+### src
+Le dossier **`/src`** contient les ressources utilisées par le script principal.
+
+#### /templates 
+Le dossier **`templates`** contient les gabarits utilisés pour générer les fichiers extrants `.mmd`. Les gabarits ont des classes  de stylepré-définies : l'une pour visualiser les instances (`instance.mmd`) et l'autre pour visualiser l'ontologie (`ontology.mmd`). Le style par défaut est basé sur le thème CIDOC CRM (tel que l'a proposé George Bruseker).
+
+Par exemple :
+```
+graph TD
+classDef Literal fill:#f2f2f2,stroke:#000000;
+classDef CRM_Entity fill:#FFFFFF,stroke:#000000;
+classDef CRM_Entity_URI fill:#FFFFFF,stroke:#000000;
+classDef Temporal_Entity fill:#00C9E6, stroke:#000000;
+classDef Temporal_Entity_URI fill:#99f1ff,stroke:#000000;
+```
+> :warning: À l'heure actuelle, il est possible d'éditer *UNIQUEMENT les couleurs* dans les fichiers, veuillez ne **PAS changer le *nom des fichiers* ou le *nom des classes* !**
+
+#### /ontologies
+Le dossier **`ontologies`** contient les fichiers d'ontologie utilisés par le script. À l'heure actuelle, ce dossier contient les fichiers `.rdfs` de [CIDOC CRM (v6.2.1)](http://www.cidoc-crm.org/Version/version-6.2.1), [FRBRoo (v2.4)](http://www.cidoc-crm.org/frbroo/ModelVersion/frbroo-v.-2.4), [CRMpc (v1.1)](http://www.cidoc-crm.org/Version/version-6.2), et CRMdig (v3.2.2) (depuis l'application [3M de FORTH](https://isl.ics.forth.gr/3M/)).
+> :warning: il est crucial que les classes `.rdfs` **soient alignées** avec les classes utilisées dans le `.ttl`
+> Par exemple, si le fichier `.ttl` utilise `E24_Physical_Human-Made_Thing` mais que l'ontologie utilise `E24_Physical_Man-Made_Thing`, le fichier d'ontologie devra être édité en conséquence.
+
+#### source
+**`source.py`** est l'endroit où conserver les objets python qui doivent être importés par le script. Il contient actuellement :
+- `classes`: une liste d'objets stockant les principales classes CIDOC CRM auxquelles seront appliqués les codes de couleur.
+- `onto`: un objet-dictionnaire stockant les noms d'ontologies utilisées par le script (c.-à-d. les fichiers `.rdfs` dans le dossier `/ontologies`).
+> :warning: si vous remplacez le fichier `.rdfs` du dossier `/ontologies` par un fichier mis à jour ou si vous le renommez, les **valeurs** dans le dictionnaire `onto` doivent être mises à jour en conséquence.
+
+## Licence
+
+CRITERIA est disponible sous licence [MIT License](https://github.com/chin-rcip/CRITERIA/blob/master/LICENSE). Pour rencontrer les critères d'attribution de cette licence, vous devez désigner le détenteur des droits en utilisant la formule suivante :
+
+> Copyright (c) 2020 Canadian Heritage Information Network, Canadian Heritage, Government of Canada - Réseau Canadien d'information sur le patrimoine, Patrimoine canadien, Gouvernement du Canada
+
+## Utilisateurs de CRITERIA
+
+Le RCIP aimerait souligner les projets et institutions utilisant CRITERIA et grâce à qui l'outil peut être amélioré. Si vous utilisez CRITERIA et que votre projet n'est pas mentionné ci-dessous, n'hésitez pas à [nous contacter](#contactez-nous).
+
+Projet: [Reference Data Models](http://docs.swissartresearch.net/)
+
+Organisation: [Swiss Art Research Infrastructure, University of Zurich](http://swissartresearch.net/)
+
+Description ([Source](https://docs.swissartresearch.net/)):
+>The Semantic Reference Data Models project aims to create a series of re-usable templates of semantic pattern for facilitating the integration and querying of cultural heritage data sources. Each template is a collection of semantic patterns and it is grounded on the analysis of selected sources determined to be of relevance an entity. The developed semantic patterns are mapped to the CIDOC-CRM ontology to ensure compatibility across the heritage domain. The patterns can be used to provide reference implementations for institutions and projects not familiar with CIDOC-CRM, to create usable guidelines to generate input interfaces for born-CRM semantic data and to guide mapping processes from extant sources into the CRM conformant reference model using tools such as 3M.
+
+## Contactez-nous
+
+Pour toute question ou commentaire au sujet de  CRITERIA, veuillez consulter la section [Issues](https://github.com/chin-rcip/CRITERIA/issues) (et ouvrir une Issue si c'est pertinent) ou contactez-nous par courriel à l'adresse suivante: [pch.RCIP-CHIN.pch@canada.ca](mailto:pch.RCIP-CHIN.pch@canada.ca)
