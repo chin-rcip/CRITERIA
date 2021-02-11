@@ -8,9 +8,9 @@ The tool can generate two types of diagrams using the same RDF file (which must 
 
 The markdown is intended to be incorporated into an HTML page; however, a PNG version can be downloaded from [Mermaid Live Editor](https://mermaid-js.github.io/mermaid-live-editor) by simply pasting the entire markdown file into the code box. 
 
-**UPDATE** A [live demonstrator](http://chinrcip.pythonanywhere.com/) of CRITERIA is now available!
+If you do not want to use the script directly, a [Live Demonstrator](http://chinrcip.pythonanywhere.com/) of CRITERIA is available.
 
-Recommended browsers for Mermaid Live Editor & Live demo:
+Recommended browsers for Mermaid Live Editor & Live Demontrator:
 * **Mac**: Safari, Chrome, Firefox
 * **Windows**: Firefox
 
@@ -33,7 +33,7 @@ It will run in console; see [Usage](#usage) for further instructions.
 The following programming language versions of are necessary to run this tool.
 - Python 3.7.0
 - [rdflib 5.0.0](https://rdflib.readthedocs.io/en/stable/gettingstarted.html)
-- **UPDATE**: [rdflib-jsonld 0.5.0](https://github.com/RDFLib/rdflib-jsonld)
+- [rdflib-jsonld 0.5.0](https://github.com/RDFLib/rdflib-jsonld)
 
 ## Usage
 
@@ -42,8 +42,8 @@ The main python script is **`criteria.py`**, which requires **three** arguments.
 |Argument|Description|
 |--|--|
 |Type | Type of the diagram; the values must be either **`instance`** or **`ontology`**|
-|rdf|  RDF input including the full or relative path to the input file (e.g. `./rdf/BirthDeath_Fortin.ttl`).<br>>>**UPDATE**:<br>- The tool can now process **other input formats** besides **`Turtle`**, such as **`NTriples`**, **`RDF/XML`**, **`Trig`**, **`JSON-LD`**, etc.<br>- RDF files is NO LONGER needed to be  stored in the folder `/rdf`. User can now provide their own **input path**, `/User/username/path_to_directory/input.ttl`.|
-|mmd|  Mermaid output including the full or relative path to the output file (e.g. `./mmd/BirthDeath_Fortin.mmd`).<br>>>**UPDATE**: User can now provide their own **output path**, `/User/username/path_to_directory/output.mmd`.|
+|rdf|  RDF input including the full or relative path to the input file (e.g. `./rdf/BirthDeath_Fortin.ttl`).<br>>><br>- The tool can process **several input formats** such as **`Turtle`**, **`NTriples`**, **`RDF/XML`**, **`Trig`**, **`JSON-LD`**, etc.<br>- RDF files do not need to be  stored in the folder `/rdf`. User can provide their own **input path**, `/User/username/path_to_directory/input.ttl`.|
+|mmd|  Mermaid output including the full or relative path to the output file (e.g. `./mmd/BirthDeath_Fortin.mmd`).<br>>>User can provide their own **output path**, `/User/username/path_to_directory/output.mmd`.|
 
 For example, to generate a diagram rendering instances using the `BirthDeath_Fortin.ttl` file in `./rdf` folder and the mermaid output to be stored in folder `./mmd`, the command is as follows:
 ```shell
@@ -51,16 +51,14 @@ $  python criteria.py instance ./rdf/BirthDeath_Fortin.ttl ./mmd/BirthDeath_Fort
 ```
 ### rdf
 This folder contains RDF files used for testing.
-> **UPDATE**:
-> - The tool can now process **prefixes defined by users**.
-> - RDF files are no longer needed be stored in the **`/rdf`** folder.
+> - The tool can process **prefixes defined by users**.
+> - RDF files do not need be stored in the **`/rdf`** folder.
 
 ### mmd
 This folder contains mermaid outputs generated during testing. 
-> **UPDATE**:
 > - Output files are no longer stored in the **`/mmd`** folder by default. User can now provide their own output path.
 >
-> **Note**: While processing the triples, the script would grab all of them randomly, meaning user would not have much control about the order of statements in the .mmd. However, it also means that running the script over the same RDF file would generate slightly different Mermaid files (i.e. different order of statements), meaning different graphs (i.e. different positions of the nodes). However, the top node's position will remain the same.
+> **Note**: While processing the triples, the script would grab all of them randomly, meaning user would not have much control about the order of statements in the .mmd. It also means that running the script over the same RDF file would generate slightly different Mermaid files (i.e. different order of statements), meaning different graphs (i.e. different positions of the nodes). However, the top node's position will remain the same.
 
 ### src
 The **`/src`** folder contains resources used by the main script.
@@ -114,7 +112,7 @@ For questions or comments regarding CRITERIA, please consult the [Issues](https:
 
 # CRITERIA
 
-**CRITERIA** est un outil Python permettant de convertir des fichiers RDF (basés sur le [modèle CIDOC CRM](http://www.cidoc-crm.org/)) en format markdown [Mermaid](https://mermaid-js.github.io/mermaid/#/) markdown pour générer des diagrammes.
+CRITERIA (acronyme anglais de **C**idoc c**R**m **I**n **T**riples m**ER**maid d**I**agr**A**ms) est un outil Python permettant de convertir des fichiers RDF (basés sur le [modèle CIDOC CRM](http://www.cidoc-crm.org/)) en format [Mermaid](https://mermaid-js.github.io/mermaid/#/) markdown pour générer des diagrammes.
 
 Cet outil peut générer deux types de diagrammes en utilisant un seul fichier RDF (qui doit toujours contenir des instances) :
 * Le premier type de diagramme représente toutes les **instances**, p. ex. des URI, des dates et des valeurs littérales. 
@@ -122,7 +120,7 @@ Cet outil peut générer deux types de diagrammes en utilisant un seul fichier R
 
 Le markdown est prévu pour être intégré à une page HTML; une version PNG peut néanmoins être téléchargée depuis un [éditeur Mermaid](https://mermaid-js.github.io/mermaid-live-editor) en copiant l'intégralité du fichier markdown dans la boîte de code. 
 
-**MISE À JOUR** Un [démonstrateur en ligne](http://chinrcip.pythonanywhere.com/) de CRITERIA est maintenant disponible!
+Pour ceux qui ne souhaitent pas utiliser directement le script, un [démonstrateur en ligne](http://chinrcip.pythonanywhere.com/) de CRITERIA est disponible.
 
 Navigateurs recommandés pour l'éditeur Mermaid et le Démonstrateur en ligne :
 * **Mac**: Safari, Chrome, Firefox
@@ -147,7 +145,7 @@ Le fichier s'exécutera dans la console; voir [Utilisation](#utilisation) pour p
 Les versions des langages de programmation suivantes sont nécessaires à l'exécution de l'outil :
 - Python 3.7.0
 - [rdflib 5.0.0](https://rdflib.readthedocs.io/en/stable/gettingstarted.html)
-- **MISE À JOUR**: [rdflib-jsonld 0.5.0](https://github.com/RDFLib/rdflib-jsonld)
+- [rdflib-jsonld 0.5.0](https://github.com/RDFLib/rdflib-jsonld)
 
 ## Utilisation
 
@@ -156,8 +154,8 @@ Le principal script python est **`criteria.py`**; il exige **trois** arguments:
 |Argument|Description|
 |--|--|
 |Type | Type du diagramme; les valeurs doivent être **`instance`** ou **`ontology`**|
-|rdf|  Entrée RDF, incluant le chemin complet ou relatif au fichier d'entrée (p. ex. `./rdf/BirthDeath_Fortin.ttl`).<br>>>**MISE À JOUR**:<br>- L'outil peut maintenant exécuter d'**autres formats** que **`Turtle`**, tels que **`NTriples`**, **`RDF/XML`**, **`Trig`**, **`JSON-LD`**, etc.<br>- Les fichiers RDF ne doivent plus nécessairement être enregistrés dans le dossier `/rdf`. L'utilisateur peut maintenant utiliser un **chemin d'entrée** qui lui est particulier : `/User/username/path_to_directory/input.ttl`.|
-|mmd|  Les données converties en Mermaid, incluant le chemin complet ou relatif au fichier extrant (p. ex. `./mmd/BirthDeath_Fortin.mmd`).<br>>>**MISE À JOUR**: L'utilisateur peut maintenant soumettre son propre **chemin extrant** : `/User/username/path_to_directory/output.mmd`.|
+|rdf|  Entrée RDF, incluant le chemin complet ou relatif au fichier d'entrée (p. ex. `./rdf/BirthDeath_Fortin.ttl`).<br>>><br>- L'outil peut exécuter **plusieurs formats** tels que **`Turtle`**, **`NTriples`**, **`RDF/XML`**, **`Trig`**, **`JSON-LD`**, etc.<br>- Les fichiers RDF ne doivent pas nécessairement être enregistrés dans le dossier `/rdf`. L'utilisateur peut utiliser un **chemin d'entrée** qui lui est particulier : `/User/username/path_to_directory/input.ttl`.|
+|mmd|  Les données converties en Mermaid, incluant le chemin complet ou relatif au fichier extrant (p. ex. `./mmd/BirthDeath_Fortin.mmd`).<br>>>L'utilisateur peut soumettre son propre **chemin extrant** : `/User/username/path_to_directory/output.mmd`.|
 
 Par exemple, pour générer un diagramme représentant les instances du fichier `BirthDeath_Fortin.ttl` se trouvant dans le dossier `./rdf` avec pour extrant un fichier mermaid `./mmd`, il faut exécuter la commande suivante :
 ```shell
@@ -165,22 +163,20 @@ $  python criteria.py instance ./rdf/BirthDeath_Fortin.ttl ./mmd/BirthDeath_Fort
 ```
 ### rdf
 Ce dossier contient les fichiers RDF utilisés à des fins de tests.
-> **MISE À JOUR**:
-> - L'outil peut maintenant utiliser des **préfixes définis par l'utilisateur**.
-> - Il n'est plus nécessaire de stocker les fichiers RDF dans le dossier **`/rdf`**.
+> - L'outil peut utiliser des **préfixes définis par l'utilisateur**.
+> - Il n'est pas nécessaire de stocker les fichiers RDF dans le dossier **`/rdf`**.
 
 ### mmd
 Ce dossier contient les extrants mermaid générés par les tests. This folder contains mermaid outputs generated during testing. 
-> **MISE À JOUR**:
-> - Les fichiers RDF extrants ne sont plus stockés dans le dossier **`/mmd`** par défaut. L'utilisateur peut soumettre son propre chemin.
+> - Les fichiers RDF extrants ne sont pas stockés dans le dossier **`/mmd`** par défaut. L'utilisateur peut soumettre son propre chemin.
 >
-> **Note**: While processing the triples, the script would grab all of them randomly, meaning user would not have much control about the order of statements in the .mmd. However, it also means that running the script over the same RDF file would generate slightly different Mermaid files (i.e. different order of statements), meaning different graphs (i.e. different positions of the nodes). However, the top node's position will remain the same.
+> **Note**: Pendant le traitement des triplets, le script les analysera de manière aléatoire, ce qui veut dire que l'utilisateur a très peu de contrôle sur l'ordre des énoncés dans le .mmd. De plus, le fait de lancer le script sur un même fichier RDF pourrait générer un fichier Mermaid un peu différent (soit un ordre différent des énoncés), donc aussi des diagrammes différents (soit une disposition différente des noeuds sémantiques). Cependant, la position du noeud sémantique initial restera le même.
 
 ### src
 Le dossier **`/src`** contient les ressources utilisées par le script principal.
 
 #### /templates 
-Le dossier **`templates`** contient les gabarits utilisés pour générer les fichiers extrants `.mmd`. Les gabarits ont des classes  de stylepré-définies : l'une pour visualiser les instances (`instance.mmd`) et l'autre pour visualiser l'ontologie (`ontology.mmd`). Le style par défaut est basé sur le thème CIDOC CRM (tel que l'a proposé George Bruseker).
+Le dossier **`templates`** contient les gabarits utilisés pour générer les fichiers extrants `.mmd`. Les gabarits ont des classes  de style pré-définies : l'une pour visualiser les instances (`instance.mmd`) et l'autre pour visualiser l'ontologie (`ontology.mmd`). Le style par défaut est basé sur le thème CIDOC CRM (tel que l'a proposé George Bruseker).
 
 Par exemple :
 ```
