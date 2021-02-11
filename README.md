@@ -1,3 +1,5 @@
+[*Le français suit*](https://github.com/chin-rcip/criteria#criteria-2)
+
 # CRITERIA
 
 **C**idoc c**R**m **I**n **T**riples m**ER**maid d**I**agr**A**ms (CRITERIA) is a Python tool that converts RDF files (based on the [CIDOC CRM model](http://www.cidoc-crm.org/)) into [Mermaid](https://mermaid-js.github.io/mermaid/#/) markdown to generate (flowchart) diagrams.
