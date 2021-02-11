@@ -42,8 +42,8 @@ The main python script is **`criteria.py`**, which requires **three** arguments.
 |Argument|Description|
 |--|--|
 |Type | Type of the diagram; the values must be either **`instance`** or **`ontology`**|
-|rdf|  RDF input including the full or relative path to the input file (e.g. `./rdf/BirthDeath_Fortin.ttl`).<br>>><br>- The tool can process **several input formats** such as **`Turtle`**, **`NTriples`**, **`RDF/XML`**, **`Trig`**, **`JSON-LD`**, etc.<br>- RDF files do not need to be  stored in the folder `/rdf`. User can provide their own **input path**, `/User/username/path_to_directory/input.ttl`.|
-|mmd|  Mermaid output including the full or relative path to the output file (e.g. `./mmd/BirthDeath_Fortin.mmd`).<br>>>User can provide their own **output path**, `/User/username/path_to_directory/output.mmd`.|
+|rdf|  RDF input including the full or relative path to the input file (e.g. `./rdf/BirthDeath_Fortin.ttl`).<br><br>- The tool can process **several input formats** such as **`Turtle`**, **`NTriples`**, **`RDF/XML`**, **`Trig`**, **`JSON-LD`**, etc.<br>- RDF files do not need to be  stored in the folder `/rdf`. User can provide their own **input path**, `/User/username/path_to_directory/input.ttl`.|
+|mmd|  Mermaid output including the full or relative path to the output file (e.g. `./mmd/BirthDeath_Fortin.mmd`).<br>User can provide their own **output path**, `/User/username/path_to_directory/output.mmd`.|
 
 For example, to generate a diagram rendering instances using the `BirthDeath_Fortin.ttl` file in `./rdf` folder and the mermaid output to be stored in folder `./mmd`, the command is as follows:
 ```shell
@@ -154,8 +154,8 @@ Le principal script python est **`criteria.py`**; il exige **trois** arguments:
 |Argument|Description|
 |--|--|
 |Type | Type du diagramme; les valeurs doivent être **`instance`** ou **`ontology`**|
-|rdf|  Entrée RDF, incluant le chemin complet ou relatif au fichier d'entrée (p. ex. `./rdf/BirthDeath_Fortin.ttl`).<br>>><br>- L'outil peut exécuter **plusieurs formats** tels que **`Turtle`**, **`NTriples`**, **`RDF/XML`**, **`Trig`**, **`JSON-LD`**, etc.<br>- Les fichiers RDF ne doivent pas nécessairement être enregistrés dans le dossier `/rdf`. L'utilisateur peut utiliser un **chemin d'entrée** qui lui est particulier : `/User/username/path_to_directory/input.ttl`.|
-|mmd|  Les données converties en Mermaid, incluant le chemin complet ou relatif au fichier extrant (p. ex. `./mmd/BirthDeath_Fortin.mmd`).<br>>>L'utilisateur peut soumettre son propre **chemin extrant** : `/User/username/path_to_directory/output.mmd`.|
+|rdf|  Entrée RDF, incluant le chemin complet ou relatif au fichier d'entrée (p. ex. `./rdf/BirthDeath_Fortin.ttl`).<br><br>- L'outil peut exécuter **plusieurs formats** tels que **`Turtle`**, **`NTriples`**, **`RDF/XML`**, **`Trig`**, **`JSON-LD`**, etc.<br>- Les fichiers RDF ne doivent pas nécessairement être enregistrés dans le dossier `/rdf`. L'utilisateur peut utiliser un **chemin d'entrée** qui lui est particulier : `/User/username/path_to_directory/input.ttl`.|
+|mmd|  Les données converties en Mermaid, incluant le chemin complet ou relatif au fichier extrant (p. ex. `./mmd/BirthDeath_Fortin.mmd`).<br>L'utilisateur peut soumettre son propre **chemin extrant** : `/User/username/path_to_directory/output.mmd`.|
 
 Par exemple, pour générer un diagramme représentant les instances du fichier `BirthDeath_Fortin.ttl` se trouvant dans le dossier `./rdf` avec pour extrant un fichier mermaid `./mmd`, il faut exécuter la commande suivante :
 ```shell
