@@ -12,6 +12,8 @@ The markdown is intended to be incorporated into an HTML page; however, a PNG ve
 
 If you do not want to use the script directly, a [Live Demonstrator](http://chinrcip.pythonanywhere.com/) of CRITERIA is available.
 
+> **UPDATE**: The live demonstrator can now process JSON-LD data with external context file, (such as the [Linked.art context](https://linked.art/ns/v1/linked-art.json)).
+
 Recommended browsers for Mermaid Live Editor & Live Demontrator:
 * **Mac**: Safari, Chrome, Firefox
 * **Windows**: Firefox
@@ -123,6 +125,8 @@ Cet outil peut générer deux types de diagrammes en utilisant un seul fichier R
 Le markdown est prévu pour être intégré à une page HTML; une version PNG peut néanmoins être téléchargée depuis un [éditeur Mermaid](https://mermaid-js.github.io/mermaid-live-editor) en copiant l'intégralité du fichier markdown dans la boîte de code. 
 
 Pour ceux qui ne souhaitent pas utiliser directement le script, un [démonstrateur en ligne](http://chinrcip.pythonanywhere.com/) de CRITERIA est disponible.
+
+> **MISE À JOUR** : Le démonstrateur en ligne peut maintenant traiter des données référant à un fichier contextuel externe (comme [le fichier de contexte Linked.art](https://linked.art/ns/v1/linked-art.json)).
 
 Navigateurs recommandés pour l'éditeur Mermaid et le Démonstrateur en ligne :
 * **Mac**: Safari, Chrome, Firefox
