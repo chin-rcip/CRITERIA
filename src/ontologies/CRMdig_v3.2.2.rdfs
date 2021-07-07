@@ -692,7 +692,7 @@ part of the image data analysis.This property is a specialisation of P90 has val
 
 <rdf:Property rdf:about="L59_has_serial_number">
 <rdfs:label xml:lang="en">has serial number</rdfs:label>
-<rdfs:comment>This property records the serial number that was assigned to identify an instance of E22 Human Made Object.
+<rdfs:comment>This property records the serial number that was assigned to identify an instance of E22 Man Made Object.
  This property is a specialisation of L53 is not uniquely identified by.</rdfs:comment>
 	<rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E22_Human-Made_Object"/>
 	<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
