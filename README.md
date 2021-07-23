@@ -1,4 +1,4 @@
-[*Le français suit*](https://github.com/chin-rcip/criteria#criteria-2)
+[*Le français suit*](https://github.com/chin-rcip/criteria#criteria-1)
 
 # CRITERIA
 
@@ -382,7 +382,7 @@ Un aperçu de ce que CRITERIA offre comme fonctionnalités ainsi que les instruc
 
 **CRITERIA** (acronyme anglais de **C**idoc c**R**m **I**n **T**riples m**ER**maid d**I**agr**A**ms) est un outil créé en Python qui convertit des documents de tout format (json-ld, ttl, etc.) fondés sur le [CIDOC CRM](http://www.cidoc-crm.org/)) en documents Markdown (syntaxe [Mermaid](https://mermaid-js.github.io/mermaid/#/), extension .mmd), qu’un script Javascript Mermaid peut ensuite convertir en organigramme.
 
-## Vocabulaire de base et connaissances préalables {#vocabulaire-de-base-et-connaissances-prealables}
+## Vocabulaire de base et connaissances préalables 
 
 Avant de poursuivre, tout utilisateur doit bien comprendre les termes et technologies suivants :
 
@@ -444,7 +444,7 @@ CRITERIA peut créer deux types de diagrammes à partir des mêmes données RDF.
 
 ![](/docs/images/criteria_2.png)
 
-## Auditoires visés {#auditoires-vises}
+## Auditoires visés 
 
 CRITERIA est un outil de visualisation de données liées. Il se prête toutefois mal à la visualisation de tout un ensemble de données ou d’un modèle de données complet se rapportant à une seule entité. Voici pourquoi :
 
@@ -464,13 +464,13 @@ Par exemple, il ne faudrait pas utiliser CRITERIA pour visualiser toutes les don
 
 On peut utiliser CRITERIA de deux façons : par une démonstrateur en ligne ou par ligne de commande.
 
-### Démonstrateur en ligne {#demonstrateur-en-ligne}
+### Démonstrateur en ligne 
 
 Le [démonstrateur en ligne](http://chinrcip.pythonanywhere.com), en anglais seulement, intéressera surtout ceux et celles qui désirent créer rapidement des diagrammes.
 
 Dans le cas des données JSON-LD, le démonstrateur en temps réel peut traiter les [contextes](https://w3c.github.io/json-ld-syntax/#the-context) tant intégrés au document que ceux auxquels le document fait référence par URL (comme le [contexte Linked.art](https://linked.art/ns/v1/linked-art.json)).
 
-#### Navigateurs recommandés {#navigateurs-recommandes}
+#### Navigateurs recommandés 
 
   - **MacOS :** Safari, Chrome ou Firefox
 
@@ -502,7 +502,7 @@ Cette méthode intéressera surtout les utilisateurs voulant utiliser CRITERIA d
 
 Pour installer l’outil, cloner [son répertoire](https://github.com/chin-rcip/CRITERIA) ou télécharger celui-ci en fichier Zip.
 
-#### Dépendances {#dependances}
+#### Dépendances 
 
 Pour exécuter l’outil, les versions du langage de programmation et les bibliothèques suivantes sont nécessaires :
 
@@ -512,7 +512,7 @@ Pour exécuter l’outil, les versions du langage de programmation et les biblio
 
   - [rdflib - 0.5.0](https://github.com/RDFLib/rdflib-jsonld) ([license BSD 3](https://github.com/RDFLib/rdflib-jsonld/blob/master/LICENSE.md))
 
-#### Utilisation {#utilisation-1}
+#### Utilisation 
 
 ***criteria.py***
 
@@ -622,7 +622,7 @@ CRITERIA est installé avec plusieurs ontologies CIDOC CRM par défaut en format
 </tbody>
 </table>
 
-## Aide-mémoire {#aide-memoire}
+## Aide-mémoire 
 
   - [Lien vers le démonstrateur en ligne](http://chinrcip.pythonanywhere.com)
 
