@@ -1,10 +1,15 @@
 import rdflib
 from rdflib import Graph, URIRef, Namespace, util
+from rdflib.util import SUFFIX_FORMAT_MAP
 from rdflib.namespace import NamespaceManager, RDFS, RDF, XSD
 import re
 import sys
 import argparse
-from src import source
+
+try:
+	from src import source
+except ImportError:
+	from CRITERIA.src import source
 
 
 # Function to build a dictionary of an ontology's classes and their superclasses.
@@ -25,15 +30,20 @@ from src import source
 # 	                           'E77_Persistent_Item',
 # 	                           'E1_CRM_Entity']}
 
-def superClass(ontology, prefix, baseURL):
+def superClass(ontology):
+	inFormat = util.guess_format(ontology)
 	g = Graph()
-	g.parse('./src/ontologies/{}'.format(ontology))
 
-	ns = Namespace(baseURL)
-	g.bind(prefix, ns)
-	if baseURL != 'http://www.cidoc-crm.org/cidoc-crm/':
-		crm = Namespace('http://www.cidoc-crm.org/cidoc-crm/')
-		g.bind('crm', crm)
+	if not "http" in ontology:
+		g.parse('./src/ontologies/{}'.format(ontology), format=inFormat)
+	else:
+		g.parse(ontology, format=inFormat)
+
+	prefix = source.prefix
+	for pf in prefix:
+		ns = Namespace(prefix[pf])
+		g.bind(pf, ns)
+
 	
 	clss = {}
 	for c in g.subjects(RDF.type, RDFS.Class):
@@ -63,53 +73,48 @@ def superClass(ontology, prefix, baseURL):
 def classDict():
 	d = {}
 	classes = source.classes
-	# CIDOC-CRM
-	cidocClass = superClass(source.onto['crm'], 'crm', 'http://www.cidoc-crm.org/cidoc-crm/')
-	for sc in cidocClass:
-		for spc in cidocClass[sc]:
-			# spc = spc.split(':')[1]
-			if spc in classes:
-				d[sc] = '_'.join(spc.split('_')[1:])
-				break 
-				# exit loop after the first superclass is found in the classes list.
-				# e.g. for 'E21_Person' the first superclass found in the classes list
-				# is E39_Actor
-	# FRBRoo
-	frbrClass = superClass(source.onto['frbroo'], 'frbroo', 'http://iflastandards.info/ns/fr/frbr/frbroo/')
-	for fr in frbrClass:
-		crmSpc = frbrClass[fr][-1] # retrieve the last/highest cidoc-crm superclass of a frbroo class.
-		for spc in cidocClass[crmSpc]:
-			# spc = spc.split(':')[1]
-			if spc in classes:
-				d[fr] = '_'.join(spc.split('_')[1:])
-				break 
-	# CRMDig
-	digClass = superClass(source.onto['crmdig'], 'crmdig', 'http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/')
-	for dig in digClass:
-		crmSpc = digClass[dig][-1] # retrieve the last/highest cidoc-crm superclass of a crmdig class.
-		for spc in cidocClass[crmSpc]:
-			# spc = spc.split(':')[1]
-			if spc in classes:
-				d[dig] = '_'.join(spc.split('_')[1:])
-				break 
-	# CRMpc
-	pcClass = superClass(source.onto['pc'], 'crm', 'http://www.cidoc-crm.org/cidoc-crm/')
-	for pc in pcClass:
-		d[pc] = 'PC_Classes'
+	onto = source.onto
+	
+	for ontology in onto:
+		core = onto[ontology]['core']
+		coreClass = superClass(core)
+		for sc in coreClass:
+			for spc in coreClass[sc]:
+				if spc in classes:
+					d[sc] = spc
+					break 
+					# exit loop after the first superclass is found in the classes list.
+					# e.g. for 'E21_Person' the first superclass found in the classes list
+					# is E39_Actor
+
+		if 'extensions' in onto[ontology]:
+			for key in onto[ontology]['extensions']:
+				ext = onto[ontology]['extensions'][key]
+				extClass = superClass(ext)
+				for ent in extClass:
+					if ent in coreClass:
+						for spc in coreClass[ent]:
+							if spc in classes:
+								d[ent] = spc
+								break
+					elif len(extClass[ent]) > 0:
+						crmSpc = extClass[ent][-1] # retrieve the last/highest superclass of an extension class.
+						if crmSpc in classes:
+							d[ent] = crmSpc
+						elif crmSpc in coreClass:
+							for spc in coreClass[crmSpc]:
+								if spc in classes:
+									d[ent] = spc
+									break
 
 	for c in classes:
-		# d['crm:'+c] = '_'.join(c.split('_')[1:])
-		d[c] = '_'.join(c.split('_')[1:])
+		d[c] = c
 	return d
 
 # Function to convert RDF triples to Mermaid statements.
 # Returns a list of statements
 def convert(rdfInput):
-	if '.json' in rdfInput or '.jsonld' in rdfInput:
-		inFormat = util.guess_format(rdfInput, {'json': 'json-ld', 'jsonld': 'json-ld'})
-	else:
-		inFormat = util.guess_format(rdfInput)
-		
+	inFormat = util.guess_format(rdfInput)
 	g = Graph()
 	g.parse(rdfInput, format=inFormat)
 
@@ -129,7 +134,7 @@ def convert(rdfInput):
 		else:
 			n1 = i
 			i += 1
-			if isinstance(s, rdflib.URIRef):
+			if isinstance(s, rdflib.URIRef) or isinstance(s, rdflib.BNode):
 				uriDict[s] = n1
 
 		if o in uriDict:
@@ -137,8 +142,7 @@ def convert(rdfInput):
 		else:
 			n2 = i
 			i += 1
-			if (isinstance(o, rdflib.URIRef) and 
-				p != 'rdf:type' ):
+			if (isinstance(o, rdflib.URIRef) or isinstance(o, rdflib.BNode)) and p != 'rdf:type':
 				uriDict[o] = n2
 
 		# check whether the object of the triple is a key in the returned dict of classDict
@@ -180,10 +184,18 @@ def convert(rdfInput):
 		stmtList.append(stmt)
 	return stmtList
 
+# Function to generate mermaid.jd style class definition based the classes dict from source.py
+def template():
+	template = "graph TD\n"
+	classes = source.classes
+	for c in classes:
+		template += "classDef {} fill:{},stroke:{};\n".format(c,classes[c]["classColor"],classes[c]["classStroke"])
+		template += "classDef {}_URI fill:{},stroke:{};\n".format(c,classes[c]["instanceColor"],classes[c]["instanceStroke"])
+	return template
+
 # Main function to convert a RDF turtle files to Mermaid with instances.
 def instance(rdfInput, mmdOutput):
-	template = open("./src/templates/instance.mmd", "r", encoding="utf-8")
-	read = template.read()
+	read = template()
 	out = open(mmdOutput, "w", encoding="utf-8")
 	out.write(read)
 
@@ -198,8 +210,7 @@ def instance(rdfInput, mmdOutput):
 # Main function to convert a RDF turtle files to Mermaid, but only the classes represented, without the instances,
 # by replacing the uri with the classes in Mermaid statements.
 def ontology(rdfInput, mmdOutput):
-	template = open("./src/templates/ontology.mmd", "r", encoding="utf-8")
-	read = template.read()
+	read = template()
 	out = open(mmdOutput, "w", encoding="utf-8")
 	out.write(read)
 
@@ -245,7 +256,9 @@ def ontology(rdfInput, mmdOutput):
 		out.write(stmt+'\n')
 
 
-def main(Type, rdf, mmd):
+def main(Type, rdf, mmd,):
+	SUFFIX_FORMAT_MAP["rdfs"] = "xml"
+	SUFFIX_FORMAT_MAP["json"] = "json-ld"
 	if Type == 'instance':
 		instance(rdf, mmd)
 	elif Type == 'ontology':
@@ -266,4 +279,3 @@ def parse_args():
 if __name__ == '__main__':
 	args = parse_args()
 	main(args.Type, args.rdf, args.mmd)
-
