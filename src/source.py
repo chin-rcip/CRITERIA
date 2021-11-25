@@ -12,7 +12,7 @@ classes = {
 "E18_Physical_Thing": {"classColor": "#e1ba9c", "classStroke": "#000000", "instanceColor": "#f3e5d8", "instanceStroke": "#000000"},
 "E39_Actor": {"classColor": "#ffbdca", "classStroke": "#000000", "instanceColor": "#ffe6eb", "instanceStroke": "#000000"},
 "PC0_Typed_CRM_Property": {"classColor": "#cc80ff", "classStroke": "#000000", "instanceColor": "#ebccff", "instanceStroke": "#000000"},
-"Mutlti": {"classColor": "", "classStroke": "", "instanceColor": "#cccccc", "instanceStroke": "#000000"},
+"Multi": {"classColor": "#cccccc", "classStroke": "#000000", "instanceColor": "#cccccc", "instanceStroke": "#000000"},
 }
 
 
@@ -38,8 +38,7 @@ prefix = {
 	'frbroo':'http://iflastandards.info/ns/fr/frbr/frbroo/',
 	'crmdig':'http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/',
 	'crmsci':'http://www.cidoc-crm.org/cidoc-crm/CRMsci/',
-	'crmarcheo':'http://www.cidoc-crm.org/cidoc-crm/CRMarchaeo/',
-	'schema': 'https://schema.org/'
+	'crmarcheo':'http://www.cidoc-crm.org/cidoc-crm/CRMarchaeo/'
 }
 
 
