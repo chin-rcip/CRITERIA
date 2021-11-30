@@ -19,13 +19,13 @@ classes = {
 # Ontologies files
 onto = {
 	'cidoc': {
-		'core': 'cidoc_crm_v6.2.1-2018April.rdfs',
+		'core': './src/ontologies/cidoc_crm_v6.2.1-2018April.rdfs',
 		'extensions': {
-			'crmpc': 'CRMpc_v1.1.1.rdfs',
-			'frbr': 'FRBR2.4-draft.rdfs',
-			'crmdig': 'CRMdig_v3.2.2.rdfs',
-			'crmsci': 'CRMsci_v1.2.6.rdfs',
-			'crmarcheo': 'CRMarchaeo_v1.4.1.rdfs'
+			'crmpc': './src/ontologies/CRMpc_v1.1.1.rdfs',
+			'frbr': './src/ontologies/FRBR2.4-draft.rdfs',
+			'crmdig': './src/ontologies/CRMdig_v3.2.2.rdfs',
+			'crmsci': './src/ontologies/CRMsci_v1.2.6.rdfs',
+			'crmarcheo': './src/ontologies/CRMarchaeo_v1.4.1.rdfs'
 		}
 	}
 	

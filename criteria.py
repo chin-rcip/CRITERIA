@@ -34,10 +34,7 @@ def superClass(ontology):
 	inFormat = util.guess_format(ontology)
 	g = Graph()
 
-	if not "http" in ontology:
-		g.parse('./src/ontologies/{}'.format(ontology), format=inFormat)
-	else:
-		g.parse(ontology, format=inFormat)
+	g.parse(ontology, format=inFormat)
 
 	prefix = source.prefix
 	for pf in prefix:
