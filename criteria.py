@@ -199,10 +199,11 @@ def instance(rdfInput, mmdOutput):
 	stmtList = convert(rdfInput)
 		
 	for stmt in stmtList:
-		stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
-		stmt = stmt.replace('(["<','(["').replace('>"])','"])')
-		stmt = stmt.replace('|<','|"').replace('>|','"|').replace('--"','-->')
-		out.write(stmt+'\n')
+		if source.node_label['prop'] not in stmt:
+			stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
+			stmt = stmt.replace('(["<','(["').replace('>"])','"])')
+			stmt = stmt.replace('|<','|"').replace('>|','"|').replace('--"','-->')
+			out.write(stmt+'\n')
 
 # Main function to convert a RDF turtle files to Mermaid, but only the classes represented, without the instances,
 # by replacing the uri with the classes in Mermaid statements.
@@ -211,20 +212,48 @@ def ontology(rdfInput, mmdOutput):
 	out = open(mmdOutput, "w", encoding="utf-8")
 	out.write(read)
 
-	uriType = {}
+	nodeLabelProp = source.node_label['prop']
+	sep = source.node_label['separator']
+
+	uriType = {} # URI and class dict
+	classNode = {} # URI and Node Label for node of ontology class
+	litNode = {} # URI, {Property, Node Label} for node of Literal type
+	nodeLink = {} # Node Label and link to node documentation
 	statements = []
 	
 	stmtList = convert(rdfInput)
 	for stmt in stmtList:
+		# processing Node Label
+		if nodeLabelProp in stmt:
+			stmt = stmt.replace('"',"")
+			stmt = stmt.replace('([<','([').replace('>])','])')
+			m = re.match('\d+(\(\[.*:.*\)) -->\|.*\| \d+\(\[(.*)\]\)', stmt) 
+			inst = m.group(1) # get the uri part
+			nodeLab = m.group(2) # get the node label value
+			nodeLabelSplit = nodeLab.split(sep)
+
+			if ('http' not in nodeLabelSplit[-1] and len(nodeLabelSplit) == 1) \
+				or ('http' in nodeLabelSplit[-1] and len(nodeLabelSplit) == 2):
+					classNode[inst] = nodeLabelSplit[0]
+			if ('http' not in nodeLabelSplit[-1] and len(nodeLabelSplit) != 1) \
+				or ('http' in nodeLabelSplit[-1] and len(nodeLabelSplit) != 2):
+				if not inst in litNode:
+					litNode[inst] = {nodeLabelSplit[0]: nodeLabelSplit[1]}
+				else:
+					litNode[inst][nodeLabelSplit[0]] = nodeLabelSplit[1]
+			if 'http' in nodeLabelSplit[-1]:
+				nodeLink[nodeLabelSplit[-2]] = nodeLabelSplit[-1]
+
 		stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
 		stmt = stmt.replace('(["<','([').replace('>"])','])')
-					
+
 		date = re.findall('\(\[".*\^xsd:dateTime"]\)', stmt)
 		lit = re.findall('\(\["\'\'.*\'\'.*"]\)', stmt)
 		if date:
-			stmt = stmt.replace(date[0], '[xsd:dateTime]')
+			stmt = stmt.replace(date[0], '["xsd:dateTime"]')
 		elif lit:
-			stmt = stmt.replace(lit[0], '[rdfs:Literal]')
+			stmt = stmt.replace(lit[0], '["xsd:string"]')
+		
 		if 'rdf:type' in stmt:
 			inst = re.findall('\(\[.*:.*\)', stmt)[0] # get the uri part
 			clType = '[' + re.findall('\|.*\[".*"\].*', stmt)[0].split('[')[1] # get the class part
@@ -239,18 +268,30 @@ def ontology(rdfInput, mmdOutput):
 				clType = clType.split('["')[1].split(']')[0]
 				multi = uriType[inst].split('"]')[0] + '<br>' + clType + ']:::Multi'
 				uriType[inst] = multi
-				
-		elif not 'rdfs:label' in stmt:
-			statements.append(stmt)
 
+		elif not 'rdfs:label' in stmt and not nodeLabelProp in stmt:
+			statements.append(stmt)
+	
 	for stmt in statements:
-		key1 = re.findall('\(\[.*:.*\) ', stmt)[0].split(' ')[0]
-		stmt = stmt.replace(key1, uriType[key1])
-		key2 = re.findall('\(\[.*:.*\)', stmt)
-		if key2:
-			key2 = key2[0]
-			stmt = stmt.replace(key2, uriType[key2])
+		m = re.match('\d+(\(\[.*:.*\)) -->\|(.*)\| (\d+)(\(*\[(.*)\]\)*)', stmt)
+		label = ''
+		if m.group(1) in uriType:
+			stmt = stmt.replace(m.group(1), uriType[m.group(1)])
+		if m.group(4) in uriType:
+			if m.group(4) in classNode:
+				label = classNode[m.group(4)]
+				addNodeLab = uriType[m.group(4)].split('"]')[0]+'<br><b>'+label+'</b>'+'"]'+uriType[m.group(4)].split('"]')[1]
+				stmt = stmt.replace(m.group(4), addNodeLab)
+			else:
+				stmt = stmt.replace(m.group(4), uriType[m.group(4)])
+		if m.group(1) in litNode and m.group(2) in litNode[m.group(1)]:
+			label = litNode[m.group(1)][m.group(2)]
+			stmt = stmt.replace(m.group(5), m.group(5)+'<br><b>'+label+'</b>')
+		# write out statement
 		out.write(stmt+'\n')
+		# add clickable link to node
+		if label in nodeLink:
+			out.write('click '+m.group(3)+' "'+nodeLink[label]+'" _blank\n')
 
 
 def main(Type, rdf, mmd,):

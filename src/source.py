@@ -41,5 +41,7 @@ prefix = {
 	'crmarcheo':'http://www.cidoc-crm.org/cidoc-crm/CRMarchaeo/'
 }
 
+# Commentary property to add node label in onotlogical diagram (not to be display in instance diagram)
+node_label = {'prop': 'rdfs:comment', 'separator': '|'}
 
 
