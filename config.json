@@ -1,0 +1,39 @@
+{
+	"style": {
+		"Literal": {"classColor": "#ffffff", "classStroke": "#000000", "instanceColor": "#ffffff", "instanceStroke": "#000000"},
+		"crm_E1_CRM_Entity": {"classColor": "#ffffff", "classStroke": "#000000", "instanceColor": "#ffffff", "instanceStroke": "#000000"},
+		"crm_E2_Temporal_Entity": {"classColor": "#82c3ec", "classStroke": "#000000", "instanceColor": "#d2e9f9", "instanceStroke": "#000000"},
+		"crm_E55_Type": {"classColor": "#fab565", "classStroke": "#000000", "instanceColor": "#fde7ce", "instanceStroke": "#000000"},
+		"crm_E52_Time-Span": {"classColor": "#86bcc8", "classStroke": "#000000", "instanceColor": "#dcebef", "instanceStroke": "#000000"},
+		"crm_E41_Appellation": {"classColor": "#fef3ba", "classStroke": "#000000", "instanceColor": "#fffae6", "instanceStroke": "#000000"},
+		"crm_E53_Place": {"classColor": "#94cc7d", "classStroke": "#000000", "instanceColor": "#e1f1da", "instanceStroke": "#000000"},
+		"crm_E77_Persistent_Item": {"classColor": "#ffffff", "classStroke": "#000000", "instanceColor": "#ffffff", "instanceStroke": "#000000"},
+		"crm_E28_Conceptual_Object": {"classColor": "#fddc34", "classStroke": "#000000", "instanceColor": "#fef6cd", "instanceStroke": "#000000"},
+		"crm_E18_Physical_Thing": {"classColor": "#e1ba9c", "classStroke": "#000000", "instanceColor": "#f3e5d8", "instanceStroke": "#000000"},
+		"crm_E39_Actor": {"classColor": "#ffbdca", "classStroke": "#000000", "instanceColor": "#ffe6eb", "instanceStroke": "#000000"},
+		"crmpc_PC0_Typed_CRM_Property": {"classColor": "#cc80ff", "classStroke": "#000000", "instanceColor": "#ebccff", "instanceStroke": "#000000"},
+		"Multi": {"classColor": "#cccccc", "classStroke": "#000000", "instanceColor": "#cccccc", "instanceStroke": "#000000"}
+	},
+	"onto": {
+		"crm": {
+			"core": "./src/ontologies/cidoc_crm_v6.2.1-2018April.rdfs",
+			"extensions": {
+				"crmpc": "./src/ontologies/CRMpc_v1.1.1.rdfs",
+				"frbroo": "./src/ontologies/FRBR2.4-draft.rdfs",
+				"crmdig": "./src/ontologies/CRMdig_v3.2.2.rdfs",
+				"crmsci": "./src/ontologies/CRMsci_v1.2.6.rdfs",
+				"crmarcheo": "./src/ontologies/CRMarchaeo_v1.4.1.rdfs"
+			}
+		}
+
+	},
+	"prefix": {
+		"crm": "http://www.cidoc-crm.org/cidoc-crm/",
+		"crmpc": "http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/",
+		"frbroo":"http://iflastandards.info/ns/fr/frbr/frbroo/",
+		"crmdig":"http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/",
+		"crmsci":"http://www.cidoc-crm.org/cidoc-crm/CRMsci/",
+		"crmarcheo":"http://www.cidoc-crm.org/cidoc-crm/CRMarchaeo/"
+	}
+}
+

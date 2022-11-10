@@ -1,16 +1,16 @@
 import rdflib
 from rdflib import Graph, URIRef, Namespace, util
 from rdflib.util import SUFFIX_FORMAT_MAP
-from rdflib.namespace import NamespaceManager, RDFS, RDF, XSD
+from rdflib.namespace import NamespaceManager, RDFS, RDF, XSD, SKOS, SH
 import re
 import sys
 import argparse
+import json
 
-try:
-	from src import source
-except ImportError:
-	from CRITERIA.src import source
 
+nodeLabels = {} # URI: {Property, Node Label} for node 
+nodeLink = {} # Node Label and URL link to node documentation
+defaultConfig = json.load(open('config.json','r',encoding='utf-8'))
 
 # Function to build a dictionary of an ontology's classes and their superclasses.
 # For instances, the returned object (clss) would look like this:
@@ -30,13 +30,15 @@ except ImportError:
 # 	                           'E77_Persistent_Item',
 # 	                           'E1_CRM_Entity']}
 
-def superClass(ontology):
+def superClass(ontology,conf):
 	inFormat = util.guess_format(ontology)
 	g = Graph()
 
 	g.parse(ontology, format=inFormat)
-
-	prefix = source.prefix
+	if 'prefix' in conf:
+		prefix = conf['prefix']
+	else:
+		prefix = defaultConfig['prefix']
 	for pf in prefix:
 		ns = Namespace(prefix[pf])
 		g.bind(pf, ns)
@@ -50,33 +52,40 @@ def superClass(ontology):
 			if l == 0:
 				sc = c
 			for spc in g.objects(sc, RDFS.subClassOf):
-				spcList.append(spc.n3(g.namespace_manager).split(':')[1])
+				spcList.append(spc.n3(g.namespace_manager))
 				sc = spc
 			l += 1
-		clss[c.n3(g.namespace_manager).split(':')[1]] = spcList
+		clss[c.n3(g.namespace_manager)] = spcList
 	return clss
 
 
 # Function to build a dictionary of an ontology's classes and their Mermaid classes, i.e. main CIDOC-CRM classes.
 # For instances, the returned object (d) would look like this:
-	# d = {'E10_Transfer_of_Custody': 'Temporal_Entity',
-	# 	 'E11_Modification': 'Temporal_Entity',
-	# 	 'E12_Production': 'Temporal_Entity',
-	# 	 'E1_CRM_Entity': 'CRM_Entity',
-	# 	 'E20_Biological_Object': 'Physical_Thing',
-	# 	 'E21_Person': 'Actor',
-	# 	 'E22_Human-Made_Object': 'Physical_Thing'}
+	# d = {'E10_Transfer_of_Custody': 'crm_E2_Temporal_Entity',
+	# 	 'E11_Modification': 'crm_E2_Temporal_Entity',
+	# 	 'E12_Production': 'crm_E2_Temporal_Entity',
+	# 	 'E1_CRM_Entity': 'crm_E1_CRM_Entity',
+	# 	 'E20_Biological_Object': 'crm_E18_Physical_Thing',
+	# 	 'E21_Person': 'crm_E39_Actor',
+	# 	 'E22_Human-Made_Object': 'crm_E18_Physical_Thing'}
 
-def classDict():
+def classDict(conf):
 	d = {}
-	classes = source.classes
-	onto = source.onto
+	if 'style' in conf:
+		classes = conf['style']
+	else:
+		classes = defaultConfig['style']
+	if 'onto' in conf:
+		onto = conf['onto']
+	else:
+		onto = defaultConfig['onto']
 	
 	for ontology in onto:
 		core = onto[ontology]['core']
-		coreClass = superClass(core)
+		coreClass = superClass(core,conf)
 		for sc in coreClass:
 			for spc in coreClass[sc]:
+				spc = spc.replace(':','_')
 				if spc in classes:
 					d[sc] = spc
 					break 
@@ -87,35 +96,36 @@ def classDict():
 		if 'extensions' in onto[ontology]:
 			for key in onto[ontology]['extensions']:
 				ext = onto[ontology]['extensions'][key]
-				extClass = superClass(ext)
+				extClass = superClass(ext,conf)
 				for ent in extClass:
 					if ent in coreClass:
 						for spc in coreClass[ent]:
+							spc = spc.replace(':','_')
 							if spc in classes:
 								d[ent] = spc
 								break
 					elif len(extClass[ent]) > 0:
 						crmSpc = extClass[ent][-1] # retrieve the last/highest superclass of an extension class.
+						crmSpc = crmSpc.replace(':','_')
 						if crmSpc in classes:
 							d[ent] = crmSpc
 						elif crmSpc in coreClass:
 							for spc in coreClass[crmSpc]:
+								spc = spc.replace(':','_')
 								if spc in classes:
 									d[ent] = spc
 									break
 
 	for c in classes:
-		d[c] = c
+		d[c.replace('_',':',1)] = c
 	return d
 
 # Function to convert RDF triples to Mermaid statements.
 # Returns a list of statements
-def convert(rdfInput):
-	inFormat = util.guess_format(rdfInput)
-	g = Graph()
-	g.parse(rdfInput, format=inFormat)
+def convert(dataGraph,conf):
+	g = dataGraph
 
-	classes = classDict()
+	classes = classDict(conf)
 
 	objList = []
 	stmtList = []
@@ -145,7 +155,7 @@ def convert(rdfInput):
 		# check whether the object of the triple is a key in the returned dict of classDict
 		# to retrieve the Mermaid class, i.e check for the object of the property rdf:type
 		if p == 'rdf:type':
-			c = o.n3(g.namespace_manager).split(':')[1]
+			c = o.n3(g.namespace_manager)
 			if c in classes:
 				cl = classes[c]
 			else:
@@ -178,72 +188,110 @@ def convert(rdfInput):
 										n2,
 										o.n3(g.namespace_manager))
 
-		stmtList.append(stmt)
+		stmtList.append(stmt)	
 	return stmtList
 
+# processing node labels and urls described by shacl
+def shapeProc(dataGraph,shapeInput):
+	shapeFormat = util.guess_format(shapeInput)
+	shape = Graph()
+	shape.parse(shapeInput, format=shapeFormat)
+
+	for s,p,o in shape.triples((None, SKOS.example, None)):
+		if (s,RDF.type,SH.NodeShape) in shape:
+			inst = "(["+o.n3(shape.namespace_manager)+"])"
+			inst = inst.replace('<','').replace('>','')
+			nodeLb =''
+			for propShape in shape.objects(s,SH.property):
+				for path in shape.objects(propShape,SH.path):
+					path = path.n3(shape.namespace_manager)
+				for nodeLb in shape.objects(propShape,SH.name):
+					nodeLb = nodeLb.n3(shape.namespace_manager).replace('"','')
+				for nodeURL in shape.objects(propShape,SH.description):
+					nodeURL = nodeURL.n3(shape.namespace_manager).replace('"','')
+				if nodeURL:
+					nodeLink[nodeLb] = nodeURL
+				for nodeVal in shape.objects(propShape,SH.defaultValue):
+					nodeLb = nodeLb+'|||'+nodeVal.n3(shape.namespace_manager)
+					nodeValURL = nodeVal
+					nodeVal = nodeVal.n3(shape.namespace_manager)
+					for nodeValLb in dataGraph.objects(nodeValURL,RDFS.label):
+						nodeValLb = nodeValLb.n3(shape.namespace_manager).replace('"',"''").replace('^^xsd:string','')
+						nodeLb = nodeLb+'<br><i>'+str(nodeValLb)+'</i>'
+						nodeVal = nodeVal+'<br><i>'+str(nodeValLb)+'</i>'
+					if nodeValURL:
+						nodeLink[nodeVal] = nodeValURL
+
+				if not inst in nodeLabels:
+					nodeLabels[inst] = {path: nodeLb}
+				else:
+					nodeLabels[inst][path] = nodeLb		
+
+
 # Function to generate mermaid.jd style class definition based the classes dict from source.py
-def template():
-	template = "graph TD\n"
-	classes = source.classes
+def template(conf):
+	template = "flowchart TD\n"
+	if 'style' in conf:
+		classes = conf['style']
+	else:
+		classes = defaultConfig['style']
 	for c in classes:
-		template += "classDef {} fill:{},stroke:{};\n".format(c,classes[c]["classColor"],classes[c]["classStroke"])
-		template += "classDef {}_URI fill:{},stroke:{};\n".format(c,classes[c]["instanceColor"],classes[c]["instanceStroke"])
+		if 'classColor' in classes[c]:
+			classFill = classes[c]["classColor"]
+		else:
+			classFill = ''
+		if 'classStroke' in classes[c]:
+			classStroke = classes[c]["classStroke"]
+		else:
+			classStroke = ''
+		if 'classFontColor' in classes[c]:
+			classFontColor = classes[c]["classFontColor"]
+		else:
+			classFontColor = ''
+		if 'instanceColor' in classes[c]:
+			instanceFill = classes[c]["instanceColor"]
+		else:
+			instanceFill = ''
+		if 'instanceStroke' in classes[c]:
+			instanceStroke = classes[c]["instanceStroke"]
+		else:
+			instanceStroke = ''
+		if 'instanceFontColor' in classes[c]:
+			instanceFontColor = classes[c]["instanceFontColor"]
+		else:
+			instanceFontColor = ''
+		template += "classDef {} fill:{},stroke:{},color:{};\n".format(c,classFill,classStroke,classFontColor)
+		template += "classDef {}_URI fill:{},stroke:{},color:{};\n".format(c,instanceFill,instanceStroke,instanceFontColor)
 	return template
 
 # Main function to convert a RDF turtle files to Mermaid with instances.
-def instance(rdfInput, mmdOutput):
-	read = template()
+def instance(dataGraph, mmdOutput, conf):
+	read = template(conf)
 	out = open(mmdOutput, "w", encoding="utf-8")
 	out.write(read)
 
-	stmtList = convert(rdfInput)
+	stmtList = convert(dataGraph,conf)
 		
 	for stmt in stmtList:
-		if source.node_label['prop'] not in stmt:
-			stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
-			stmt = stmt.replace('(["<','(["').replace('>"])','"])')
-			stmt = stmt.replace('|<','|"').replace('>|','"|').replace('--"','-->')
-			out.write(stmt+'\n')
+		stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
+		stmt = stmt.replace('(["<','(["').replace('>"])','"])')
+		stmt = stmt.replace('|<','|"').replace('>|','"|').replace('--"','-->')
+		out.write(stmt+'\n')
 
 # Main function to convert a RDF turtle files to Mermaid, but only the classes represented, without the instances,
 # by replacing the uri with the classes in Mermaid statements.
-def ontology(rdfInput, mmdOutput):
-	read = template()
+def ontology(dataGraph, mmdOutput, conf):
+	read = template(conf)
 	out = open(mmdOutput, "w", encoding="utf-8")
 	out.write(read)
 
-	nodeLabelProp = source.node_label['prop']
-	sep = source.node_label['separator']
-
 	uriType = {} # URI and class dict
-	classNode = {} # URI and Node Label for node of ontology class
-	litNode = {} # URI, {Property, Node Label} for node of Literal type
-	nodeLink = {} # Node Label and link to node documentation
+
 	statements = []
-	
-	stmtList = convert(rdfInput)
+
+	stmtList = convert(dataGraph,conf)
+
 	for stmt in stmtList:
-		# processing Node Label
-		if nodeLabelProp in stmt:
-			stmt = stmt.replace('"',"")
-			stmt = stmt.replace('([<','([').replace('>])','])')
-			m = re.match('\d+(\(\[.*:.*\)) -->\|.*\| \d+\(\[(.*)\]\)', stmt) 
-			inst = m.group(1) # get the uri part
-			nodeLab = m.group(2) # get the node label value
-			nodeLabelSplit = nodeLab.split(sep)
-
-			if ('http' not in nodeLabelSplit[-1] and len(nodeLabelSplit) == 1) \
-				or ('http' in nodeLabelSplit[-1] and len(nodeLabelSplit) == 2):
-					classNode[inst] = nodeLabelSplit[0]
-			if ('http' not in nodeLabelSplit[-1] and len(nodeLabelSplit) != 1) \
-				or ('http' in nodeLabelSplit[-1] and len(nodeLabelSplit) != 2):
-				if not inst in litNode:
-					litNode[inst] = {nodeLabelSplit[0]: nodeLabelSplit[1]}
-				else:
-					litNode[inst][nodeLabelSplit[0]] = nodeLabelSplit[1]
-			if 'http' in nodeLabelSplit[-1]:
-				nodeLink[nodeLabelSplit[-2]] = nodeLabelSplit[-1]
-
 		stmt = stmt.replace('"',"''").replace('[','["').replace(']','"]')
 		stmt = stmt.replace('(["<','([').replace('>"])','])')
 
@@ -269,38 +317,55 @@ def ontology(rdfInput, mmdOutput):
 				multi = uriType[inst].split('"]')[0] + '<br>' + clType + ']:::Multi'
 				uriType[inst] = multi
 
-		elif not 'rdfs:label' in stmt and not nodeLabelProp in stmt:
+		elif not 'rdfs:label' in stmt:
 			statements.append(stmt)
-	
+
 	for stmt in statements:
 		m = re.match('\d+(\(\[.*:.*\)) -->\|(.*)\| (\d+)(\(*\[(.*)\]\)*)', stmt)
 		label = ''
 		if m.group(1) in uriType:
 			stmt = stmt.replace(m.group(1), uriType[m.group(1)])
 		if m.group(4) in uriType:
-			if m.group(4) in classNode:
-				label = classNode[m.group(4)]
-				addNodeLab = uriType[m.group(4)].split('"]')[0]+'<br><b>'+label+'</b>'+'"]'+uriType[m.group(4)].split('"]')[1]
-				stmt = stmt.replace(m.group(4), addNodeLab)
-			else:
-				stmt = stmt.replace(m.group(4), uriType[m.group(4)])
-		if m.group(1) in litNode and m.group(2) in litNode[m.group(1)]:
-			label = litNode[m.group(1)][m.group(2)]
-			stmt = stmt.replace(m.group(5), m.group(5)+'<br><b>'+label+'</b>')
-		# write out statement
+			stmt = stmt.replace(m.group(4), uriType[m.group(4)])
+
+		m2 = re.match('\d+(\(*\[.*:.*\)*) -->\|(.*)\| (\d+)(\(*\[(.*)\]\)*)(.*)', stmt)
+		mGroup1 = m.group(1).replace('"','')
+		if mGroup1 in nodeLabels and m.group(2) in nodeLabels[mGroup1]:
+			label = nodeLabels[mGroup1][m.group(2)]
+			out.write(f'subgraph {m2.group(3)} [{m2.group(5)}]\n')
+			lbSplit = label.split('|||')
+			if lbSplit[0] != '':
+				sgStmt1 = f'{m2.group(3)}a[<b>{lbSplit[0]}</b>]{m2.group(6)}\n'
+				out.write(sgStmt1)
+				if lbSplit[0] in nodeLink:
+					out.write(f'click {m.group(3)}a "{nodeLink[lbSplit[0]]}" _blank\n')
+			if len(lbSplit) > 1:
+				sgStmt2 = f'{m2.group(3)}b["{lbSplit[1]}"]{m2.group(6)}\n'
+				out.write(sgStmt2)
+				if lbSplit[1] in nodeLink:
+					out.write(f'click {m.group(3)}b "{nodeLink[lbSplit[1]]}" _blank\n')
+			if len(lbSplit) > 1 and lbSplit[0] != '':
+				out.write(f'{m2.group(3)}a---{m2.group(3)}b\n')
+			out.write('end\n')
+			stmt = stmt.replace(m2.group(4), '')
+		
 		out.write(stmt+'\n')
-		# add clickable link to node
-		if label in nodeLink:
-			out.write('click '+m.group(3)+' "'+nodeLink[label]+'" _blank\n')
 
 
-def main(Type, rdf, mmd,):
+def main(Type, rdf, mmd, shacl, configFile):
 	SUFFIX_FORMAT_MAP["rdfs"] = "xml"
 	SUFFIX_FORMAT_MAP["json"] = "json-ld"
+	
+	inFormat = util.guess_format(rdf)
+	dataGraph = Graph()
+	dataGraph.parse(rdf, format=inFormat)
+	if shacl is not None:
+		shapeProc(dataGraph,shacl)
+	conf = json.load(open(configFile,'r',encoding='utf-8'))
 	if Type == 'instance':
-		instance(rdf, mmd)
+		instance(dataGraph, mmd, conf)
 	elif Type == 'ontology':
-		ontology(rdf, mmd)
+		ontology(dataGraph, mmd, conf)		
 	print('Success!')
 
 # argparse arguments
@@ -310,10 +375,12 @@ def parse_args():
 	parser.add_argument("Type", help='The type of the diagram', choices=['instance', 'ontology'])
 	parser.add_argument("rdf", help='RDF input filename including path_to_file')
 	parser.add_argument("mmd", help='Mermaid output filename including path_to_file')
+	parser.add_argument("-sh","--shacl", help='SHACL filename including path_to_file', default=None)
+	parser.add_argument("-conf","--configFile", help='Configuration filename including path_to_file', default='config.json')
 
 	args = parser.parse_args()
 	return args
 
 if __name__ == '__main__':
 	args = parse_args()
-	main(args.Type, args.rdf, args.mmd)
+	main(args.Type, args.rdf, args.mmd, args.shacl, args.configFile)

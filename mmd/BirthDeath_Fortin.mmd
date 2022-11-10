@@ -1,52 +1,60 @@
-graph TD
-classDef Literal fill:#f2f2f2,stroke:#000000;
-classDef CRM_Entity fill:#FFFFFF,stroke:#000000;
-classDef CRM_Entity_URI fill:#FFFFFF,stroke:#000000;
-classDef Temporal_Entity fill:#00C9E6, stroke:#000000;
-classDef Temporal_Entity_URI fill:#99f1ff,stroke:#000000;
-classDef Type fill:#E18312, stroke:#000000;
-classDef Type_URI fill:#f6c588,stroke:#000000;
-classDef Time-Span fill:#2C9C91, stroke:#000000;
-classDef Time-Span_URI fill:#9be4dc,stroke:#000000;
-classDef Appellation fill:#FFEB7F, stroke:#000000;
-classDef Appellation_URI fill:#fff6cc,stroke:#000000;
-classDef Place fill:#008836, stroke:#000000;
-classDef Place_URI fill:#33ff85,stroke:#000000;
-classDef Persistent_Item fill:#B266B2, stroke:#000000;
-classDef Persistent_Item_URI fill:#dcbcdc,stroke:#000000;
-classDef Conceptual_Object fill:#FFD700, stroke:#000000;
-classDef Conceptual_Object_URI fill:#fff099,stroke:#000000;
-classDef Physical_Thing fill:#D2B48C, stroke:#000000;
-classDef Physical_Thing_URI fill:#eadbc8,stroke:#000000;
-classDef Actor fill:#f58aad, stroke:#000000;
-classDef Actor_URI fill:#fbd0de,stroke:#000000;
-classDef PC_Classes fill:#4ce600, stroke:#000000;
-classDef PC_Classes_URI fill:#bbff99,stroke:#000000;
-classDef Multi_URI fill:#cccccc,stroke:#000000;
-
-0([https://www.chin-rcip.ca/e2/0001]) -->|crm:P7_took_place_at| 1([https://www.chin-rcip.ca/e53/0001])
-2([https://www.chin-rcip.ca/e39/0001]):::Actor_URI -->|rdf:type| 3["crm:E21_Person"]:::Actor
-4([https://www.chin-rcip.ca/e2/0002]) -->|crm:P4_has_time-span| 5([https://www.chin-rcip.ca/e52/0002])
-5([https://www.chin-rcip.ca/e52/0002]) -->|crm:P82a_begin_of_the_begin| 6(["''1970-03-02T00:00:00''^^xsd:dateTime"]):::Literal
-2([https://www.chin-rcip.ca/e39/0001]) -->|rdfs:label| 7(["''Marc-Aurèle Fortin (1888-1970)''^^xsd:string"]):::Literal
-8([https://www.chin-rcip.ca/e53/0002]) -->|rdfs:label| 9(["''Macamic, Québec''^^xsd:string"]):::Literal
-5([https://www.chin-rcip.ca/e52/0002]):::Time-Span_URI -->|rdf:type| 10["crm:E52_Time-Span"]:::Time-Span
-8([https://www.chin-rcip.ca/e53/0002]):::Place_URI -->|rdf:type| 11["crm:E53_Place"]:::Place
-1([https://www.chin-rcip.ca/e53/0001]):::Place_URI -->|rdf:type| 12["crm:E53_Place"]:::Place
-13([https://www.chin-rcip.ca/e52/0001]):::Time-Span_URI -->|rdf:type| 14["crm:E52_Time-Span"]:::Time-Span
-0([https://www.chin-rcip.ca/e2/0001]) -->|crm:P97_from_father| 15([https://www.chin-rcip.ca/e39/0003])
-5([https://www.chin-rcip.ca/e52/0002]) -->|crm:P82b_end_of_the_end| 16(["''1970-03-02T23:59:59''^^xsd:dateTime"]):::Literal
-15([https://www.chin-rcip.ca/e39/0003]) -->|rdfs:label| 17(["''Thomas Fortin (1853-1933)''^^xsd:string"]):::Literal
-13([https://www.chin-rcip.ca/e52/0001]) -->|crm:P82a_begin_of_the_begin| 18(["''1888-03-14T00:00:00''^^xsd:dateTime"]):::Literal
-15([https://www.chin-rcip.ca/e39/0003]):::Actor_URI -->|rdf:type| 19["crm:E21_Person"]:::Actor
-4([https://www.chin-rcip.ca/e2/0002]):::Temporal_Entity_URI -->|rdf:type| 20["crm:E69_Death"]:::Temporal_Entity
-0([https://www.chin-rcip.ca/e2/0001]) -->|crm:P4_has_time-span| 13([https://www.chin-rcip.ca/e52/0001])
-2([https://www.chin-rcip.ca/e39/0001]) -->|crm:P98i_was_born| 0([https://www.chin-rcip.ca/e2/0001])
-0([https://www.chin-rcip.ca/e2/0001]) -->|crm:P96_by_mother| 21([https://www.chin-rcip.ca/e39/0002])
-21([https://www.chin-rcip.ca/e39/0002]) -->|rdfs:label| 22(["''Amanda Fortier (1861-1953)''^^xsd:string"]):::Literal
-0([https://www.chin-rcip.ca/e2/0001]):::Temporal_Entity_URI -->|rdf:type| 23["crm:E67_Birth"]:::Temporal_Entity
-4([https://www.chin-rcip.ca/e2/0002]) -->|crm:P7_took_place_at| 8([https://www.chin-rcip.ca/e53/0002])
-21([https://www.chin-rcip.ca/e39/0002]):::Actor_URI -->|rdf:type| 24["crm:E21_Person"]:::Actor
-13([https://www.chin-rcip.ca/e52/0001]) -->|crm:P82b_end_of_the_end| 25(["''1888-03-14T23:59:59''^^xsd:dateTime"]):::Literal
-1([https://www.chin-rcip.ca/e53/0001]) -->|rdfs:label| 26(["''Laval, Québec''^^xsd:string"]):::Literal
-2([https://www.chin-rcip.ca/e39/0001]) -->|crm:P100i_died_in| 4([https://www.chin-rcip.ca/e2/0002])
+flowchart TD
+classDef Literal fill:#ffffff,stroke:#000000,color:;
+classDef Literal_URI fill:#ffffff,stroke:#000000,color:;
+classDef E1_CRM_Entity fill:#ffffff,stroke:#000000,color:;
+classDef E1_CRM_Entity_URI fill:#ffffff,stroke:#000000,color:;
+classDef E2_Temporal_Entity fill:#82c3ec,stroke:#000000,color:;
+classDef E2_Temporal_Entity_URI fill:#d2e9f9,stroke:#000000,color:;
+classDef E55_Type fill:#fab565,stroke:#000000,color:;
+classDef E55_Type_URI fill:#fde7ce,stroke:#000000,color:;
+classDef E52_Time-Span fill:#86bcc8,stroke:#000000,color:;
+classDef E52_Time-Span_URI fill:#dcebef,stroke:#000000,color:;
+classDef E41_Appellation fill:#fef3ba,stroke:#000000,color:;
+classDef E41_Appellation_URI fill:#fffae6,stroke:#000000,color:;
+classDef E53_Place fill:#94cc7d,stroke:#000000,color:;
+classDef E53_Place_URI fill:#e1f1da,stroke:#000000,color:;
+classDef E77_Persistent_Item fill:#ffffff,stroke:#000000,color:;
+classDef E77_Persistent_Item_URI fill:#ffffff,stroke:#000000,color:;
+classDef E28_Conceptual_Object fill:#fddc34,stroke:#000000,color:;
+classDef E28_Conceptual_Object_URI fill:#fef6cd,stroke:#000000,color:;
+classDef E18_Physical_Thing fill:#e1ba9c,stroke:#000000,color:;
+classDef E18_Physical_Thing_URI fill:#f3e5d8,stroke:#000000,color:;
+classDef E39_Actor fill:#ffbdca,stroke:#000000,color:;
+classDef E39_Actor_URI fill:#ffe6eb,stroke:#000000,color:;
+classDef PC0_Typed_CRM_Property fill:#cc80ff,stroke:#000000,color:;
+classDef PC0_Typed_CRM_Property_URI fill:#ebccff,stroke:#000000,color:;
+classDef Multi fill:#cccccc,stroke:#000000,color:;
+classDef Multi_URI fill:#cccccc,stroke:#000000,color:;
+0(["actor:0001"]) -->|crm:P98i_was_born| 1(["https://dopheda.info/crm_e2/0001"])
+2(["https://dopheda.info/crm_e52/0001"]) -->|crm:P82a_begin_of_the_begin| 3(["''1888-03-14T00:00:00''^^xsd:dateTime"]):::Literal
+4(["geoname:6062563"]):::E53_Place_URI -->|rdf:type| 5["crm:E53_Place"]:::E53_Place
+6(["https://dopheda.info/crm_e41/0003"]):::E28_Conceptual_Object_URI -->|rdf:type| 7["crm:E33_Linguistic_Object"]:::E28_Conceptual_Object
+8(["https://dopheda.info/crm_e52/0002"]) -->|crm:P82b_end_of_the_end| 9(["''1970-03-02T23:59:59''^^xsd:dateTime"]):::Literal
+1(["https://dopheda.info/crm_e2/0001"]) -->|crm:P4_has_time-span| 2(["https://dopheda.info/crm_e52/0001"])
+0(["actor:0001"]):::E39_Actor_URI -->|rdf:type| 10["crm:E21_Person"]:::E39_Actor
+11(["https://dopheda.info/crm_e2/0002"]) -->|crm:P4_has_time-span| 8(["https://dopheda.info/crm_e52/0002"])
+12(["https://dopheda.info/crm_e41/0002"]) -->|crm:P190_has_symbolic_content| 13(["''Amanda Fortier (1861-1953)''^^xsd:string"]):::Literal
+11(["https://dopheda.info/crm_e2/0002"]) -->|crm:P7_took_place_at| 4(["geoname:6062563"])
+14(["geoname:6050610"]) -->|rdfs:label| 15(["''Laval, Québec''@fr"]):::Literal
+12(["https://dopheda.info/crm_e41/0002"]):::E41_Appellation_URI -->|rdf:type| 16["crm:E41_Appellation"]:::E41_Appellation
+0(["actor:0001"]) -->|rdfs:label| 17(["''Marc-Aurèle Fortin (1888-1970)''^^xsd:string"]):::Literal
+2(["https://dopheda.info/crm_e52/0001"]):::E52_Time-Span_URI -->|rdf:type| 18["crm:E52_Time-Span"]:::E52_Time-Span
+4(["geoname:6062563"]) -->|rdfs:label| 19(["''Macamic, Québec''^^xsd:string"]):::Literal
+20(["actor:0002"]):::E39_Actor_URI -->|rdf:type| 21["crm:E21_Person"]:::E39_Actor
+6(["https://dopheda.info/crm_e41/0003"]) -->|crm:P190_has_symbolic_content| 22(["''Thomas Fortin (1853-1933)''^^xsd:string"]):::Literal
+14(["geoname:6050610"]) -->|rdfs:label| 23(["''Laval, Quebec''@en"]):::Literal
+8(["https://dopheda.info/crm_e52/0002"]):::E52_Time-Span_URI -->|rdf:type| 24["crm:E52_Time-Span"]:::E52_Time-Span
+1(["https://dopheda.info/crm_e2/0001"]):::E2_Temporal_Entity_URI -->|rdf:type| 25["crm:E67_Birth"]:::E2_Temporal_Entity
+12(["https://dopheda.info/crm_e41/0002"]):::Multi_URI -->|rdf:type| 26["crm:E33_Linguistic_Object"]:::E28_Conceptual_Object
+8(["https://dopheda.info/crm_e52/0002"]) -->|crm:P82a_begin_of_the_begin| 27(["''1970-03-02T00:00:00''^^xsd:dateTime"]):::Literal
+20(["actor:0002"]) -->|crm:P1_is_identified_by| 12(["https://dopheda.info/crm_e41/0002"])
+0(["actor:0001"]) -->|crm:P100i_died_in| 11(["https://dopheda.info/crm_e2/0002"])
+28(["actor:0003"]):::E39_Actor_URI -->|rdf:type| 29["crm:E21_Person"]:::E39_Actor
+6(["https://dopheda.info/crm_e41/0003"]):::Multi_URI -->|rdf:type| 30["crm:E41_Appellation"]:::E41_Appellation
+1(["https://dopheda.info/crm_e2/0001"]) -->|crm:P97_from_father| 28(["actor:0003"])
+1(["https://dopheda.info/crm_e2/0001"]) -->|crm:P96_by_mother| 20(["actor:0002"])
+14(["geoname:6050610"]):::E53_Place_URI -->|rdf:type| 31["crm:E53_Place"]:::E53_Place
+11(["https://dopheda.info/crm_e2/0002"]):::E2_Temporal_Entity_URI -->|rdf:type| 32["crm:E69_Death"]:::E2_Temporal_Entity
+1(["https://dopheda.info/crm_e2/0001"]) -->|crm:P7_took_place_at| 14(["geoname:6050610"])
+2(["https://dopheda.info/crm_e52/0001"]) -->|crm:P82b_end_of_the_end| 33(["''1888-03-14T23:59:59''^^xsd:dateTime"]):::Literal
+28(["actor:0003"]) -->|crm:P1_is_identified_by| 6(["https://dopheda.info/crm_e41/0003"])

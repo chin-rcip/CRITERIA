@@ -1,0 +1,78 @@
+flowchart TD
+classDef Literal fill:#ffffff,stroke:#000000;
+classDef Literal_URI fill:#ffffff,stroke:#000000;
+classDef E1_CRM_Entity fill:#ffffff,stroke:#000000;
+classDef E1_CRM_Entity_URI fill:#ffffff,stroke:#000000;
+classDef E2_Temporal_Entity fill:#82c3ec,stroke:#000000;
+classDef E2_Temporal_Entity_URI fill:#d2e9f9,stroke:#000000;
+classDef E55_Type fill:#fab565,stroke:#000000;
+classDef E55_Type_URI fill:#fde7ce,stroke:#000000;
+classDef E52_Time-Span fill:#86bcc8,stroke:#000000;
+classDef E52_Time-Span_URI fill:#dcebef,stroke:#000000;
+classDef E41_Appellation fill:#fef3ba,stroke:#000000;
+classDef E41_Appellation_URI fill:#fffae6,stroke:#000000;
+classDef E53_Place fill:#94cc7d,stroke:#000000;
+classDef E53_Place_URI fill:#e1f1da,stroke:#000000;
+classDef E77_Persistent_Item fill:#ffffff,stroke:#000000;
+classDef E77_Persistent_Item_URI fill:#ffffff,stroke:#000000;
+classDef E28_Conceptual_Object fill:#fddc34,stroke:#000000;
+classDef E28_Conceptual_Object_URI fill:#fef6cd,stroke:#000000;
+classDef E18_Physical_Thing fill:#e1ba9c,stroke:#000000;
+classDef E18_Physical_Thing_URI fill:#f3e5d8,stroke:#000000;
+classDef E39_Actor fill:#ffbdca,stroke:#000000;
+classDef E39_Actor_URI fill:#ffe6eb,stroke:#000000;
+classDef PC0_Typed_CRM_Property fill:#cc80ff,stroke:#000000;
+classDef PC0_Typed_CRM_Property_URI fill:#ebccff,stroke:#000000;
+classDef Multi fill:#cccccc,stroke:#000000;
+classDef Multi_URI fill:#cccccc,stroke:#000000;
+6["crm:E67_Birth"]:::E2_Temporal_Entity -->|crm:P96_by_mother| 7["crm:E21_Person"]:::E39_Actor
+8["crm:E21_Person"]:::E39_Actor -->|crm:P98i_was_born| 6["crm:E67_Birth"]:::E2_Temporal_Entity
+subgraph 10 ["xsd:dateTime"]
+10a[<b>Birth Date Begin</b>]:::Literal
+click 10a "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#birth-date-begin" _blank
+end
+9["crm:E52_Time-Span"]:::E52_Time-Span -->|crm:P82a_begin_of_the_begin| 10:::Literal
+15["crm:E69_Death"]:::E2_Temporal_Entity -->|crm:P4_has_time-span| 16["crm:E52_Time-Span"]:::E52_Time-Span
+subgraph 18 ["crm:E53_Place"]
+18a[<b>Death Place</b>]:::E53_Place
+click 18a "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#birth-place" _blank
+end
+15["crm:E69_Death"]:::E2_Temporal_Entity -->|crm:P7_took_place_at| 18:::E53_Place
+6["crm:E67_Birth"]:::E2_Temporal_Entity -->|crm:P4_has_time-span| 9["crm:E52_Time-Span"]:::E52_Time-Span
+subgraph 20 ["xsd:dateTime"]
+20a[<b>Death Date End</b>]:::Literal
+click 20a "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#death-date-end" _blank
+end
+16["crm:E52_Time-Span"]:::E52_Time-Span -->|crm:P82b_end_of_the_end| 20:::Literal
+subgraph 21 ["xsd:string"]
+21a[<b>Mother Appellation</b>]:::Literal
+click 21a "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#mother-appellation" _blank
+end
+4["crm:E33_Linguistic_Object<br>crm:E41_Appellation"]:::Multi -->|crm:P190_has_symbolic_content| 21:::Literal
+subgraph 23 ["xsd:dateTime"]
+23a[<b>Birth Date End</b>]:::Literal
+click 23a "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#birth-date-end" _blank
+end
+9["crm:E52_Time-Span"]:::E52_Time-Span -->|crm:P82b_end_of_the_end| 23:::Literal
+24["crm:E21_Person"]:::E39_Actor -->|crm:P1_is_identified_by| 0["crm:E41_Appellation<br>crm:E33_Linguistic_Object"]:::Multi
+7["crm:E21_Person"]:::E39_Actor -->|crm:P1_is_identified_by| 4["crm:E33_Linguistic_Object<br>crm:E41_Appellation"]:::Multi
+6["crm:E67_Birth"]:::E2_Temporal_Entity -->|crm:P97_from_father| 24["crm:E21_Person"]:::E39_Actor
+subgraph 29 ["xsd:dateTime"]
+29a[<b>Death Date Begin</b>]:::Literal
+click 29a "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#death-date-begin" _blank
+end
+16["crm:E52_Time-Span"]:::E52_Time-Span -->|crm:P82a_begin_of_the_begin| 29:::Literal
+subgraph 31 ["xsd:string"]
+31a[<b>Father Appellation</b>]:::Literal
+click 31a "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#father-appellation" _blank
+end
+0["crm:E41_Appellation<br>crm:E33_Linguistic_Object"]:::Multi -->|crm:P190_has_symbolic_content| 31:::Literal
+subgraph 2 ["crm:E53_Place"]
+2a[<b>Birth Place</b>]:::E53_Place
+click 2a "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#birth-place" _blank
+2b["geoname:6050610<br><i>''Laval, Québec''@fr</i><br><i>''Laval, Quebec''@en</i>"]:::E53_Place
+click 2b "http://www.geonames.org/6050610" _blank
+2a---2b
+end
+6["crm:E67_Birth"]:::E2_Temporal_Entity -->|crm:P7_took_place_at| 2:::E53_Place
+8["crm:E21_Person"]:::E39_Actor -->|crm:P100i_died_in| 15["crm:E69_Death"]:::E2_Temporal_Entity

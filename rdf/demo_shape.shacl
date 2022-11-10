@@ -1,0 +1,65 @@
+@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix ex: <http://www.example.org/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix geoname: <http://www.geonames.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+ex:BirthDate a sh:NodeShape ;
+	skos:example <https://dopheda.info/crm_e52/0001> ;
+	sh:property [
+		sh:path crm:P82a_begin_of_the_begin ;
+		sh:name "Birth Date Begin" ;
+		sh:description "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#birth-date-begin" ;
+	] ;
+	sh:property [
+		sh:path crm:P82b_end_of_the_end ;
+		sh:name "Birth Date End" ;
+		sh:description "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#birth-date-end" ;
+	] .
+
+ex:BirthPlace a sh:NodeShape ;
+	skos:example <https://dopheda.info/crm_e2/0001> ;
+	sh:property [
+		sh:path crm:P7_took_place_at ;
+		sh:defaultValue geoname:6050610 ;
+		sh:name "Birth Place" ;
+		sh:description "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#birth-place" ;
+	] .
+
+ex:DeathDate a sh:NodeShape ;
+	skos:example <https://dopheda.info/crm_e52/0002> ;
+	sh:property [
+		sh:path crm:P82a_begin_of_the_begin ;
+		sh:name "Death Date Begin" ;
+		sh:description "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#death-date-begin" ;
+	] ;
+	sh:property [
+		sh:path crm:P82b_end_of_the_end ;
+		sh:name "Death Date End" ;
+		sh:description "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#death-date-end" ;
+	] .
+
+ex:DeathPlace a sh:NodeShape ;
+	skos:example <https://dopheda.info/crm_e2/0002> ;
+	sh:property [
+		sh:path crm:P7_took_place_at ;
+		sh:name "Death Place" ;
+		sh:description "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#birth-place" ;
+	] .
+
+ex:MotherAppellation a sh:NodeShape ;
+	skos:example <https://dopheda.info/crm_e41/0002> ;
+	sh:property [
+		sh:path crm:P190_has_symbolic_content ;
+		sh:name "Mother Appellation" ;
+		sh:description "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#mother-appellation" ;
+	] .
+
+ex:FatherAppellation a sh:NodeShape ;
+	skos:example <https://dopheda.info/crm_e41/0003> ;
+	sh:property [
+		sh:path crm:P190_has_symbolic_content ;
+		sh:name "Father Appellation" ;
+		sh:description "https://chin-rcip.github.io/collections-model/en/semantic-paths-specification/current/entry-nodes#father-appellation" ;
+	] .
