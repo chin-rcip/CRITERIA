@@ -217,8 +217,8 @@ def shapeProc(dataGraph,shapeInput):
 					nodeVal = nodeVal.n3(shape.namespace_manager)
 					for nodeValLb in dataGraph.objects(nodeValURL,RDFS.label):
 						nodeValLb = nodeValLb.n3(shape.namespace_manager).replace('"',"''").replace('^^xsd:string','')
-						nodeLb = nodeLb+'<br><i>'+str(nodeValLb)+'</i>'
-						nodeVal = nodeVal+'<br><i>'+str(nodeValLb)+'</i>'
+						nodeLb = nodeLb+'<br><em>'+str(nodeValLb)+'</em>'
+						nodeVal = nodeVal+'<br><em>'+str(nodeValLb)+'</em>'
 					if nodeValURL:
 						nodeLink[nodeVal] = nodeValURL
 
@@ -335,7 +335,7 @@ def ontology(dataGraph, mmdOutput, conf):
 			out.write(f'subgraph {m2.group(3)} [{m2.group(5)}]\n')
 			lbSplit = label.split('|||')
 			if lbSplit[0] != '':
-				sgStmt1 = f'{m2.group(3)}a[<b>{lbSplit[0]}</b>]{m2.group(6)}\n'
+				sgStmt1 = f'{m2.group(3)}a[<strong>{lbSplit[0]}</strong>]{m2.group(6)}\n'
 				out.write(sgStmt1)
 				if lbSplit[0] in nodeLink:
 					out.write(f'click {m.group(3)}a "{nodeLink[lbSplit[0]]}" _blank\n')
