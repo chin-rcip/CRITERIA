@@ -11,7 +11,7 @@
 		"crm_E28_Conceptual_Object": {"classColor": "#fddc34", "classStroke": "#000000", "instanceColor": "#fef6cd", "instanceStroke": "#000000"},
 		"crm_E18_Physical_Thing": {"classColor": "#e1ba9c", "classStroke": "#000000", "instanceColor": "#f3e5d8", "instanceStroke": "#000000"},
 		"crm_E39_Actor": {"classColor": "#ffbdca", "classStroke": "#000000", "instanceColor": "#ffe6eb", "instanceStroke": "#000000"},
-		"crmpc_PC0_Typed_CRM_Property": {"classColor": "#cc80ff", "classStroke": "#000000", "instanceColor": "#ebccff", "instanceStroke": "#000000"},
+		"crm_PC0_Typed_CRM_Property": {"classColor": "#cc80ff", "classStroke": "#000000", "instanceColor": "#ebccff", "instanceStroke": "#000000"},
 		"Multi": {"classColor": "#cccccc", "classStroke": "#000000", "instanceColor": "#cccccc", "instanceStroke": "#000000"}
 	},
 	"onto": {
@@ -29,7 +29,6 @@
 	},
 	"prefix": {
 		"crm": "http://www.cidoc-crm.org/cidoc-crm/",
-		"crmpc": "http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/",
 		"frbroo":"http://iflastandards.info/ns/fr/frbr/frbroo/",
 		"crmdig":"http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/",
 		"crmsci":"http://www.cidoc-crm.org/cidoc-crm/CRMsci/",
