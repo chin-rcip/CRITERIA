@@ -106,8 +106,8 @@ def classDict(conf):
 								break
 					elif len(extClass[ent]) > 0:
 						crmSpc = extClass[ent][-1] # retrieve the last/highest superclass of an extension class.
-						crmSpc = crmSpc.replace(':','_')
-						if crmSpc in classes:
+						if crmSpc.replace(':','_') in classes:
+							crmSpc = crmSpc.replace(':','_')
 							d[ent] = crmSpc
 						elif crmSpc in coreClass:
 							for spc in coreClass[crmSpc]:
