@@ -16,9 +16,9 @@
 	},
 	"onto": {
 		"crm": {
-			"core": "./src/ontologies/cidoc_crm_v6.2.1-2018April.rdfs",
+			"core": "./src/ontologies/CIDOC_CRM_v7.1.1.rdfs",
 			"extensions": {
-				"crmpc": "./src/ontologies/CRMpc_v1.1.1.rdfs",
+				"crmpc": "./src/ontologies/CIDOC_CRM_v7.1.1_PC.rdfs",
 				"frbroo": "./src/ontologies/FRBR2.4-draft.rdfs",
 				"crmdig": "./src/ontologies/CRMdig_v3.2.2.rdfs",
 				"crmsci": "./src/ontologies/CRMsci_v1.2.6.rdfs",
