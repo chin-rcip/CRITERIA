@@ -215,17 +215,17 @@ The following programming language versions and libraries are necessary to run t
 	- Pasting the entire mermaid markdown file into the code box on [Mermaid Live Editor](https://mermaid-js.github.io/mermaid-live-editor), which offers the option to download it in PNG or SVG;
 	- Embedding the mermaid markdown in the web site source code and [using Mermaid.js to render](https://mermaid-js.github.io/mermaid/#/n00b-gettingStarted?id=_3-deploying-mermaid-on-the-browser).
 	
-	***Example***:
+Example:
 
-	- To generate a diagram rendering instances using the RDF file `BirthDeath_Fortin.ttl` in the `./rdf` folder and the mermaid output to be stored in folder `./mmd`, the command is as follows:
-    ```shell
-    $ python criteria.py instance ./rdf/BirthDeath_Fortin.ttl ./mmd/BirthDeath_Fortin.mmd
-    ```
+- To generate a diagram rendering instances using the RDF file `BirthDeath_Fortin.ttl` in the `./rdf` folder and the mermaid output to be stored in folder `./mmd`, the command is as follows:
+  ```shell
+  $ python criteria.py instance ./rdf/BirthDeath_Fortin.ttl ./mmd/BirthDeath_Fortin.mmd
+  ```
 
-	- To generate a diagram rendering only the ontology without annotated nodes using the same RDF file and folder as above, the command is as follows:
-    ```shell
-    $ python criteria.py ontology ./rdf/BirthDeath_Fortin.ttl ./mmd/BirthDeath_onto.mmd
-    ```
+- To generate a diagram rendering only the ontology without annotated nodes using the same RDF file and folder as above, the command is as follows:
+  ```shell
+  $ python criteria.py ontology ./rdf/BirthDeath_Fortin.ttl ./mmd/BirthDeath_onto.mmd
+  ```
 
 - To generate a diagram rendering only the ontology with annotated nodes using the same RDF file and folder as above, the command is as follows:
     ```shell
@@ -263,7 +263,7 @@ The RDF snippet below is used for demonstration:
 - `sh:defaultValue`: Specific value of the annotated node, which could be either URI or literal, e.g. `geoname:6050610`. If URI, this value is embedded to the value node in the diagram as a link, if applicable.
 **Note**: *Annotated nodes sharing the same subject node can be grouped together, see the example for `Birth Date` in the [demo_shape.shacl](https://github.com/chin-rcip/CRITERIA/rdf/demo_shape.shacl).*
  
-***SHACL example***:
+SHACL example:
  
 ```turtle
 ex:BirthPlace a sh:NodeShape ;
@@ -314,7 +314,7 @@ The **JSON structure** for `"style"` is as below:
 		- ALWAYS use **underscore** as separator between ontology prefix and class name.
 - Use **CSS colour value**, e.g. `#90EE09`, or `lightgreen`.
 
-***Example***:
+Example:
 
 ```json
 {
@@ -363,7 +363,7 @@ To overwrite the default ontologies, prepare your JSON configuration file follow
 		- `{link-or-path-to-extension-ontology}`: URL or full path to the extension ontology RDF file.
 - `{ontology-base-url}`: The base URL of each ontology.
 
-***Example***:
+Example:
 
 ```json
 {
@@ -674,7 +674,7 @@ Pour exécuter l’outil, les versions du langage de programmation et les biblio
     - collant intégralement le contenu du fichier mermaid Markdown dans le champ de code de [l’éditeur Mermaid en ligne](https://mermaid-js.github.io/mermaid-live-editor) (en anglais seulement); cet utilitaire permet de télécharger le diagramme correspondant en format PNG ou SVG; ou en
     - intégrant le code Markdown dans le code source du site Web et en créant le diagramme à l’aide de [Mermaid.js](https://mermaid-js.github.io/mermaid/#/n00b-gettingStarted?id=_3-deploying-mermaid-on-the-browser) (en anglais seulement).
 
-***Exemple*** :
+Exemple :
 
   - Voici la commande servant à générer un diagramme d’instances à partir du fichier RDF `BirthDeath_Fortin.ttl` dans le répertoire `./rdf` et à l’enregistrer dans le répertoire `./mmd` :
   ```shell
@@ -723,7 +723,7 @@ L'extrait RDF ci-dessous est utilisé pour la démonstration :
 
 **Remarque** : *Les nœuds annotés partageant le même nœud sujet peuvent être regroupés, voir l'exemple pour `Birth Date` dans la démonstration [demo_shape.shacl](https://github.com/chin-rcip/CRITERIA/rdf/demo_shape.shacl).*
  
-***Exemple SHACL*** :
+Exemple SHACL :
  
 ```turtle
 ex:BirthPlace a sh:NodeShape ;
@@ -774,7 +774,7 @@ La **structure JSON** pour `"style"` est la suivante :
 		- Utilisez TOUJOURS le **trait de soulignement** comme séparateur entre le préfixe de l'ontologie et le nom de la classe.
 - Utilisez **la valeur de couleur CSS**, p. ex. `#90EE09` ou `lightgreen`.
 
-***Exemple*** :
+Exemple :
 
 ```json
 {
@@ -823,7 +823,7 @@ Pour écraser les ontologies par défaut, préparez votre fichier de configurati
 		- `{lien-ou-chemin-vers-lextension-de-lontologie-principale}`: URL ou chemin complet au fichier RDF de l'extension de l'ontologie principale.
 - `{url-de-base-de-lontologie}` : URL de base de chaque ontologie.
 
-***Exemple*** :
+Exemple :
 
 ```json
 {
