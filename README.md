@@ -25,10 +25,10 @@ An overview of CRITERIA, its usage, and instructions.
 		- [Requirements](#requirements)
 		- [Usage](#usage-1)
 			- [criteria.py](#criteriapy)
-			- [Node Annotation](#node-annotation)
-			- [Configuration](#configuration)
-				- [Colour Scheme](#colour-scheme)
-				- [Source ontologies](#source-ontologies)
+		- [Node Annotation](#node-annotation)
+		- [Configuration](#configuration)
+			- [Colour Scheme](#colour-scheme)
+			- [Source ontologies](#source-ontologies)
 - [Memory Aids](#memory-aids)
 - [For More Information](#for-more-information)
 - [Licence](#licence)
@@ -406,7 +406,7 @@ CRITERIA is under the [MIT License](https://github.com/chin-rcip/CRITERIA/blob/m
 
 ## Notable Users
 
-CHIN would like to recognize the projects and institutions that use CRITERIA, which make it possible for CHIN to improve the tool. If you use CRITERIA and your project is not listed below, please feel free to [contact us](#30j0zll).
+CHIN would like to recognize the projects and institutions that use CRITERIA, which make it possible for CHIN to improve the tool. If you use CRITERIA and your project is not listed below, please feel free to [contact us](mailto:pch.RCIP-CHIN.pch@canada.ca).
 
 **Project: [Reference Data Models](http://docs.swissartresearch.net/)**
 
@@ -596,7 +596,7 @@ Par exemple, il ne faudrait pas utiliser CRITERIA pour visualiser toutes les don
 
   - *Utilisateurs·rices (incluant les néophytes) du CIDOC CRM* : les personnes qui désirent mieux comprendre les ontologies du CIDOC CRM peuvent visualiser une sérialisation RDF existante, puisque CRITERIA a été créé à partir de l'ontologie principale CIDOC CRM et de certaines de ses extensions. Le schème de couleurs du CIDOC CRM est le style appliqué par défaut.
 
-  - *Développeurs·ses de logiciels ou de contenu* : les personnes chargées de produire la documentation sur un modèle de données ou de le tenir à jour sous forme numérique peuvent utiliser CRITERIA pour intégrer automatiquement dans leur environnement une visualisation des patrons conceptuels. Ces personnes seront particulièrement intéressées par l’utilisation en [ligne de commande](https://docs.google.com/document/d/1BCWZAtljnQag212G7hsHwfjvvsDwplLfjOh7gfODPLQ/edit#heading=h.17dp8vu) de cet outil.
+  - *Développeurs·ses de logiciels ou de contenu* : les personnes chargées de produire la documentation sur un modèle de données ou de le tenir à jour sous forme numérique peuvent utiliser CRITERIA pour intégrer automatiquement dans leur environnement une visualisation des patrons conceptuels. Ces personnes seront particulièrement intéressées par l’utilisation en [ligne de commande](#interface-en-ligne-de-commande) de cet outil.
 
 ## Instructions
 
@@ -867,7 +867,7 @@ CRITERIA est distribué en vertu de la [licence MIT](https://github.com/chin-rci
 
 ## Utilisateurs·rices dignes de mention
 
-Le RCIP veut remercier les responsables de projets et les institutions qui utilisent CRITERIA; nous ne pourrions pas améliorer cet outil sans leur contribution. Si vous utilisez CRITERIA mais que votre projet ne se trouve pas dans la liste ci-dessous, n’hésitez pas à [communiquer avec nous](#kix.xmzgkpdo17zb).
+Le RCIP veut remercier les responsables de projets et les institutions qui utilisent CRITERIA; nous ne pourrions pas améliorer cet outil sans leur contribution. Si vous utilisez CRITERIA mais que votre projet ne se trouve pas dans la liste ci-dessous, n’hésitez pas à [communiquer avec nous](mailto:pch.RCIP-CHIN.pch@canada.ca).
 
 **Projet : [Reference Data Models](http://docs.swissartresearch.net/) (en anglais seulement)**
 
