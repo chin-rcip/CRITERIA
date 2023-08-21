@@ -174,7 +174,7 @@ After launching the Live Demonstrator:
 
 7. Click on the generated diagram to zoom in or out if needed.
 
-8. Download the diagram as either a PNG or an SVG.
+8. To download the diagram as either a PNG, a SVG, or a mermaid markdown file, click on the corresponding button.
 
 ![](/docs/images/criteria_3.png)
 
@@ -634,7 +634,7 @@ Après avoir lancé le démonstrateur en ligne :
 
 7. Pour agrandir ou réduire le diagramme, cliquez sur celui-ci.
 
-8. Pour télécharger le diagramme en format PNG ou SVG, cliquez sur le bouton correspondant.
+8. Pour télécharger le diagramme en format PNG, SVG ou mermaid Markdown, cliquez sur le bouton correspondant.
 
 ![](/docs/images/criteria_3.png)
 
