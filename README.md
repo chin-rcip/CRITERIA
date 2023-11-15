@@ -8,9 +8,9 @@ An overview of CRITERIA, its usage, and instructions.
 
 **Created date**: 2021-04-19
 
-**Last update**: 2022-11-17
+**Last update**: 2023-11-15
 
-**Contact**: For questions or comments regarding CRITERIA, please consult the [Issues](https://github.com/chin-rcip/CRITERIA/issues) section (and open an Issue if it is relevant) or contact us by email at the following address: [pch.RCIP-CHIN.pch@canada.ca](mailto:pch.RCIP-CHIN.pch@canada.ca) with "CRITERIA" in the subject line.
+**Contact**: For questions or comments regarding CRITERIA, please consult the [Issues](https://github.com/chin-rcip/CRITERIA/issues) section (and open an Issue if it is relevant) or contact us by email at the following address: [rcip-chin@pch.gc.ca](mailto:rcip-chin@pch.gc.ca) with "CRITERIA" in the subject line.
 
 - [Main Use](#main-use)
 - [Context](#context)
@@ -143,7 +143,14 @@ For example, all data pertaining to Canadian artist Emily Carr (appellation, bir
 
 CRITERIA can be used in two ways, via either the live demonstrator or the command line interface (CLI).
 > **Note**: The script processes triples in random order, meaning the user would not have control on the order of statements in the mermaid output. It also means that running the script over the same RDF file would generate slightly different Mermaid files (i.e. different order of statements), meaning different graphs (i.e. nodes of the same level in different positions). However, the top node’s position and the hierarchy will remain the same.
+
 ### Live Demonstrator
+
+> **Disclaimer**: Please note the following points before using the live demonstrator:
+> 1. Do NOT enter any sensitive data into the input file that will be transformed into a diagram (unclassified data only);
+> 2. The live demonstrator is NOT a bilingual nor accessible application.
+> 
+> Contact us at [rcip-chin@pch.gc.ca](mailto:rcip-chin@pch.gc.ca) for further questions on that topic.
 
 The live demonstrator is [available here](http://chinrcip.pythonanywhere.com).
 
@@ -406,7 +413,7 @@ CRITERIA is under the [MIT License](https://github.com/chin-rcip/CRITERIA/blob/m
 
 ## Notable Users
 
-CHIN would like to recognize the projects and institutions that use CRITERIA, which make it possible for CHIN to improve the tool. If you use CRITERIA and your project is not listed below, please feel free to [contact us](mailto:pch.RCIP-CHIN.pch@canada.ca).
+CHIN would like to recognize the projects and institutions that use CRITERIA, which make it possible for CHIN to improve the tool. If you use CRITERIA and your project is not listed below, please feel free to [contact us](mailto:rcip-chin@pch.gc.ca).
 
 **Project: [Reference Data Models](http://docs.swissartresearch.net/)**
 
@@ -469,9 +476,9 @@ Un aperçu des fonctionnalités de CRITERIA ainsi que les instructions à suivre
 
 **Date de création** : 2021-04-19
 
-**Dernière mise à jour** : 2022-11-17
+**Dernière mise à jour** : 2023-11-15
 
-**Pour information** : Si vous avez des questions ou des commentaires sur CRITERIA, veuillez consulter la section [Enjeux](https://github.com/chin-rcip/CRITERIA/issues) (et créer un nouvel Enjeu si c'est pertinent) ou nous contacter par courriel à l’adresse [pch.RCIP-CHIN.pch@canada.ca](mailto:pch.RCIP-CHIN.pch@canada.ca) avec « CRITERIA » comme objet.
+**Pour information** : Si vous avez des questions ou des commentaires sur CRITERIA, veuillez consulter la section [Enjeux](https://github.com/chin-rcip/CRITERIA/issues) (et créer un nouvel Enjeu si c'est pertinent) ou nous contacter par courriel à l’adresse [rcip-chin@pch.gc.ca](mailto:rcip-chin@pch.gc.ca) avec « CRITERIA » comme objet.
 
 - [Utilisation principale](#utilisation-principale)
 - [Contexte](#contexte)
@@ -605,6 +612,12 @@ On peut utiliser CRITERIA de deux façons : par le biais d'un démonstrateur en 
 > **Remarque** :** Le script traite les triplets en ordre aléatoire; par conséquent, l’utilisateur·rice n’a aucun contrôle sur l’ordre de présentation du fichier mermaid extrant. Cela signifie aussi qu’exécuter le script plusieurs fois à partir d’un même document RDF crée des documents Mermaid légèrement différents (l’ordre des énoncés y diffère), ce qui crée des diagrammes différents, car l’ordre des nœuds de même niveau sera différent. L’emplacement du nœud principal et la hiérarchie restent toutefois identiques.
 
 ### Démonstrateur en ligne 
+
+> **Avertissement** : Veuillez prendre connaissance des points suivants avant d'utiliser le démonstrateur en ligne :
+> 1. Ne saisissez AUCUNE donnée sensible dans le fichier entrant qui sera transformé en diagramme (données non classifiées seulement);
+> 2. Le démonstrateur en ligne n'est PAS une application bilingue ni accessible.
+>
+> Contactez-nous au [rcip-chin@pch.gc.ca](mailto:rcip-chin@pch.gc.ca) si vous avez des questions à ce sujet.
 
 Le [démonstrateur en ligne](http://chinrcip.pythonanywhere.com), en anglais seulement, intéressera surtout ceux et celles qui désirent créer rapidement des diagrammes.
 
@@ -867,7 +880,7 @@ CRITERIA est distribué en vertu de la [licence MIT](https://github.com/chin-rci
 
 ## Utilisateurs·rices dignes de mention
 
-Le RCIP veut remercier les responsables de projets et les institutions qui utilisent CRITERIA; nous ne pourrions pas améliorer cet outil sans leur contribution. Si vous utilisez CRITERIA mais que votre projet ne se trouve pas dans la liste ci-dessous, n’hésitez pas à [communiquer avec nous](mailto:pch.RCIP-CHIN.pch@canada.ca).
+Le RCIP veut remercier les responsables de projets et les institutions qui utilisent CRITERIA; nous ne pourrions pas améliorer cet outil sans leur contribution. Si vous utilisez CRITERIA mais que votre projet ne se trouve pas dans la liste ci-dessous, n’hésitez pas à [communiquer avec nous](mailto:rcip-chin@pch.gc.ca).
 
 **Projet : [Reference Data Models](http://docs.swissartresearch.net/) (en anglais seulement)**
 
