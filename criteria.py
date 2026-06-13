@@ -1,8 +1,9 @@
 import rdflib
-from rdflib import Graph, URIRef, Namespace, util, Literal
+from rdflib import Graph, URIRef, Namespace, util
 from rdflib.util import SUFFIX_FORMAT_MAP
-from rdflib.namespace import RDFS, RDF, SDO, SKOS, SH
+from rdflib.namespace import NamespaceManager, RDFS, RDF, XSD, SKOS, SH
 import re
+import sys
 import argparse
 import json
 
@@ -133,26 +134,8 @@ def convert(dataGraph,conf):
 	stmtList = []
 	doubleInst = [] # to check for URI with double instantiations
 	i = 0
-
-	printgraph = Graph()
-
 	for s,p,o in g.triples((None, None, None)):
-		s_type = g.value(subject=s, predicate=RDF.type)
-		if p == RDF.type:
-			pass
-		elif type(o) == Literal:
-			if (s_type, p, Literal('Literal')) not in printgraph:
-				printgraph.add((s_type, p, Literal('Literal')))
-		else:
-			o_type = g.value(subject=o, predicate=RDF.type)
-			if o_type != None and (s_type, p, o_type) not in printgraph:
-				printgraph.add((s_type, p, o_type))
-			elif type(o) == URIRef and (s_type, p, o_type) not in printgraph:
-				printgraph.add((s_type, p, URIRef(o)))
-	
-	for s,p,o in printgraph.triples((None, None, None)):
 		p = p.n3(g.namespace_manager)
-
 		if s in uriDict:
 			n1 = uriDict[s]
 		else:
@@ -171,14 +154,13 @@ def convert(dataGraph,conf):
 
 		# check whether the object of the triple is a key in the returned dict of classDict
 		# to retrieve the Mermaid class, i.e check for the object of the property rdf:type
-		if p == RDF.type:
+		if p == 'rdf:type':
 			c = o.n3(g.namespace_manager)
 			if c in classes:
 				cl = classes[c]
 			else:
 				cl = 'Default'
-			if (not s in doubleInst) and o != SDO.Dataset:
-				print(f'adding {s}')
+			if not s in doubleInst:
 				doubleInst.append(s)
 				uriCl = cl+'_URI'
 			else:
@@ -248,7 +230,7 @@ def shapeProc(dataGraph,shapeInput):
 
 # Function to generate mermaid.jd style class definition based the classes dict from source.py
 def template(conf):
-	template = '%%{init: {\"flowchart\": {\"defaultRenderer\": \"elk\"}} }%%\nflowchart TD\n'
+	template = "flowchart TD\n"
 	if 'style' in conf:
 		classes = conf['style']
 	else:
@@ -315,21 +297,16 @@ def ontology(dataGraph, mmdOutput, conf):
 
 		date = re.findall('\(\[".*\^xsd:dateTime"]\)', stmt)
 		lit = re.findall('\(\["\'\'.*\'\'.*"]\)', stmt, re.DOTALL)
-		term = re.findall('([https://.*])', stmt)
-					 
 		if date:
 			stmt = stmt.replace(date[0], '["xsd:dateTime"]')
 		elif lit:
 			stmt = stmt.replace(lit[0], '["xsd:string"]')
-		elif term:
-			stmt = stmt.replace(term[0], '["xsd:anyURI"]')
 		
 		if 'rdf:type' in stmt:
 			inst = re.findall('\(\[.*:.*\)', stmt)[0] # get the uri part
 			clType = '[' + re.findall('\|.*\[".*"\].*', stmt)[0].split('[')[1] # get the class part
 			# add to the uriType dict the uri part as the key, and the class part as the value
 			# so the class part will replace the uri part in the for loop below
-			
 			if not inst in uriType:
 				uriType[inst] = clType
 			# else if uri is already in uriType, indicating multi instantiations,
@@ -346,8 +323,6 @@ def ontology(dataGraph, mmdOutput, conf):
 	for stmt in statements:
 		m = re.match('\d+(\(\[.*:.*\)) -->\|(.*)\| (\d+)(\(*\[(.*)\]\)*)', stmt, re.DOTALL)
 		label = ''
-		if m == None:
-			print(f'No match for: {stmt}')
 		if m.group(1) in uriType:
 			stmt = stmt.replace(m.group(1), uriType[m.group(1)])
 		if m.group(4) in uriType:
